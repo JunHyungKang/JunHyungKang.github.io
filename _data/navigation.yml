@@ -1,13 +1,14 @@
 # main links
 main:
   - title: "Papers"
-    url: https://junhyungkang.github.io/
-  - title: "Projects"
-    url: /Projects/
+    url: /categories/papers/
+  # - title: "Posts"
+  #   url: /categories/posts/
   - title: "Posts"
-    url: /Posts/
+    url: /categories/
   - title: "About"
     url: /about/
+
   # - title: "Sample Collections"
   #   url: /collection-archive/
   # - title: "Sitemap"
