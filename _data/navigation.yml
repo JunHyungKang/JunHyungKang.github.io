@@ -2,8 +2,10 @@
 main:
   - title: "Papers"
     url: /categories/papers/
-  - title: "Steps"
-    url: /categories/steps/
+  - title: "Tech"
+    url: /categories/tech/
+  - title: "Etc."
+    url: /categories/etc/
   - title: "Categories"
     url: /categories/
   - title: "About"

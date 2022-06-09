@@ -1,6 +1,6 @@
 ---
 title: "etc."
-permalink: /categories/etc./
+permalink: /categories/tech/
 layout: category
 author_profile: true
 toc_sticky: true
@@ -8,4 +8,4 @@ toc_ads : true
 taxonomy: etc.
 ---
 
-기타 여러가지
+Tech관련
