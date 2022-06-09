@@ -1,11 +1,11 @@
 ---
-title: "Steps"
-permalink: /categories/steps/
+title: "etc."
+permalink: /categories/etc./
 layout: category
 author_profile: true
 toc_sticky: true
 toc_ads : true
-taxonomy: steps
+taxonomy: etc.
 ---
 
-한걸음씩
+기타 여러가지

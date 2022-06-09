@@ -3,7 +3,7 @@ title:  "딥러닝 용 Ubuntu 세팅 "
 excerpt: "딥러닝 학습을 위한 ubuntu, cuda, cudnn, torch, tensorflow 세팅"
 
 categories:
-  - environment
+  - etc.
 
 last_modified_at: 2022-06-08T00:00:00-00:00
 ---
