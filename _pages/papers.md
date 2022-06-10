@@ -3,8 +3,9 @@ title: "Papers"
 permalink: /categories/papers/
 layout: category
 author_profile: true
+toc: true
 toc_sticky: true
-toc_ads : true
+toc_label : "MYSELF"
 taxonomy: papers
 ---
 

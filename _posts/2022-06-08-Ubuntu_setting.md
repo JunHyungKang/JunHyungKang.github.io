@@ -4,6 +4,11 @@ excerpt: "딥러닝 학습을 위한 ubuntu, cuda, cudnn, torch, tensorflow 세�
 
 categories:
   - tech
+tags:
+  - ubuntu
+  - cuda
+  - cudnn
+  - environment
 
 last_modified_at: 2022-06-08T00:00:00-00:00
 ---

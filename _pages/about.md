@@ -2,8 +2,6 @@
 title: "이 블로그 설명서"
 permalink: /about/
 author_profile: true
-toc_sticky: true
-toc_ads : true
 layout: single
 ---
 
