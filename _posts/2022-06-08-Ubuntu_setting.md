@@ -82,7 +82,7 @@ $ nvidia-smi
 # 3. CUDA 설정
 * 원하는 버전의 cuda 설치를 위해서 기존에 cuda가 설치된 경우 삭제
 ```shell
-sudo rm -rf /usr/local/cuda*
+$ sudo rm -rf /usr/local/cuda*
 ```
 * 원하는 버전의 cuda 설치
 <https://developer.nvidia.com/cuda-toolkit-archive>
@@ -158,7 +158,7 @@ $ sudo mkfs.ext4 /dev/sd*1
 
 * 자동 마운트를 위한 설정
 ```shell
-$ vi nano /etc/fstab
+$ sudo vi /etc/fstab
 ```
 여기에 이런 내용으로 확인한 UUID 추가 (UUID=** /data ext4 defaults 0 0)
 
