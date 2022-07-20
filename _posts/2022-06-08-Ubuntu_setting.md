@@ -99,13 +99,20 @@ $ sudo apt install g++-10
 $ sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 10
 $ sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 10
 ```
+
+* cuda 10.1의 경우 supporting GCC version이 8이기 때문에 이미 설치된 경우 아래와 같이 변경한다
+```shell
+$ sudo update-alternatives --config gcc
+$ sudo update-alternatives --config g++
+```
+
 설치 진행중 그래픽 driver는 이미 설치한 상태이기 때문에 제외하고 설치한다.
 * 
 * 설치가 끝난 후, cuda 관련 환경변수를 설정한다
 ```shell
-$ sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-11.0/bin' >> /etc/profile"
-$ sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/lib64' >> /etc/profile"
-$ sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-11.0' >> /etc/profile"
+$ sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-10.1/bin' >> /etc/profile"
+$ sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.1/lib64' >> /etc/profile"
+$ sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-10.1' >> /etc/profile"
 $ source /etc/profile
 ```
 * cuda 설치가 잘 되었는지 확인한다
@@ -120,12 +127,15 @@ $ nvcc -V
 ```shell
 $ tar -xvf cudnn-linux-x86_64-8.x.x.x_cudaX.Y-archive.tar.xz
 $ sudo cp cudnn-*-archive/include/* /usr/local/cuda/include 
+#sudo cp cuda/include/* /usr/local/cuda/include 
 $ sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
+#sudo cp -P cuda/lib64/* /usr/local/cuda/lib64 
 $ sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 ```
 * 설치 버전 확인
 ```shell
 $ cat /usr/local/cuda-11.0/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+#cat /usr/local/cuda-10.1/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
 
 # 5. Anaconda 설치
