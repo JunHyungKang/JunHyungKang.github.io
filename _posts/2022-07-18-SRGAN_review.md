@@ -27,7 +27,7 @@ yolov7은 5FPS ~ 160FPS 사이의 일명 real-time object detectors에서 SOTA�
 소스 코드도 공개되어 있다.\
 <https://github.com/WongKinYiu/yolov7>
 
-![Figure1](../assets/images/220711/220711-1.png)
+![Figure1](/assets/images/220711/220711-1.png)
 yolo 계열의 논문마다 전통적으로 보여주는 성능 그래프에서 yolov7이 다른 모델에 비해서 높은 성능을 보여주고 있다.\
 특히 많이들 사용하는 yolov5에 비해서 약 0.02 (or 2%) AP 향상이 있는 것으로 보인다. 
 

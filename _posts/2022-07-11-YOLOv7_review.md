@@ -24,7 +24,7 @@ yolov7은 5FPS ~ 160FPS 사이의 일명 real-time object detectors에서 SOTA�
 소스 코드도 공개되어 있다.\
 <https://github.com/WongKinYiu/yolov7>
 
-![Figure1](../assets/images/220711/220711_1.png)
+![Figure1](/assets/images/220711/220711_1.png)
 yolo 계열의 논문마다 전통적으로 보여주는 성능 그래프에서 yolov7이 다른 모델에 비해서 높은 성능을 보여주고 있다.\
 특히 많이들 사용하는 yolov5에 비해서 약 0.02 (or 2%) AP 향상이 있는 것으로 보인다. 
 
@@ -68,7 +68,7 @@ Module level의 reparameterization이 최근에는 더 주목받고 있는데, �
 ## Architecture
 ### Extended dfficient layer aggregation networks
 대부분의 efficient architectures 관련한 연구에서는 주로 parameter의 숫자, computation의 양, 그리고 computational density을 다룬다.\
-![Figure2](../assets/images/220711/220711_2.png)
+![Figure2](/assets/images/220711/220711_2.png)
 위 그림의 VoVNe (a)는 그러한 기본적인 설계 컨셉을 고려하였고, CSPVoVNet (b)는 거기에 더해 gradient path 분석을 통해 다른 layers에 weights를 부여하여 더 다양한 features를 학습 할 수 있도록 하였다. \
 이는 곧 더 빠르고 정확한 inference를 가능하게 했다. 
 ELAN (c)의 경우에는 가장 짧고 긴 gradient path의 controlling을 통해서 더 요휼적인 네트워크를 구성하는 방법을 제안하였다. (computational blocks를 stacking ?) 
@@ -84,7 +84,7 @@ E-ELAN은 cardinality (of gradient path?)의 expand, shuffle, merge를 통해서
 PlainNet이나 ResNet의 경우에 scaling up or down을 수행해도 각 layer의 입출력 차원이 변하지 않기 때문에, 각 scaling factor가 parameters와 computation에 미치는 영향을 독립적으로 확인할 수 있다.\
 하지만 이러한 방법들을 concatenation-based 구조에 적용하는 경우에는 scaling up or down시에 concatenation-based computational block 이후에 translation layer의 차원이 증가하거나 줄어드는 것을 확인할 수 있다.\
 아래 그림 (a, b) 참고,,
-![Figure3](../assets/images/220711/220711_3.png)
+![Figure3](/assets/images/220711/220711_3.png)
 예를 들어서, 모델의 depth를 scaling-up하는 경우에는 transition layer의 input, output channel이 변하게 되고, 이것이 모델의 hardware usage를 줄이게 된다.\
 그렇기 때문에 이 모델에서는 concatenation-based 모델을 위한 compound (합성?) 모델 scaling method를 위의 그림 (c)와 같이 제안한다.\
 이런 방법은 모델이 가지고 있는 initial design과 optimal structure를 유지할 수 있다.
