@@ -1,6 +1,8 @@
 ---
 title:  "Pytorch installation 문제 해결"
 excerpt: "Pytorch 설치시에 발행하는 문제 해결 log"
+toc: true
+toc_sticky: true
 
 categories:
   - tech

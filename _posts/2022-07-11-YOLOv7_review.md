@@ -1,6 +1,8 @@
 ---
 title:  "논문 리뷰: YOLOv7"
 excerpt: "YOLOv7: Trainable bag-og-greebies sets new state-of-the-art for real-time object detectors"
+toc: true
+toc_sticky: true
 
 categories:
   - papers
