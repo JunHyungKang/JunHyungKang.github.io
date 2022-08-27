@@ -1,5 +1,5 @@
 ---
-title:  "Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model(1)"
+title:  "Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model"
 excerpt: "Muzero by Deepmind"
 toc: true
 toc_sticky: true
