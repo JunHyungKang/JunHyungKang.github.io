@@ -32,7 +32,7 @@ pip install kaggle --upgrade
 ```
 
 ## Installation
-* pip를 지원하기 때문에 아래의 명령어로 간단히 설치 가능
+pip를 지원하기 때문에 아래의 명령어로 간단히 설치 가능
 ```shell
 pip install kaggle
 
@@ -51,7 +51,7 @@ kaggle config path
 ```
 
 ## Commands
-* 기본적인 명령어 틀
+기본적인 명령어 틀
 ```shell
 kaggle competitions {list, files, download, submit, submissions, leaderboard}
 kaggle datasets {list, files, download, create, version, init}
