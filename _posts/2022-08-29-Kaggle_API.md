@@ -20,7 +20,7 @@ kaggle을 진행하면서 노트북 환경에서 복잡한 작업을 수행해�
 아래의 글은 공식 API github의 document를 거의 그대로 한국어로만 바꿔서 정리해 놓았다.
 
 ## Intro
-가장 널리 알려진 DS/ML competition 플랫폼인 [kaggle]<https://www.kaggle.com> 에서는 python3을 사용하는 official API를 제공한다\
+가장 널리 알려진 DS/ML competition 플랫폼인 [kaggle](https://www.kaggle.com) 에서는 python3을 사용하는 official API를 제공한다\
 * 참고로 1.5.0이전의 API 버전에서는 competition 결과 제출이 되지 않는다고 하니 아래의 명령어로 미리 버전을 확인해 보자
 ```shell
 kaggle --version
