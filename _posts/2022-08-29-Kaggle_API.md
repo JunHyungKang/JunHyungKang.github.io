@@ -11,7 +11,7 @@ tags:
   - API
   - Competition
 
-last_modified_at: 2022-08-28T00:00:00-00:00
+last_modified_at: 2022-08-29T00:00:00-00:00
 ---
 
 # Kaggle API
@@ -62,12 +62,36 @@ kaggle config {view, set, unset}
 ### Competitions
 ```shell
 # available한 competition 목록 확인
-# group: ['general', 'entered', 'inClass']
-# category: ['all', 'featured', 'research', 'recruitment', 'gettingStarted', 'masters', 'playground']
-
-kaggle competitions list [--group GROUP] [--category CATEGORY] [--sort-by SORT_BY] [-p PAGE] [-s SEARCH] [-v] 
+kaggle competitions list [-h] [--group GROUP] [--category CATEGORY] [--sort-by SORT_BY] [-p PAGE] [-s SEARCH] [-v]
 # example_1: kaggle competitions list -s health
 # example_2: kaggle competitions list --category gettingStarted
 
-kaggle competitions files  # 
+# competitions files 확인
+kaggle competitions files [-h] [-v] [-q] [competition]
+# example: kaggle competitions files favorita-grocery-sales-forecasting
+
+# competition files 다운로드
+kaggle competitions download [-h] [-f FILE_NAME] [-p PATH] [-w] [-o] [-q] [competition]
+# example_1: kaggle competitions download favorita-grocery-sales-forecasting
+# example_2: kaggle competitions download favorita-grocery-sales-forecasting -f test.csv.7z
+
+# 결과 submit
+kaggle competitions submit [-h] -f FILE_NAME -m MESSAGE [-q] [competition]
+# example: kaggle competitions submit favorita-grocery-sales-forecasting -f sample_submission_favorita.csv.7z -m "My submission message"
+
+# submit한 결과 확인
+kaggle competitions submissions [-h] [-v] [-q] [competition]
+# example: kaggle competitions submissions favorita-grocery-sales-forecasting
+
+# 리더보드 확인
+kaggle competitions leaderboard [-h] [-s] [-d] [-p PATH] [-v] [-q] [competition]
+# example: kaggle competitions leaderboard favorita-grocery-sales-forecasting -s
+```
+
+### Datasets, Kernels, config
+```shell
+# 각 command에 대하여 help로 자세한 사항은 확인 필요
+kaggle datasets [-h] {list, files, download, create, version, init, metadata, status}
+kaggle kernels [-h] {list, init, push, pull, output, status}
+kaggle config [-h] {view,set,unset}
 ```
