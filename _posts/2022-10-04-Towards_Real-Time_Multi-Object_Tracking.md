@@ -73,19 +73,19 @@ detection 부분은 standard RPN과 유사하지만 아래의 두가지 차이�
 ### Learning Appearance Embeddings
 appearance embeddings를 학습하기 위해서 metric learning 개념을 이용한다. \
 metric learning에서 많이 사용하는 triplet loss를 사용하여 negative sample과의 거리를 최대화하고 positive sample과의 거리를 최소화 하도록 한다. 
-<center><img src="../assets/images/221004/221004_3.png" height="50"></center> \ 
+<center><img src="../assets/images/221004/221004_3.png" height="50"></center> 
 
 하지만 이런 triplet loss에는 몇기지 문제가 있는데, 하나는 학습 데이터에서 huge sampling space를 필요로 한다는 것이다. \
 여기서는 이 문제를 mini-batch에서 모든 negative sample과 hardest positive smaple을 사용해서 계산하고 이를 sum하는 방법으로 해결하려고 한다. 
-<center><img src="../assets/images/221004/221004_4.png" height="50"></center> \
+<center><img src="../assets/images/221004/221004_4.png" height="50"></center>
 
 또다른 문제는 triplet loss가 학습이 느리고 안정적이지 못하다는 것이다. \
 이 부분은 triplet loss의 smooth upper bound를 optimize하는 방법을 통해서 해결하려고 한다. 
-<center><img src="../assets/images/221004/221004_5.png" height="50"></center> \
+<center><img src="../assets/images/221004/221004_5.png" height="50"></center>
 
 위에서 말한 smooth upper bound of triplet loss는 아래와 같이 다시 쓸 수 있고, 이 수식은 cross-entropy loss와 유사한 모양이 된다. 
 <center><img src="../assets/images/221004/221004_6.png" height="50"></center> 
-<center><img src="../assets/images/221004/221004_7.png" height="50"></center> \
+<center><img src="../assets/images/221004/221004_7.png" height="50"></center>
 
 하지만 cross-entropy와 smooth upper bound of triplet loss는 차이가 있다. \
 첫번째는 cross-entropy loss는 smooth upper bound of triplet loss가 embeddings를 directly 이용하는 것과 다르게 학습가능한 class-wise weight를 사용한다는 점이다. \
