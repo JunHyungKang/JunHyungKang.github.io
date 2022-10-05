@@ -1,7 +1,6 @@
 ---
 title:  "논문 리뷰: Towards Real-Time Multi-Object Tracking"
-excerpt: "Wang, Zhongdao, et al. "Towards real-time multi-object tracking." European Conference on Computer Vision
-. Springer, Cham, 2020."
+excerpt: "Wang, Zhongdao, et al. 'Towards real-time multi-object tracking.' European Conference on Computer Vision. Springer, Cham, 2020."
 toc: true
 toc_sticky: true
 
