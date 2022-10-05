@@ -70,7 +70,7 @@ detection 부분은 standard RPN과 유사하지만 아래의 두가지 차이�
 ### Learning Appearance Embeddings
 appearance embeddings를 학습하기 위해서 metric learning 개념을 이용한다. \
 metric learning에서 많이 사용하는 triplet loss를 사용하여 negative sample과의 거리를 최대화하고 positive sample과의 거리를 최소화 하도록 한다. \
-![Figure3](../assets/images/221004/221004_3.png | height=20)
+<img src="../assets/images/221004/221004_3.png" height="10%">
 하지만 이런 triplet loss에는 몇기지 문제가 있는데, 하나는 학습 데이터에서 huge sampling space를 필요로 한다는 것이다. \
 여기서는 이 문제를 mini-batch에서 모든 negative sample과 hardest positive smaple을 사용해서 계산하고 이를 sum하는 방법으로 해결하려고 한다. \
 ![Figure4](../assets/images/221004/221004_4.png | height=20)
