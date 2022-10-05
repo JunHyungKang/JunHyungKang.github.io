@@ -53,11 +53,11 @@ JDE 모델은 아래 두가지 objectives를 만족해야 한다.
 * 입력되는 비디오 frame은 feature map을 각각 세가지 scale (1/32, 1/16, 1/8)로 얻기 위해서 backbone network를 통과한다. 
 * 더 작은 scale의 feature map은 up-sampled 된 후에 다음 scale의 feature map과 skip connection을 이용해서 fuse한다.
 * prediction head는 모두 세가지 scale에서 얻어지고, 각 head는 여러가지 stacked된 convolutional layer로 구성되어 dense prediction map을 출력한다.
-* 최종 output의 경우 $(6A + D) \times H \times W$의 크기를 가진다. (A: number of anchor, D: dimension of the embedding) 
+* 최종 output의 경우 $$(6A + D) \times H \times W$$의 크기를 가진다. (A: number of anchor, D: dimension of the embedding) 
 * 이 출력된 dense prediction map output은 아래와 같이 task에 따라서 세가지로 나뉜다
-  * bbox classification $(2A \times H \times W)$
-  * bbox regression $(4S \times H \times W)$
-  * embedding map $(D \times H \times W)$
+  * bbox classification $$(2A \times H \times W)$$
+  * bbox regression $$(4S \times H \times W)$$
+  * embedding map $$(D \times H \times W)$$
 위에서 설명한 archtecture는 아래 그림에 대략적으로 나타난다.
 ![Figure2](/assets/images/221004/221004_2.png)
 
@@ -117,8 +117,8 @@ tracking performance는 CLEAR metric중 MOTA를 사용하였다.
 
 ### Implementation Details
 DarkNet-53을 backone network로 사용하였고, SGD optimizer에서 30에폭 학습하여 사용했다. \
-initial learning rate는 $10^{-2}$를 사용하였고, 여러 data augmentation (ex. random rotation, random scale, color jittering)이 사용되었다. \
-input 해상도는 $1088 \times 608$을 사용하였다.\
+initial learning rate는 $$10^{-2}$$를 사용하였고, 여러 data augmentation (ex. random rotation, random scale, color jittering)이 사용되었다. \
+input 해상도는 $$1088 \times 608$$을 사용하였다.\
 (FPN을 사용했다고 했었는데, darknet-53이 여러 scacle feature가 fuse되는지 확인 필요)
 
 ### Experimental Results
