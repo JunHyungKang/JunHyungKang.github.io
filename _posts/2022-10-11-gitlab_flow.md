@@ -30,7 +30,7 @@ Git을 사용하면 위의 그림과 같이 대부분 3가지 단계를 거쳐 c
 하지만 GitLab에서는 이러한 방법론에 여전히 improvement할 점이 있다고 생각하고, 아래와 같은 방법론을 제시하고 있다.
 
 ## Git flow and its problems
-<img src="/assets/images/221011/221011_2.png" height=40>
+<img src="/assets/images/221011/221011_2.png" width="50%" height="50%">
 
 
 Git flow는 git branches를 이용하기위해 처름 제안된 방법중 하나로 많은 관심을 받아왔다. \
