@@ -30,7 +30,9 @@ Git을 사용하면 위의 그림과 같이 대부분 3가지 단계를 거쳐 c
 하지만 GitLab에서는 이러한 방법론에 여전히 improvement할 점이 있다고 생각하고, 아래와 같은 방법론을 제시하고 있다.
 
 ## Git flow and its problems
-<img src="/assets/images/221011/221011_2.png" height="50%">
+<img src="/assets/images/221011/221011_2.png" height="60">
+
+
 Git flow는 git branches를 이용하기위해 처름 제안된 방법중 하나로 많은 관심을 받아왔다. \
 이 전략은 main branch와 별도로 devlop branch를 제안하고, 이를 지원하기위한 features, releases, hotfixes branch들을 제안한다. \
 개발은 develop branch에서 이루어지고 release branch로 이동되며, main에 최종적으로 merge된다. 
@@ -43,7 +45,11 @@ Git flow는 잘 정의된 방법이지만, 그 복잡성때문에 두가지 문�
 
 ## GitHub flow as a simpler alternative
 Git flow에 대응하여 Github는 오직 feature branch와 main branch를 이용하는 Github flow를 만들었다.
-<img src="/assets/images/221011/221011_3.png" height="50%">
+
+
+<img src="/assets/images/221011/221011_3.png" height="60">
+
+
 이 flow는 매우 직관적이고, 실제로 많은 조직에서 성공적으로 적용하였다. \
 Atlassian에서는 여기에서 feature branch를 rebase하는 이와 유사한 전략을 제안하기도 하였다. \
 모든 내용을 main에 merge하고 자주 deploy 한다는 것의 의미는 unreleased code를 최소화 한다는 것이다. \
@@ -56,8 +62,12 @@ SaaS application과 같은 일부 경우에는 이 것이 가능할 수 있겠�
 * deployment windows를 가지고 있느 경우 (?). 예를 들면, operation 팀이 10 to 4로 일하는데, 당신은 다른 시간에 코드를 merge하는 경우
 
 이러한 경우에, 우리는 production branch를 만들어 deployed code를 반영하게 할 수 있다. \
-그러면 우리는 development를 production branch에 merge해서 새로운 버전을 deploy할 수 있게 된다. \
-<img src="/assets/images/221011/221011_4.png" height="50%">
+그러면 우리는 development를 production branch에 merge해서 새로운 버전을 deploy할 수 있게 된다. 
+
+
+<img src="/assets/images/221011/221011_4.png" height="60">
+
+
 만약 우리가 어떤 코드가 production에 반영되고 있는지 알고 싶다면, 바로 production branch를 확인하면 된다. \
 이 전략은 release, tagging, 그리고 merging에 소요되는 overhead를 예방할 수 있게 해준다.
 
@@ -94,7 +104,9 @@ feature branch가 merge될 준비가 되면, 사람을 지정하고 merge reques
 GitLab에서는 main branch와 같은 long-lived branch는 보호되어야 하고 대부분의 개발자는 이것을 수정할 수 없다. \
 그렇기때문에 이 보호되는 branch에 merge하기 위해서는 maintainer role을 가진 사람을 merge request에 지정해야 한다.
 
-<img src="/assets/images/221011/221011_4.png" height="10%">
+
+<img src="/assets/images/221011/221011_8.png" height="20">
+
 
 feature branch를 merge한 이후에는 이를 지워야 하고, GitLab에서는 merging을 했을때 지울 수 있다. \
 이렇게 끝난 branch를 지우는 것은 보이는 branch들이 모두 작업중이라는 것을 알 수 있게 한다. \
@@ -139,9 +151,9 @@ Rebasing은 매번 어느정도의 conflict들을 해결해야 할 수 있기 �
 
 많은 merge commit을 만들지 않는 방법은 feature branch에서 main branch에 merge를 자주 하지 않는 것이다. \
 main branch에 merge하는 이유는 아래와 같다.
-1) 새로운 코드 사용
-2) merge conflict 해결
-3) long running branch 업데이트
+1. 새로운 코드 사용
+2. merge conflict 해결
+3. long running branch 업데이트
 
 1번째 이유 관련해서 만약 어떤 기능을 만든 후 main branch에 적용하고 싶다면, 해당 commit을 cherry-picking하는 것으로 해결할 수 있다. \
 그리고 3번째 이유로 long runinng feature branch를 up-to-date로 유지하고 싶은 것이라면, feature branch를 하루 이하로 유지하도록 해야한다. \
