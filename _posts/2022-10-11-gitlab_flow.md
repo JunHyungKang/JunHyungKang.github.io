@@ -74,7 +74,7 @@ staging branch에 자동으로 업데이트하도록 하는 환경을 구성하�
 그러한 경우에는 staging enviroment, pre-production enviroment, production enviroment와 같은 다른 branch 이름을 가지게 될 것이다. 
 
 
-![Figure5](/assets/images/221011/221011_5.png){: .align-center}{: width="50%" height="50%"}
+![Figure5](/assets/images/221011/221011_5.png){: .align-center}{: width=30 height="auto"}
 
 
 이 부분에 대한 설명이 잘 이해는 되지 않았지만 우선 자동으로 업데이트하도록 staging branch를 구성해 놓고, pre-prod과 production branch에 dowstream flow로 commit을 하는 구성을 하라는 뜻으로 이해하였다.
@@ -84,7 +84,7 @@ staging branch에 자동으로 업데이트하도록 하는 환경을 구성하�
 만약 release software를 외부로 보내야 하는 경우에만 release branch를 운영해야 한다. 이 경우 각 branch는 2.3-stable과 같은 minor한 version을 포함한다.
 
 
-![Figure6](/assets/images/221011/221011_6.png){: .align-center}{: width="50%" height="50%"}
+![Figure6](/assets/images/221011/221011_6.png){: .align-center}{: width=30 height="auto"}
 
 
 가장 최신의 main branch를 starting point로 stable branches를 만든다. 이를 통해 bug fixes를 여러 branch에 적용하는 수고를 덜 수 있다. \
