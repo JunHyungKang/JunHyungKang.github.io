@@ -47,7 +47,7 @@ Git flow는 잘 정의된 방법이지만, 그 복잡성때문에 두가지 문�
 Git flow에 대응하여 Github는 오직 feature branch와 main branch를 이용하는 Github flow를 만들었다.
 
 
-<img src="/assets/images/221011/221011_3.png" width="50%" height="50%">
+<img src="/assets/images/221011/221011_3.png" width="30%" height="30%">
 
 
 이 flow는 매우 직관적이고, 실제로 많은 조직에서 성공적으로 적용하였다. \
@@ -65,7 +65,7 @@ SaaS application과 같은 일부 경우에는 이 것이 가능할 수 있겠�
 그러면 우리는 development를 production branch에 merge해서 새로운 버전을 deploy할 수 있게 된다. 
 
 
-<img src="/assets/images/221011/221011_4.png" width="50%" height="50%">
+<img src="/assets/images/221011/221011_4.png" width="35%" height="35%">
 
 
 만약 우리가 어떤 코드가 production에 반영되고 있는지 알고 싶다면, 바로 production branch를 확인하면 된다. \
@@ -76,13 +76,19 @@ staging branch에 자동으로 업데이트하도록 하는 환경을 구성하�
 그러한 경우에는 staging enviroment, pre-production enviroment, production enviroment와 같은 다른 branch 이름을 가지게 될 것이다. 
 
 
-![Figure5](/assets/images/221011/221011_5.png)
+<img src="/assets/images/221011/221011_5.png" width="70%" height="70%">
+
+
 이 부분에 대한 설명이 잘 이해는 되지 않았지만 우선 자동으로 업데이트하도록 staging branch를 구성해 놓고, pre-prod과 production branch에 dowstream flow로 commit을 하는 구성을 하라는 뜻으로 이해하였다.
 이 경우 downstream flow(staging, pre-prod, production 순)으로 merge할 때마다 test가 완료되어 있어야 하고, merge request를 통해 feature branch에서 production branch로 merge하는 경우에는 모든 testing에 통과하기전에는 해당 feature branch를 지우지 않도록 한다.
 
 ## Release branches with GitLab flow
 만약 release software를 외부로 보내야 하는 경우에만 release branch를 운영해야 한다. 이 경우 각 branch는 2.3-stable과 같은 minor한 version을 포함한다.
-![Figure6](/assets/images/221011/221011_6.png)
+
+
+<img src="/assets/images/221011/221011_6.png" width="70%" height="70%">
+
+
 가장 최신의 main branch를 starting point로 stable branches를 만든다. 이를 통해 bug fixes를 여러 branch에 적용하는 수고를 덜 수 있다. \
 release branch를 선언한 후에는 오직 심각한 bug fix만 추가하도록 하고, 가능하면 main branch에 먼저 반영한 후에 cherry-pick을 통해 release branch로 가져오도록 한다. \
 이를 upstream first 정책이라고 부르며, Google과 Red Hat에서 적용하고 있는 방식이다. \
@@ -90,7 +96,7 @@ release branch에서 bug를 fix하는 경우 Semantic Versioning을 적용해 ta
 이 전략에서는 production branch나 git flow의 main branch를 보통 가지지 않는다. 
 
 ## Merge/pull requests with GitLab flow
-![Figure7](/assets/images/221011/221011_7.png)
+<img src="/assets/images/221011/221011_7.png" width="50%" height="50%">
 Merge or pull request는 Git management application에서 만들어 졌다. 이것은 assigned person이 두 branch들을 merge하는 것을 요청받게 한다. \
 GitHub과 Bitbucket과 같은 Tool에서는 pull request라고 이름을 붙이고 (처음의 manual action이 feature branch를 pull하는 것이기 때문에), GitLab과 다른 일부는 merge request라는 이름을 붙인다 (최종 action이 feature branch를 merge하는 것이기 때문에. 
 
