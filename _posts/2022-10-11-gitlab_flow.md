@@ -47,7 +47,7 @@ Git flow는 잘 정의된 방법이지만, 그 복잡성때문에 두가지 문�
 Git flow에 대응하여 Github는 오직 feature branch와 main branch를 이용하는 Github flow를 만들었다.
 
 
-<img src="/assets/images/221011/221011_3.png" height=40>
+<img src="/assets/images/221011/221011_3.png" width="50%" height="50%">
 
 
 이 flow는 매우 직관적이고, 실제로 많은 조직에서 성공적으로 적용하였다. \
@@ -65,7 +65,7 @@ SaaS application과 같은 일부 경우에는 이 것이 가능할 수 있겠�
 그러면 우리는 development를 production branch에 merge해서 새로운 버전을 deploy할 수 있게 된다. 
 
 
-<img src="/assets/images/221011/221011_4.png" height=40>
+<img src="/assets/images/221011/221011_4.png" width="50%" height="50%">
 
 
 만약 우리가 어떤 코드가 production에 반영되고 있는지 알고 싶다면, 바로 production branch를 확인하면 된다. \
@@ -105,7 +105,7 @@ GitLab에서는 main branch와 같은 long-lived branch는 보호되어야 하�
 그렇기때문에 이 보호되는 branch에 merge하기 위해서는 maintainer role을 가진 사람을 merge request에 지정해야 한다.
 
 
-<img src="/assets/images/221011/221011_8.png" height=10>
+<img src="/assets/images/221011/221011_8.png" width="10%" height="10%">
 
 
 feature branch를 merge한 이후에는 이를 지워야 하고, GitLab에서는 merging을 했을때 지울 수 있다. \
