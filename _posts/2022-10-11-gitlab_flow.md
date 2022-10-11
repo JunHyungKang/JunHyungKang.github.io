@@ -94,7 +94,7 @@ release branch에서 bug를 fix하는 경우 Semantic Versioning을 적용해 ta
 이 전략에서는 production branch나 git flow의 main branch를 보통 가지지 않는다. 
 
 ## Merge/pull requests with GitLab flow
-![Figure7](/assets/images/221011/221011_7.png){: .align-center}{: width="50%" height="50%"}
+![Figure7](/assets/images/221011/221011_7.png){: .align-center}{: width=30 height="auto"}
 
 
 Merge or pull request는 Git management application에서 만들어 졌다. 이것은 assigned person이 두 branch들을 merge하는 것을 요청받게 한다. \
@@ -111,7 +111,7 @@ GitLab에서는 main branch와 같은 long-lived branch는 보호되어야 하�
 그렇기때문에 이 보호되는 branch에 merge하기 위해서는 maintainer role을 가진 사람을 merge request에 지정해야 한다.
 
 
-![Figure8](/assets/images/221011/221011_8.png){: .align-center}{: width="50%" height="50%"}
+![Figure8](/assets/images/221011/221011_8.png){: .align-center}{: width="audo" height=20}
 
 
 feature branch를 merge한 이후에는 이를 지워야 하고, GitLab에서는 merging을 했을때 지울 수 있다. \
