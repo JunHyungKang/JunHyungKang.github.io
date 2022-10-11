@@ -30,11 +30,7 @@ Git을 사용하면 위의 그림과 같이 대부분 3가지 단계를 거쳐 c
 하지만 GitLab에서는 이러한 방법론에 여전히 improvement할 점이 있다고 생각하고, 아래와 같은 방법론을 제시하고 있다.
 
 ## Git flow and its problems
-![Figure2](/assets/images/221011/221011_1.png){: width="50%" height="50%"}
-<img src="/assets/images/221011/221011_2.png" width=auto height=30>
-<img src="/assets/images/221011/221011_2.png" width=auto height=50%>
-
-
+![Figure2](/assets/images/221011/221011_2.png){: .align-center}{: width="50%" height="50%"}
 Git flow는 git branches를 이용하기위해 처름 제안된 방법중 하나로 많은 관심을 받아왔다. \
 이 전략은 main branch와 별도로 devlop branch를 제안하고, 이를 지원하기위한 features, releases, hotfixes branch들을 제안한다. \
 개발은 develop branch에서 이루어지고 release branch로 이동되며, main에 최종적으로 merge된다. 
@@ -49,7 +45,7 @@ Git flow는 잘 정의된 방법이지만, 그 복잡성때문에 두가지 문�
 Git flow에 대응하여 Github는 오직 feature branch와 main branch를 이용하는 Github flow를 만들었다.
 
 
-<img src="/assets/images/221011/221011_3.png" width=auto height=30>
+![Figure3](/assets/images/221011/221011_3.png){: .align-center}{: width="50%" height="50%"}
 
 
 이 flow는 매우 직관적이고, 실제로 많은 조직에서 성공적으로 적용하였다. \
@@ -67,7 +63,7 @@ SaaS application과 같은 일부 경우에는 이 것이 가능할 수 있겠�
 그러면 우리는 development를 production branch에 merge해서 새로운 버전을 deploy할 수 있게 된다. 
 
 
-<img src="/assets/images/221011/221011_4.png" width=auto height=30>
+![Figure4](/assets/images/221011/221011_4.png){: .align-center}{: width="50%" height="50%"}
 
 
 만약 우리가 어떤 코드가 production에 반영되고 있는지 알고 싶다면, 바로 production branch를 확인하면 된다. \
@@ -78,7 +74,7 @@ staging branch에 자동으로 업데이트하도록 하는 환경을 구성하�
 그러한 경우에는 staging enviroment, pre-production enviroment, production enviroment와 같은 다른 branch 이름을 가지게 될 것이다. 
 
 
-<img src="/assets/images/221011/221011_5.png" width=auto height=15>
+![Figure5](/assets/images/221011/221011_5.png){: .align-center}{: width="50%" height="50%"}
 
 
 이 부분에 대한 설명이 잘 이해는 되지 않았지만 우선 자동으로 업데이트하도록 staging branch를 구성해 놓고, pre-prod과 production branch에 dowstream flow로 commit을 하는 구성을 하라는 뜻으로 이해하였다.
@@ -88,7 +84,7 @@ staging branch에 자동으로 업데이트하도록 하는 환경을 구성하�
 만약 release software를 외부로 보내야 하는 경우에만 release branch를 운영해야 한다. 이 경우 각 branch는 2.3-stable과 같은 minor한 version을 포함한다.
 
 
-<img src="/assets/images/221011/221011_6.png" width=auto height=15>
+![Figure6](/assets/images/221011/221011_6.png){: .align-center}{: width="50%" height="50%"}
 
 
 가장 최신의 main branch를 starting point로 stable branches를 만든다. 이를 통해 bug fixes를 여러 branch에 적용하는 수고를 덜 수 있다. \
@@ -98,7 +94,7 @@ release branch에서 bug를 fix하는 경우 Semantic Versioning을 적용해 ta
 이 전략에서는 production branch나 git flow의 main branch를 보통 가지지 않는다. 
 
 ## Merge/pull requests with GitLab flow
-<img src="/assets/images/221011/221011_7.png" width=auto height=15>
+![Figure7](/assets/images/221011/221011_7.png){: .align-center}{: width="50%" height="50%"}
 
 
 Merge or pull request는 Git management application에서 만들어 졌다. 이것은 assigned person이 두 branch들을 merge하는 것을 요청받게 한다. \
@@ -115,7 +111,7 @@ GitLab에서는 main branch와 같은 long-lived branch는 보호되어야 하�
 그렇기때문에 이 보호되는 branch에 merge하기 위해서는 maintainer role을 가진 사람을 merge request에 지정해야 한다.
 
 
-<img src="/assets/images/221011/221011_8.png" width=auto height=15>
+![Figure8](/assets/images/221011/221011_8.png){: .align-center}{: width="50%" height="50%"}
 
 
 feature branch를 merge한 이후에는 이를 지워야 하고, GitLab에서는 merging을 했을때 지울 수 있다. \
