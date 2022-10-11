@@ -45,7 +45,7 @@ Git flow는 잘 정의된 방법이지만, 그 복잡성때문에 두가지 문�
 Git flow에 대응하여 Github는 오직 feature branch와 main branch를 이용하는 Github flow를 만들었다.
 
 
-![Figure3](/assets/images/221011/221011_3.png){: .align-center}{: width="50%" height="50%"}
+![Figure3](/assets/images/221011/221011_3.png){: .align-center}{: width="auto" height=20}
 
 
 이 flow는 매우 직관적이고, 실제로 많은 조직에서 성공적으로 적용하였다. \
@@ -111,7 +111,7 @@ GitLab에서는 main branch와 같은 long-lived branch는 보호되어야 하�
 그렇기때문에 이 보호되는 branch에 merge하기 위해서는 maintainer role을 가진 사람을 merge request에 지정해야 한다.
 
 
-![Figure8](/assets/images/221011/221011_8.png){: .align-center}{: width="audo" height=20}
+![Figure8](/assets/images/221011/221011_8.png){: .align-center}{: width="auto" height=20}
 
 
 feature branch를 merge한 이후에는 이를 지워야 하고, GitLab에서는 merging을 했을때 지울 수 있다. \
