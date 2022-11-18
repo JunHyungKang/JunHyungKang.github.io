@@ -16,6 +16,7 @@ last_modified_at: 2022-11-18T00:00:00-00:00
 
 # 매개변수를 질의 함수로 바꾸기
 * 매개변수 목록의 중복은 피하는 게 좋으며, 짧을수록 이해하기 쉬움.
+
 ```python
 # As-is
 def availableVacation(anEmployee, grade):
