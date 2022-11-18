@@ -20,7 +20,7 @@ title                    : "기록으로 살아남기"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "JH Kang"
-description              : "하나씩 천천히 정리하기"
+description              : "기록으로 살아남기"
 url                      : "https://junhyungkang.github.io/"  # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
