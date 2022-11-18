@@ -30,6 +30,7 @@ def availableVacation(anEmployee):
     pass
 availableVacation(anEmployee)
 ```
+
 * 단, 매개변수를 제거하면 피호출 함수에 원치 않는 의존성이 생기는 경우에는 수행하지 않음.
 * 함수가 항상 참조 투명 (referential transparency)해야 한다 - 함수에 똑같은 값을 건네 호출하면 항상 똑같이 동작해야 한다.
 * 매개변수를 없애는 대신 가변 전역 변수를 이용하는 일은 하면 안 된다.
@@ -62,7 +63,7 @@ class Order:
 class Order:
     def finalPrice(self):
         basePrice = self.quantity * self.itemPrice
-        return self.discountedPrice(basePrice, self.discountLevel)
+        return self.discountedPrice(basePrice, self.discountLevel)  # discountLevel --> self.discountLevel
     
     def discountedPrice(self, basePrice, discountLevel):
         if discountLevel == 1:
@@ -70,7 +71,7 @@ class Order:
         elif discountLevel == 2:
             return basePrice * 0.9
 
-    def discountlevel(self):
+    def discountlevel(self):  # 함수 추출 (임시 변수를 질의 함수로 바꾸기)
         return 2 if self.quantity > 100 else 1
 ```
 
@@ -80,15 +81,15 @@ class Order:
     def finalPrice(self):
         basePrice = self.quantity * self.itemPrice
         return self.discountedPrice(basePrice, self.discountLevel)
+   
+    def discountedPrice(self, basePrice, discountLevel):
+        if self.discountLevel == 1:  # 매개변수 참조 --> 함수 호출
+            return basePrice * 0.95
+        elif self.discountLevel == 2:  # 매개변수 참조 --> 함수 호출
+            return basePrice * 0.9
 
     def discountlevel(self):
         return 2 if self.quantity > 100 else 1
-    
-    def discountedPrice(self, basePrice, discountLevel):
-        if self.discountLevel == 1:
-            return basePrice * 0.95
-        elif self.discountLevel == 2:
-            return basePrice * 0.9
 ```
 
 ```python
@@ -96,19 +97,14 @@ class Order:
 class Order:
     def finalPrice(self):
         basePrice = self.quantity * self.itemPrice
-        return self.discountedPrice(basePrice)
+        return self.discountedPrice(basePrice)  # 함수 선언 바꾸기
 
     def discountlevel(self):
         return 2 if self.quantity > 100 else 1
     
-    def discountedPrice(self, basePrice):
+    def discountedPrice(self, basePrice):  # 함수 선언 바꾸기
         if self.discountLevel == 1:
             return basePrice * 0.95
         elif self.discountLevel == 2:
             return basePrice * 0.9
 ```
-
-
-
-
-
