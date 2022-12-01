@@ -1,5 +1,5 @@
 ---
-title:  "객체 통째로 넘기기"
+title:  "리팩터링 2판 - 11.4 객체 통째로 넘기기"
 excerpt: "Refactoring - 11.4"
 toc: true
 toc_sticky: true

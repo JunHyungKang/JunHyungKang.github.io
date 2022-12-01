@@ -1,5 +1,5 @@
 ---
-title:  "매개변수를 질의 함수로 바꾸기"
+title:  "리팩터링 2판 - 11.5 매개변수를 질의 함수로 바꾸기"
 excerpt: "Refactoring - 11.5"
 toc: true
 toc_sticky: true
