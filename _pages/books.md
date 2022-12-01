@@ -1,6 +1,6 @@
 ---
 title: "Tech"
-permalink: /categories/tech/
+permalink: /categories/books/
 layout: category
 author_profile: true
 toc: true
