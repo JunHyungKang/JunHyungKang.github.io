@@ -6,7 +6,7 @@ author_profile: true
 toc: true
 toc_sticky: true
 toc_label : "MYSELF"
-taxonomy: tech
+taxonomy: books
 ---
 
-Tech관련
+책 읽고 정리하기

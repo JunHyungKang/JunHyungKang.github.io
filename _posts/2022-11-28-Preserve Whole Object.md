@@ -48,9 +48,11 @@ class HeatingPlan:
     def __init__(self, temp_low, temp_high):
         self.temp_low = temp_low
         self.temp_high = temp_high
+    
     def withinRange(self, bottom, top):
         return (bottom >= self.temp_low) and (top <= self.temp_high)
-        
+
+    
 low = aRoom.daysTempRange.low
 high = aRoom.daysTempRange.high
 aPlan = HeatingPlan(temp_low, temp_high)
@@ -64,8 +66,13 @@ class HeatingPlan:
     def __init__(self, temp_low, temp_high):
         self.temp_low = temp_low
         self.temp_high = temp_high
+    
     def withinRange(self, bottom, top):
         return (bottom >= self.temp_low) and (top <= self.temp_high)
+    
+    def xxNEWwithinRange(self, aNumberRange):  # 기존 method를 대체할 새로운 method를 만든다
+        pass
+
         
 low = aRoom.daysTempRange.low
 high = aRoom.daysTempRange.high
@@ -76,34 +83,79 @@ if not aPlan.withinRange(low, high):
 
 ```python
 # Step 2
-class Order:
-    def finalPrice(self):
-        basePrice = self.quantity * self.itemPrice
-        return self.discountedPrice(basePrice, self.discountLevel)
-   
-    def discountedPrice(self, basePrice, discountLevel):
-        if self.discountLevel == 1:  # 매개변수 참조 --> 함수 호출
-            return basePrice * 0.95
-        elif self.discountLevel == 2:  # 매개변수 참조 --> 함수 호출
-            return basePrice * 0.9
+class HeatingPlan:
+    def __init__(self, temp_low, temp_high):
+        self.temp_low = temp_low
+        self.temp_high = temp_high
+    
+    def withinRange(self, bottom, top):
+        return (bottom >= self.temp_low) and (top <= self.temp_high)
+    
+    def xxNEWwithinRange(self, aNumberRange):  
+        return self.withinRange(aNumberRange.bottom, aNumberRange.top)  # 기존 method를 호출하는 코드로 채운다
 
-    def discountlevel(self):
-        return 2 if self.quantity > 100 else 1
+        
+low = aRoom.daysTempRange.low
+high = aRoom.daysTempRange.high
+aPlan = HeatingPlan(temp_low, temp_high)
+if not aPlan.withinRange(low, high):
+    print('방 온도가 지정 범위를 벗어났습니다.')
 ```
 
 ```python
-# Step 3
-class Order:
-    def finalPrice(self):
-        basePrice = self.quantity * self.itemPrice
-        return self.discountedPrice(basePrice)  # 함수 선언 바꾸기
-
-    def discountlevel(self):
-        return 2 if self.quantity > 100 else 1
+# Step 4
+class HeatingPlan:
+    def __init__(self, temp_low, temp_high):
+        self.temp_low = temp_low
+        self.temp_high = temp_high
     
-    def discountedPrice(self, basePrice):  # 함수 선언 바꾸기
-        if self.discountLevel == 1:
-            return basePrice * 0.95
-        elif self.discountLevel == 2:
-            return basePrice * 0.9
+    def withinRange(self, bottom, top):
+        return (bottom >= self.temp_low) and (top <= self.temp_high)
+    
+    def xxNEWwithinRange(self, aNumberRange):  
+        return self.withinRange(aNumberRange.bottom, aNumberRange.top)
+
+        
+# low = aRoom.daysTempRange.low  # 필요없는 코드는 제거 한다
+# high = aRoom.daysTempRange.high
+aPlan = HeatingPlan(temp_low, temp_high)
+if not aPlan.xxNEWwithinRange(aRoom.daysTempRange):  # 기존 함수를 호출하는 코드를 새 함수를 호출하도록 수정한다
+    print('방 온도가 지정 범위를 벗어났습니다.')
 ```
+
+```python
+# Step 5
+class HeatingPlan:
+    def __init__(self, temp_low, temp_high):
+        self.temp_low = temp_low
+        self.temp_high = temp_high
+    
+    def withinRange(self, bottom, top):
+        return (bottom >= self.temp_low) and (top <= self.temp_high)
+    
+    def xxNEWwithinRange(self, aNumberRange):  
+        return (aNumberRange.low >= self.temp_low) and (aNumberRange.high <= self.temp_high)  # 원래 함수를 인라인 한다
+
+        
+aPlan = HeatingPlan(temp_low, temp_high)
+if not aPlan.xxNEWwithinRange(aRoom.daysTempRange):
+    print('방 온도가 지정 범위를 벗어났습니다.')
+```
+
+```python
+# Step 5
+class HeatingPlan:
+    def __init__(self, temp_low, temp_high):
+        self.temp_low = temp_low
+        self.temp_high = temp_high
+    
+    def withinRange(self, aNumberRange):  # 새함수의 이름을 변경하고 호출자에 모두 반영한다  
+        return (aNumberRange.low >= self.temp_low) and (aNumberRange.high <= self.temp_high)
+
+        
+aPlan = HeatingPlan(temp_low, temp_high)
+if not aPlan.withinRange(aRoom.daysTempRange):
+    print('방 온도가 지정 범위를 벗어났습니다.')
+```
+
+
