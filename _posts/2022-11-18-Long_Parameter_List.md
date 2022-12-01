@@ -5,9 +5,10 @@ toc: true
 toc_sticky: true
 
 categories:
-  - tech
+  - books
 tags:
   - refactoring
+  - book
   
 last_modified_at: 2022-11-18T00:00:00-00:00
 ---
@@ -35,7 +36,7 @@ availableVacation(anEmployee)
 * 함수가 항상 참조 투명 (referential transparency)해야 한다 - 함수에 똑같은 값을 건네 호출하면 항상 똑같이 동작해야 한다.
 * 매개변수를 없애는 대신 가변 전역 변수를 이용하는 일은 하면 안 된다.
 
-### 절차
+# 절차
 1. 필요하다면 대상 매개변수의 값을 계산하는 코드를 별도 함수로 추출 해놓는다.
 2. 함수 본문에서 대상 매개변수로의 참조를 모두 찾아서 그 매개변수의 값을 만들어주는 표현식을 참조하도록 바꾼다. 하나 수정할 때마다 테스트한다.
 3. 함수 선언 바꾸기로 대상 매개변수를 없앤다.
