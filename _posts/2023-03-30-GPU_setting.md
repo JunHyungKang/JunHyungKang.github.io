@@ -127,7 +127,7 @@ sudo nano /etc/ld.so.conf
 nvcc -V
 ```
 
-# 4. cuDNN 설정
+## 3-3. cuDNN 설정
 * local installation file을 다운
 <https://developer.nvidia.com/rdp/cudnn-archive>
 * 설치도 guide에 맞추어 진행한다
@@ -144,4 +144,12 @@ $ sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn
 $ cat /usr/local/cuda-11.4/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 $ cat /usr/local/cuda-11.0/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 #cat /usr/local/cuda-10.1/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
+```
+
+# 4. 확인
+* tensorflow
+```python
+# gpu 동작 확인
+from tensorflow.python.client import device_lib
+device_lib.list_local_devices()
 ```
