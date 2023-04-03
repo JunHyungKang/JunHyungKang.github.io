@@ -1,5 +1,5 @@
 ---
-title:  "딥러닝 용 GPU 환경 세팅
+title:  "딥러닝 용 GPU 환경 세팅"
 excerpt: "딥러닝 학습을 위한 gpu driver, cuda, cudnn 세팅"
 toc: true
 toc_sticky: true
