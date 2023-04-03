@@ -72,7 +72,6 @@ sudo rm -rf /usr/local/cuda*
  sudo bash -c "echo blacklist nouveau > /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
  sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"
 ```
-
 ```shell
 cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf
 # output should be like below:
