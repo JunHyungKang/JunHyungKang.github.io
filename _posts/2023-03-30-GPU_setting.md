@@ -39,7 +39,7 @@ cat /usr/local/cuda-{installed version}/include/cudnn_version.h | grep CUDNN_MAJ
 sudo apt update
 sudo apt upgrade
 
-sudo apt remove nvidia-drvier-<설치된 버전>
+sudo apt remove nvidia-driver-<설치된 버전>
 sudo apt remove --purge nvidia-*
 sudo apt-get remove --purge nvidia-*
 
@@ -64,8 +64,8 @@ sudo rm -rf /usr/local/cuda*
 ## 2-4. 기타
 * path 확인
 ```shell
- sudo vi ~/.bashrc
- sudo vi ~/etc/profile
+# sudo nano ~/.bashrc
+ sudo nano /etc/profile
 ```
 * nouveau 비활성화
 ```shell
@@ -115,7 +115,7 @@ nvidia-smi
  
 * 설치가 끝난 후, cuda 관련 환경변수를 수정한다
 ```shell
-sudo nano ~/etc/profile
+sudo nano /etc/profile
 source /etc/profile
 
 sudo nano /etc/ld.so.conf

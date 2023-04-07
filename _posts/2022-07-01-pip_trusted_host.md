@@ -29,6 +29,8 @@ ERROR: No matching distribution found for torch==1.10.1+cu111
 $ pip install --trusted-host pypi.org --trusted-host pytorch.org --trusted-host download.pytorch.org --trusted-host files.pypi.org --trusted-host files.pytorch.org torch==1.8.1+cpu torchvision==0.9.1+cpu torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
+pip install --trusted-host pypi.org --trusted-host pytorch.org --trusted-host download.pytorch.org --trusted-host files.pypi.org --trusted-host files.pytorch.org torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/cu113/torch_stable.html
+
 * 참고 (코드 중에 request 모듈에서 certificate관련 error가 발생하는 경우)
 ```python
 import ssl

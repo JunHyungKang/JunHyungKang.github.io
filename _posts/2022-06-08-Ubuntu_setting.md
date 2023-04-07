@@ -68,6 +68,7 @@ $ lsmod | grep nouveau
 ```
 
 * 추천 드라이버 확인 및 설치
+cuda에 맞는 드라이버 버전 확인: <https://docs.nvidia.com/deploy/cuda-compatibility/index.html>
 ```shell
 $ ubuntu-drivers devices
 $ sudo ubuntu-drivers autoinstall
@@ -87,6 +88,7 @@ $ nvidia-smi
 $ sudo rm -rf /usr/local/cuda*
 ```
 * 원하는 버전의 cuda 설치
+<https://www.tensorflow.org/install/source?hl=ko#gpu>
 <https://developer.nvidia.com/cuda-toolkit-archive>
 * cuda 11.0.3 설치 예시 
 ```shell
@@ -112,9 +114,19 @@ $ sudo update-alternatives --config g++
 * 
 * 설치가 끝난 후, cuda 관련 환경변수를 설정한다
 ```shell
-$ sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-10.1/bin' >> /etc/profile"
-$ sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-10.1/lib64' >> /etc/profile"
+$ sudo sh -c "echo 'export PATH=/usr/local/cuda-10.1/bin:$PATH' >> /etc/profile"
+$ sudo sh -c "echo 'export PATH=/usr/local/cuda-11.0/bin:$PATH' >> /etc/profile"
+$ sudo sh -c "echo 'export PATH=$PATH:/usr/local/cuda-11.0/bin' >> /etc/profile"
+$ sudo sh -c "echo 'export PATH=/usr/local/cuda-11.2/bin:$PATH' >> /etc/profile"
+
+$ sudo sh -c "echo 'export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64:$LD_LIBRARY_PATH' >> /etc/profile"
+$ sudo sh -c "echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.0/lib64:$LD_LIBRARY_PATH' >> /etc/profile"
+$ sudo sh -c "echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda-11.0/lib64' >> /etc/profile"
+$ sudo sh -c "echo 'export LD_LIBRARY_PATH=/usr/local/cuda-11.2/lib64:$LD_LIBRARY_PATH' >> /etc/profile"
+
 $ sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-10.1' >> /etc/profile"
+$ sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-11.0' >> /etc/profile"
+$ sudo sh -c "echo 'export CUDADIR=/usr/local/cuda-11.2' >> /etc/profile"
 $ source /etc/profile
 ```
 * cuda 설치가 잘 되었는지 확인한다
@@ -129,13 +141,14 @@ $ nvcc -V
 ```shell
 $ tar -xvf cudnn-linux-x86_64-8.x.x.x_cudaX.Y-archive.tar.xz
 $ sudo cp cudnn-*-archive/include/* /usr/local/cuda/include 
-#sudo cp cuda/include/* /usr/local/cuda/include 
+# sudo cp cuda/include/* /usr/local/cuda/include 
 $ sudo cp -P cudnn-*-archive/lib/libcudnn* /usr/local/cuda/lib64 
-#sudo cp -P cuda/lib64/* /usr/local/cuda/lib64 
+# sudo cp -P cuda/lib64/* /usr/local/cuda/lib64 
 $ sudo chmod a+r /usr/local/cuda/include/cudnn*.h /usr/local/cuda/lib64/libcudnn*
 ```
 * 설치 버전 확인
 ```shell
+$ cat /usr/local/cuda-11.2/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 $ cat /usr/local/cuda-11.0/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 #cat /usr/local/cuda-10.1/include/cudnn_version.h | grep CUDNN_MAJOR -A 2
 ```
