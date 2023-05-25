@@ -15,6 +15,8 @@ tags:
 last_modified_at: 2022-06-08T00:00:00-00:00
 ---
 
+test: https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/PaLM2_Technical_Report.pdf
+
 # 1. Ubuntu 재설치
 ## booting disk 만들기
 Ubuntu: <https://ubuntu.com/tutorials/create-a-usb-stick-on-ubuntu#1-overview>   
