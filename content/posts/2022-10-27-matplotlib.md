@@ -2,11 +2,8 @@
 title:  "matplotlib"
 date: "2022-10-27"
 teaser: "python matplotlib 사용하기"
-
-  - tech
 tags:
   - todo
-
 ---
 
 # Case 1: subplot을 미리 설정

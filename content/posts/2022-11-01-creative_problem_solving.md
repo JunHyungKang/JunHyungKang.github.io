@@ -1,12 +1,9 @@
 ---
 title:  "창의적 문제해결"
 teaser: "창의적 문제해결 Skill"
-
-  - etc
 tags:
   - problem solve
   - soft skill
-
 ---
 
 # 1. Discover

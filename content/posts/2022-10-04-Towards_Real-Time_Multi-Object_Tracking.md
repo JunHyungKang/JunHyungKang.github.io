@@ -2,12 +2,9 @@
 title:  "논문 리뷰: Towards Real-Time Multi-Object Tracking"
 date: "2022-10-04"
 teaser: "Wang, Zhongdao, et al. 'Towards real-time multi-object tracking.' European Conference on Computer Vision. Springer, Cham, 2020."
-
-  - papers
 tags:
   - object tracking
   - MOT
-
 ---
 
 # Towards Real-Time Multi-Object Tracking

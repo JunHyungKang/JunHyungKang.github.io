@@ -2,14 +2,11 @@
 title:  "딥러닝 용 Ubuntu 세팅 "
 date: "2022-06-08"
 teaser: "딥러닝 학습을 위한 ubuntu, cuda, cudnn, torch, tensorflow 세팅"
-
-  - tech
 tags:
   - ubuntu
   - cuda
   - cudnn
   - environment
-
 ---
 
 # 1. Ubuntu 재설치

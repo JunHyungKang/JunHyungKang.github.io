@@ -2,12 +2,9 @@
 title:  "GitLab Flow"
 date: "2022-10-11"
 teaser: "Introduction to GitLab Flow 번역"
-
-  - tech
 tags:
   - git
   - gitflow
-
 ---
 
 # Introduction to GitLab Flow

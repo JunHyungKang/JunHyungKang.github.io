@@ -1,14 +1,11 @@
 ---
 title:  "Few-Shot Pill Recognition"
 teaser: "Few-Shot Pill Recognition 논문 정리"
-
-  - papers
 tags:
   - pill
   - few-shot
   - recognition
   - CVPR
-
 ---
 
 # Few-Shot Pill Recognition
