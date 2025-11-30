@@ -15,8 +15,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "기록으로 살아남기",
-  description: "JH Kang's Blog",
+  metadataBase: new URL('https://junhyungkang.github.io'),
+  title: {
+    default: "JH Kang | AI Engineer & Full Stack Developer",
+    template: "%s | JH Kang"
+  },
+  description: "Portfolio and Blog of JH Kang, an AI Engineer specializing in LLMs, Computer Vision, and Modern Web Development.",
+  openGraph: {
+    title: "JH Kang | AI Engineer & Full Stack Developer",
+    description: "Portfolio and Blog of JH Kang, an AI Engineer specializing in LLMs, Computer Vision, and Modern Web Development.",
+    url: 'https://junhyungkang.github.io',
+    siteName: 'JH Kang Blog',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'z1Z2um-x26L98JN0Aaz0GGwzy801iZ_aiK3VT1pI9Js',
+  },
 };
 
 export default function RootLayout({
