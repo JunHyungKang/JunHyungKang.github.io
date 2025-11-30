@@ -10,7 +10,7 @@ tags:
 ---
 
 안녕하세요 저는 SK C&C에서 생성형 AI관련 업무를 하고 있는데요,
-이번 글을 통해 전통적인 수작업 프롬프트 엔지니어링과 다른 접근 방식을 시도하고 있는 DSPy에 대해서 알아보려고 합니다.
+이번 글을 통해 전통적인 수작업 프롬프트 엔지니어링과 다른 접근 방식을 시도하고 있는 **DSPy**에 대해서 알아보려고 합니다.
 
 ## 왜 DSPy 인가
 
@@ -34,7 +34,7 @@ DSPy를 들어보셨나요?
 이럴 때마다 최적화된 프롬프트로 다시 수정하는 일이 굉장히 번거롭게 느껴져서,
 일반화 성능을 높이는 방향으로 프롬프트를 수정하다 보면 어느새 엄청나게 지저분해진 프롬프트를 보게 됩니다.
 
-> LangChain이나 LlamaIndex에서 사전 정의된 작업을 위해 사용하는 프롬프트의 단어 및 문자 크기 [1]
+![LangChain이나 LlamaIndex에서 사전 정의된 작업을 위해 사용하는 프롬프트의 단어 및 문자 크기](/images/dspy-1.jpg)
 
 위 표에서도 우리가 많이 사용하는 프레임워크에서 특정 작업을 위해 사용하는 프롬프트의 크기가 굉장히 큰 것을 볼 수 있습니다.
 (특히 이런 프레임워크에 사전 정의된 프롬프트는 영문이기 때문에, 체감되는 비효율성은 더 큰 편입니다.)
@@ -46,17 +46,19 @@ DSPy를 들어보셨나요?
 ## 그럼 DSPy란 무엇인가
 
 그럼 DSPy는 무엇일까요?
-먼저 DSPy는 **Declarative Self-improving Language Programs, pythonically**를 뜻한다고 합니다 [2].
+먼저 DSPy는 **D**eclarative **S**elf-improving Language **P**rograms, p**y**thonically를 뜻한다고 합니다 [2].
 즉, 파이썬 스타일로 작성된 선언적이고 스스로 개선되는 기능을 갖춘 자연어 처리 프로그램을 의미합니다.
 이 프레임워크에서는 LLM 파이프라인이 무엇을 할 것인지를 명확히 선언하면, 내부적으로 스스로 학습하고 최적화하여 성능을 향상시키는 기능이 있습니다.
 
-이런 목적을 달성하기 위해 DSPy는 **Signatures**, **Modules**, **Teleprompters**라는 3가지 요소로 구성되어 있습니다.
+이런 목적을 달성하기 위해 DSPy는 signatures, modules, teleprompters라는 3가지 요소로 구성되어 있습니다.
 
-### Signatures
+## Signatures
 
 Signatures는 Natural Language Signatures로 함수의 자연어 타입 선언을 의미합니다.
-즉, 어떻게 프롬프트되어야 하는지가 아니라, **무엇을 해야 하는지**를 알려주는 선언적 명세입니다.
+즉, 어떻게 프롬프트되어야 하는지가 아니라, 무엇을 해야 하는지를 알려주는 선언적 명세입니다.
 이 Signatures는 입력 필드와 출력 필드의 튜플로 구성됩니다. 아래의 예시를 보면 이해하기 쉽습니다.
+
+(langchain이나 llamaIndex에서 사전 정의된 task를 위해 사용하는 prompt의 word 및 character 사이즈 [1])
 
 ```python
 # 출처: [1]
@@ -65,7 +67,11 @@ qa(question="Where is Guarani spoken?")
 # Out: Prediction(answer=’Guarani is spoken mainly in South America.’)
 ```
 
-### Modules
+(RAG 환경에서 시각적인 비교. 출처: [3])
+
+![RAG 구성에서 시각적인 비교](/images/dspy-2.jpg)
+
+## Modules
 
 위에서 설명한 Signatures를 사용하려면 Predict 모듈을 인스턴스화하여 선언한 것처럼 모듈을 선언해야 합니다.
 DSPy에 내장된 모듈들은 널리 알려진 프롬프트 기술들을 모듈식으로 변환하여 Signatures를 사용할 수 있도록 지원합니다
@@ -85,7 +91,9 @@ class ChainOfThought(dspy.Module):
     def forward(self, **kwargs):
         # Just forward the inputs to the sub-module.
         return self.predict(**kwargs)
+```
 
+```python
 class RAG(dspy.Module):
     def __init__(self, num_passages=3):
         # ‘Retrieve‘는 사용자의 기본 검색 설정을 사용합니다.
@@ -99,9 +107,9 @@ class RAG(dspy.Module):
         return self.generate_answer(context=context, question=question)
 ```
 
-### Teleprompters (Optimizers)
+## Teleprompters (Optimizers)
 
-공식 다큐먼트나 GitHub 공지에 따르면 Teleprompters를 **Optimizers**로 이름을 변경한다고 합니다.
+공식 다큐먼트나 GitHub 공지에 따르면 Teleprompters를 Optimizers로 이름을 변경한다고 합니다.
 저도 이 용어가 더 와닿는 것 같아서 이후부터는 Optimizers라는 용어를 대신 사용하도록 하겠습니다.
 Optimizers는 DSPy 프로그램의 매개변수(예: 프롬프트 또는 모델 가중치)를 조정하여 사전에 지정한 메트릭에 맞는 성능을 최대화하는 알고리즘입니다.
 
@@ -111,10 +119,10 @@ Optimizers는 DSPy 프로그램의 매개변수(예: 프롬프트 또는 모델 
 
 공식 문서에서는 데이터 셋의 크기에 따라 다음과 같이 사용을 권장합니다:
 
-*   데이터가 적은 경우 (예: 10개)는 `BootstrapFewShot` (Automatic Few-Shot Learning)
-*   데이터가 약간 더 많은 경우 (예: 50개)는 `BootstrapFewShotWithRandomSearch` (Automatic Few-Shot Learning)
-*   데이터가 많은 경우 (예: 300개 이상)는 `MIPRO` (Automatic Instruction Optimization)
-*   7B 이상의 LM을 사용하고 효율적인 프로그램이 필요한 경우 `BootstrapFinetune` (Automatic Finetuning)
+* 데이터가 적은 경우 (예: 10개)는 BootstrapFewShot (Automatic Few-Shot Learning)
+* 데이터가 약간 더 많은 경우 (예: 50개)는 BootstrapFewShotWithRandomSearch (Automatic Few-Shot Learning)
+* 데이터가 많은 경우 (예: 300개 이상)는 MIPRO (Automatic Instruction Optimization)
+* 7B 이상의 LM을 사용하고 효율적인 프로그램이 필요한 경우 BootstrapFinetune (Automatic Finetuning)
 
 아래는 Optimizers의 예시입니다.
 
@@ -130,18 +138,19 @@ teleprompter = BootstrapFewShotWithRandomSearch(metric=YOUR_METRIC_HERE, **confi
 optimized_program = teleprompter.compile(YOUR_PROGRAM_HERE, trainset=YOUR_TRAINSET_HERE)
 ```
 
-### 번외: LangChain, LlamaIndex와의 비교
+## 번외: LangChain, LlamaIndex와의 비교
 
 DSPy를 공개한 연구를 진행한 저자의 의견으로는 주요한 차이는 아래와 같습니다.
 
-*   **DSPy**: 새로운 LM 계산 그래프를 구축하기 위한 프롬프트 엔지니어링의 근본적인 문제를 해결하는 것을 목적으로 합니다.
-*   **LangChain & LlamaIndex**: 일반적으로 인기 있고 재사용 가능한 파이프라인(예: 특정 에이전트 및 특정 검색 파이프라인)과 도구(예: 다양한 데이터베이스 연결 및 에이전트를 위한 장기 및 단기 메모리 구현)의 구현을 필요로 하는 애플리케이션 개발자를 돕는 것을 목적으로 합니다.
+* DSPy: 새로운 LM 계산 그래프를 구축하기 위한 프롬프트 엔지니어링의 근본적인 문제를 해결하는 것을 목적으로 합니다.
+* LangChain & LlamaIndex: 일반적으로 인기 있고 재사용 가능한 파이프라인(예: 특정 에이전트 및 특정 검색 파이프라인)과
+    도구(예: 다양한 데이터베이스 연결 및 에이전트를 위한 장기 및 단기 메모리 구현)의 구현을 필요로 하는 애플리케이션 개발자를 돕는 것을 목적으로 합니다.
 
 예를 들어, DSPy가 발표되던 시점의 LangChain 라이브러리에서는 1000자를 초과하는 문자열 50개를 발견했다고 합니다.
 실제로도 LangChain에 익숙하신 분들도 아시겠지만, LangChain 코드베이스의 많은 부분은 프롬프트 템플릿과 엔지니어링된 프롬프트에 할애되어 있습니다.
 반면, DSPy는 이러한 프롬프트를 자동으로 부트스트랩하는 구조화된 프레임워크를 제공하는 데 집중하고 있습니다.
 (따라서 DSPy를 공개하던 시점에는 어떠한 작업에 대해서도 단일 수작업 프롬프트 데모를 포함하지 않는다고 합니다.)
-(참고: 최근 Langchian 프레임워크에도 DSPy Integration이 되었습니다!)
+[(참고: 최근 Langchian 프레임워크에도 DSPy Integration이  되었습니다!)](https://python.langchain.com/v0.1/docs/integrations/providers/dspy/)
 
 ## 마치며
 
@@ -160,9 +169,8 @@ DSPy는 이미 기존에 PyTorch와 같은 딥러닝 프레임워크에 익숙�
 
 읽어주셔서 감사합니다!
 
----
+## 출처
 
-### 출처
 [1] Khattab, Omar, et al. "Dspy: Compiling declarative language model calls into self-improving pipelines." arXiv preprint arXiv:2310.03714 (2023).
-[2] What does DSPy stand for? - GitHub
+[2] What does DSPy stand for? - [GitHub](https://github.com/stanfordnlp/dspy?tab=readme-ov-file#5a-dspy-vs-thin-wrappers-for-prompts-openai-api-minichain-basic-templating:~:text=What%20does%20DSPy%20stand%20for%3F)
 [3] https://towardsdatascience.com/intro-to-dspy-goodbye-prompting-hello-programming-4ca1c6ce3eb9
