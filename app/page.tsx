@@ -1,65 +1,60 @@
+import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import Navbar from '@/components/Navbar';
-import Hero from '@/components/Hero';
-import ProjectCard from '@/components/ProjectCard';
 import ArticleCard from '@/components/ArticleCard';
+import { ArrowRight } from 'lucide-react';
 
 export default function Home() {
   const allPostsData = getSortedPostsData();
-  const recentPosts = allPostsData.slice(0, 4); // Show only recent 4 posts
-
-  const featuredProjects = [
-    {
-      title: "LLM Chatbot",
-      description: "A specialized LLM chatbot that understands context and provides accurate responses using RAG.",
-      tags: ["Python", "PyTorch", "Transformers"],
-      image: "/projects/chatbot.png",
-      href: "/projects/llm-chatbot"
-    },
-    {
-      title: "Computer Vision API",
-      description: "Real-time object detection and classification API built for high-throughput video streams.",
-      tags: ["OpenCV", "FastAPI", "Docker"],
-      image: "/projects/vision.png",
-      href: "/projects/cv-api"
-    }
-  ];
+  const featuredPost = allPostsData[0];
+  const recentPosts = allPostsData.slice(1, 5); // Next 4 posts
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
       <Navbar />
 
-      <Hero />
-
-      {/* Featured Work Section */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-2">Featured Work</h2>
-            <p className="text-slate-400">Selected projects and experiments.</p>
-          </div>
-          <a href="/projects" className="text-blue-400 hover:text-blue-300 text-sm font-medium hidden md:block">
-            View all projects →
-          </a>
+      {/* Featured Post Hero */}
+      <section className="pt-32 pb-12 px-6 max-w-7xl mx-auto">
+        <div className="mb-8">
+          <span className="text-blue-400 font-medium tracking-wider text-sm uppercase">Featured Article</span>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.title} {...project} />
-          ))}
-        </div>
+        {featuredPost ? (
+          <Link href={`/posts/${featuredPost.slug}`} className="group block">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="order-2 md:order-1">
+                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight group-hover:text-blue-400 transition-colors">
+                  {featuredPost.title}
+                </h1>
+                <p className="text-xl text-slate-400 mb-8 leading-relaxed line-clamp-3">
+                  {featuredPost.teaser || "Read the latest insights and tutorials on AI, Engineering, and Tech."}
+                </p>
+                <div className="flex items-center gap-2 text-blue-400 font-medium group-hover:translate-x-2 transition-transform">
+                  Read Article <ArrowRight size={20} />
+                </div>
+              </div>
+
+              <div className="order-1 md:order-2 relative aspect-video rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shadow-2xl group-hover:shadow-blue-900/20 transition-all">
+                {/* Placeholder for Featured Image */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20" />
+                <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-mono">
+                  {featuredPost.date}
+                </div>
+              </div>
+            </div>
+          </Link>
+        ) : (
+          <div className="text-center py-20 text-slate-500">No posts found.</div>
+        )}
       </section>
 
-      {/* Latest Articles Section */}
+      {/* Recent Articles Grid */}
       <section className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
         <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-white mb-2">Latest Articles</h2>
-            <p className="text-slate-400">Thoughts on AI, Engineering, and Tech.</p>
-          </div>
-          <a href="/posts" className="text-blue-400 hover:text-blue-300 text-sm font-medium hidden md:block">
-            View all articles →
-          </a>
+          <h2 className="text-3xl font-bold text-white">Recent Articles</h2>
+          <Link href="/posts" className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
+            View Archive <ArrowRight size={16} />
+          </Link>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -75,16 +70,45 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Secondary Projects Section */}
+      <section className="py-20 bg-slate-950 border-t border-slate-900">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-2">Selected Projects</h2>
+              <p className="text-slate-400 text-sm">Check out what I've been building.</p>
+            </div>
+            <Link href="/projects" className="text-slate-400 hover:text-white text-sm font-medium">
+              View all projects →
+            </Link>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {/* Simple Project Links */}
+            <Link href="/projects/llm-chatbot" className="block p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors group">
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400">LLM Chatbot</h3>
+              <p className="text-slate-400 text-sm">RAG-based assistant using Python & LangChain.</p>
+            </Link>
+            <Link href="/projects/cv-api" className="block p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors group">
+              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400">Computer Vision API</h3>
+              <p className="text-slate-400 text-sm">Real-time object detection with FastAPI.</p>
+            </Link>
+            <Link href="/projects" className="block p-6 bg-slate-900/50 rounded-xl border border-slate-800 border-dashed hover:bg-slate-900 transition-colors flex items-center justify-center text-slate-500 hover:text-slate-300">
+              More Projects...
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="py-12 border-t border-slate-800 bg-slate-950">
+      <footer className="py-12 border-t border-slate-800 bg-[#020617]">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-slate-500 text-sm">
             © {new Date().getFullYear()} JH Kang. Built with Next.js & Tailwind.
           </div>
           <div className="flex gap-6">
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">GitHub</a>
+            <a href="https://github.com/JunHyungKang" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">GitHub</a>
             <a href="#" className="text-slate-400 hover:text-white transition-colors">LinkedIn</a>
-            <a href="#" className="text-slate-400 hover:text-white transition-colors">Twitter</a>
           </div>
         </div>
       </footer>
