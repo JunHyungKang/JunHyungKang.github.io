@@ -35,11 +35,20 @@ export default function Home() {
               </div>
 
               <div className="order-1 md:order-2 relative aspect-video rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shadow-2xl group-hover:shadow-blue-900/20 transition-all">
-                {/* Placeholder for Featured Image */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20" />
-                <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-mono">
-                  {featuredPost.date}
-                </div>
+                {featuredPost.image ? (
+                  <img
+                    src={featuredPost.image}
+                    alt={featuredPost.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                ) : (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20" />
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-mono">
+                      {featuredPost.date}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </Link>
@@ -58,13 +67,14 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentPosts.map(({ slug, date, title, teaser }) => (
+          {recentPosts.map(({ slug, date, title, teaser, image }) => (
             <ArticleCard
               key={slug}
               title={title}
               excerpt={teaser || "No description available."}
               date={date}
               slug={slug}
+              image={image}
             />
           ))}
         </div>

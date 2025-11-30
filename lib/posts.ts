@@ -10,6 +10,7 @@ export interface PostData {
   slug: string;
   title: string;
   date: string;
+  image?: string;
   contentHtml?: string;
   [key: string]: any;
 }
@@ -32,9 +33,20 @@ export function getSortedPostsData(): PostData[] {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
+    // Extract first image from content if not in frontmatter
+    let image = matterResult.data.image;
+    if (!image) {
+      const imageRegex = /!\[.*?\]\((.*?)\)/;
+      const match = matterResult.content.match(imageRegex);
+      if (match) {
+        image = match[1];
+      }
+    }
+
     // Combine the data with the slug
     return {
       slug,
+      image,
       ...(matterResult.data as { date: string; title: string }),
     };
   });
