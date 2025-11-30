@@ -183,6 +183,9 @@ export default function About() {
                                     <a href="mailto:gogo0920007@gmail.com" className="flex items-center gap-3 text-slate-400 hover:text-blue-400 transition-colors">
                                         <Mail size={18} /> gogo0920007@gmail.com
                                     </a>
+                                    <a href="https://www.linkedin.com/in/junhyung-kang-071605106/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-400 hover:text-blue-400 transition-colors">
+                                        <Linkedin size={18} /> LinkedIn Profile
+                                    </a>
                                     <a href="https://github.com/JunHyungKang" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-slate-400 hover:text-blue-400 transition-colors">
                                         <Github size={18} /> GitHub Profile
                                     </a>

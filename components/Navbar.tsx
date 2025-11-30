@@ -27,8 +27,8 @@ export default function Navbar() {
     return (
         <nav
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
-                    ? "bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-4"
-                    : "bg-transparent py-6"
+                ? "bg-slate-900/80 backdrop-blur-md border-b border-slate-800 py-4"
+                : "bg-transparent py-6"
                 }`}
         >
             <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
@@ -51,7 +51,10 @@ export default function Navbar() {
                         <a href="https://github.com/JunHyungKang" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
                             <Github size={20} />
                         </a>
-                        <a href="mailto:contact@example.com" className="text-slate-400 hover:text-white transition-colors">
+                        <a href="https://www.linkedin.com/in/junhyung-kang-071605106/" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">
+                            <Linkedin size={20} />
+                        </a>
+                        <a href="mailto:gogo0920007@gmail.com" className="text-slate-400 hover:text-white transition-colors">
                             <Mail size={20} />
                         </a>
                     </div>
