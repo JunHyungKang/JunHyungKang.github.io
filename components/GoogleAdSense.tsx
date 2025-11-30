@@ -4,10 +4,7 @@ type Props = {
     pId: string;
 };
 
-const GoogleAdSense = ({ pId }: Props) => {
-    if (process.env.NODE_ENV !== 'production') {
-        return null;
-    }
+export default function GoogleAdSense({ pId }: Props) {
     return (
         <Script
             async
@@ -16,6 +13,4 @@ const GoogleAdSense = ({ pId }: Props) => {
             strategy="afterInteractive"
         />
     );
-};
-
-export default GoogleAdSense;
+}

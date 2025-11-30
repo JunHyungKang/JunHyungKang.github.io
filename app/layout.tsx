@@ -57,7 +57,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {children}
-        <GoogleAdSense pId="YOUR_ADSENSE_ID_HERE" />
+        <GoogleAdSense pId="3166603343095810" />
       </body>
     </html>
   );
