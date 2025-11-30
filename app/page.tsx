@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 export default function Home() {
   const allPostsData = getSortedPostsData();
   const featuredPost = allPostsData[0];
-  const recentPosts = allPostsData.slice(1, 5); // Next 4 posts
+  const recentPosts = allPostsData.slice(1, 7); // Next 6 posts (2 rows of 3)
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
@@ -57,7 +57,7 @@ export default function Home() {
           </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {recentPosts.map(({ slug, date, title, teaser }) => (
             <ArticleCard
               key={slug}
