@@ -1,17 +1,14 @@
 ---
 title:  "Kaggle API"
-excerpt: "Kaggle API 사용방법 / official document 정리"
-toc: true
-toc_sticky: true
+date: "2022-08-29"
+teaser: "Kaggle API 사용방법 / official document 정리"
 
-categories:
   - tech
 tags:
   - Kaggle
   - API
   - Competition
 
-last_modified_at: 2022-08-29T00:00:00-00:00
 ---
 
 kaggle을 진행하면서 노트북 환경에서 복잡한 작업을 수행해야 하는 것에 불편함을 느꼈다. \

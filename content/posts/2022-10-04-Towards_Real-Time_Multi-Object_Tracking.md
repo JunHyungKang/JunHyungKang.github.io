@@ -1,16 +1,13 @@
 ---
 title:  "논문 리뷰: Towards Real-Time Multi-Object Tracking"
-excerpt: "Wang, Zhongdao, et al. 'Towards real-time multi-object tracking.' European Conference on Computer Vision. Springer, Cham, 2020."
-toc: true
-toc_sticky: true
+date: "2022-10-04"
+teaser: "Wang, Zhongdao, et al. 'Towards real-time multi-object tracking.' European Conference on Computer Vision. Springer, Cham, 2020."
 
-categories:
   - papers
 tags:
   - object tracking
   - MOT
 
-last_modified_at: 2022-10-04T00:00:00-00:00
 ---
 
 # Towards Real-Time Multi-Object Tracking
@@ -34,7 +31,7 @@ Modern MOT (multiple object tracking) system은 대부분 'trakcing-by-detection
 반면 저자는 single-shot deep network를 이용하여 jointly learns the detector and embedding model (JDE)를 제안한다. \
 다시 말하자면, JDE는 하나의 single network에서 detection 결과와 탐지된 detection boxes에 해당하는 appearance embedding을 동시에 출력한다. \
 아래 그림은 관련해서 SDE, two-stage, 그리고 JDE의 전반적인 구조를 나타낸다. 
-![Figure1](/assets/images/221004/221004_1.png)
+![Figure1](/images/221004/221004_1.png)
 실험 결과상으로 Faster R-CNN + QAN embedding 모델 대비 3배 이상의 FPS를 기록하였다. (MOTA 성능은 유사한 수준)
 
 정리해서 이 논문의 contributions는 다음과 같다.
@@ -59,7 +56,7 @@ JDE 모델은 아래 두가지 objectives를 만족해야 한다.
   * bbox regression $$(4S \times H \times W)$$
   * embedding map $$(D \times H \times W)$$
 위에서 설명한 archtecture는 아래 그림에 대략적으로 나타난다.
-![Figure2](/assets/images/221004/221004_2.png)
+![Figure2](/images/221004/221004_2.png)
 
 ### Learning to Detect
 detection 부분은 standard RPN과 유사하지만 아래의 두가지 차이가 있다. 
@@ -72,19 +69,19 @@ detection 부분은 standard RPN과 유사하지만 아래의 두가지 차이�
 ### Learning Appearance Embeddings
 appearance embeddings를 학습하기 위해서 metric learning 개념을 이용한다. \
 metric learning에서 많이 사용하는 triplet loss를 사용하여 negative sample과의 거리를 최대화하고 positive sample과의 거리를 최소화 하도록 한다. 
-<center><img src="/assets/images/221004/221004_3.png" height="20"></center> 
+<center><img src="/images/221004/221004_3.png" height="20"></center> 
 
 하지만 이런 triplet loss에는 몇기지 문제가 있는데, 하나는 학습 데이터에서 huge sampling space를 필요로 한다는 것이다. \
 여기서는 이 문제를 mini-batch에서 모든 negative sample과 hardest positive smaple을 사용해서 계산하고 이를 sum하는 방법으로 해결하려고 한다. 
-<center><img src="/assets/images/221004/221004_4.png" height="20"></center>
+<center><img src="/images/221004/221004_4.png" height="20"></center>
 
 또다른 문제는 triplet loss가 학습이 느리고 안정적이지 못하다는 것이다. \
 이 부분은 triplet loss의 smooth upper bound를 optimize하는 방법을 통해서 해결하려고 한다. 
-<center><img src="/assets/images/221004/221004_5.png" height="20"></center>
+<center><img src="/images/221004/221004_5.png" height="20"></center>
 
 위에서 말한 smooth upper bound of triplet loss는 아래와 같이 다시 쓸 수 있고, 이 수식은 cross-entropy loss와 유사한 모양이 된다. 
-<center><img src="/assets/images/221004/221004_6.png" height="20"></center> 
-<center><img src="/assets/images/221004/221004_7.png" height="20"></center>
+<center><img src="/images/221004/221004_6.png" height="20"></center> 
+<center><img src="/images/221004/221004_7.png" height="20"></center>
 
 하지만 cross-entropy와 smooth upper bound of triplet loss는 차이가 있다. \
 첫번째는 cross-entropy loss는 smooth upper bound of triplet loss가 embeddings를 directly 이용하는 것과 다르게 학습가능한 class-wise weight를 사용한다는 점이다. \
@@ -124,7 +121,7 @@ input 해상도는 $$1088 \times 608$$을 사용하였다.\
 ### Experimental Results
 논문에서 설명한 구조에 맞추어 embedding loss중 어떤 것을 사용했을때 성능이 좋았는지, loss weighting 전략은 무엇을 사용하는게 좋았는지 등을 실험결과로 보여준다. \
 크게 중요한 내용은 아니기 때문에 공간을 사용해 정리하지는 않는다. \
-![Figure8](/assets/images/221004/221004_8.png)
+![Figure8](/images/221004/221004_8.png)
 
 ## Conclusion
 이 논문에서 저자는 JDE, 즉 target detection과 appearnace feature를 하나의 공유된 모델에서 학습하는 system을 소개했다. \

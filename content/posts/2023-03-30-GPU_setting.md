@@ -1,10 +1,8 @@
 ---
 title:  "딥러닝 용 GPU 환경 세팅"
-excerpt: "딥러닝 학습을 위한 gpu driver, cuda, cudnn 세팅"
-toc: true
-toc_sticky: true
+date: "2023-03-30"
+teaser: "딥러닝 학습을 위한 gpu driver, cuda, cudnn 세팅"
 
-categories:
   - tech
 tags:
   - gpu
@@ -12,7 +10,6 @@ tags:
   - cudnn
   - environment
 
-last_modified_at: 2023-03-30T00:00:00-00:00
 ---
 
 # 1. 기존 환경 확인

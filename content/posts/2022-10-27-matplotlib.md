@@ -1,15 +1,12 @@
 ---
 title:  "matplotlib"
-excerpt: "python matplotlib 사용하기"
-toc: true
-toc_sticky: true
+date: "2022-10-27"
+teaser: "python matplotlib 사용하기"
 
-categories:
   - tech
 tags:
   - todo
 
-last_modified_at: 2022-10-27T00:00:00-00:00
 ---
 
 # Case 1: subplot을 미리 설정

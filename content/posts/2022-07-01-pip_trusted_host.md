@@ -1,17 +1,14 @@
 ---
 title:  "Pytorch installation 문제 해결"
-excerpt: "Pytorch 설치시에 발행하는 문제 해결 log"
-toc: true
-toc_sticky: true
+date: "2022-07-01"
+teaser: "Pytorch 설치시에 발행하는 문제 해결 log"
 
-categories:
   - tech
 tags:
   - install
   - pytorch
   - problem_solving
 
-last_modified_at: 2022-07-18T00:00:00-00:00
 ---
 
 # 1. SSLError

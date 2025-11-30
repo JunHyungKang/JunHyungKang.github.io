@@ -1,16 +1,12 @@
 ---
 title:  "창의적 문제해결"
-excerpt: "창의적 문제해결 Skill"
-toc: true
-toc_sticky: true
+teaser: "창의적 문제해결 Skill"
 
-categories:
   - etc
 tags:
   - problem solve
   - soft skill
 
-last_modified_at: 2022-11-01T00:00:00-00:00
 ---
 
 # 1. Discover
