@@ -83,20 +83,15 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {/* Simple Project Links */}
-            <Link href="/projects/llm-chatbot" className="block p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors group">
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400">LLM Chatbot</h3>
-              <p className="text-slate-400 text-sm">RAG-based assistant using Python & LangChain.</p>
-            </Link>
-            <Link href="/projects/cv-api" className="block p-6 bg-slate-900 rounded-xl border border-slate-800 hover:border-slate-700 transition-colors group">
-              <h3 className="text-lg font-bold text-white mb-2 group-hover:text-blue-400">Computer Vision API</h3>
-              <p className="text-slate-400 text-sm">Real-time object detection with FastAPI.</p>
-            </Link>
-            <Link href="/projects" className="block p-6 bg-slate-900/50 rounded-xl border border-slate-800 border-dashed hover:bg-slate-900 transition-colors flex items-center justify-center text-slate-500 hover:text-slate-300">
-              More Projects...
-            </Link>
-          </div>
+          <Link href="/projects" className="group block p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all hover:shadow-lg hover:shadow-blue-500/10">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">View Project Portfolio</h3>
+                <p className="text-slate-400">Visit free-utils.app to see all my deployed projects and tools.</p>
+              </div>
+              <ArrowRight className="text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" size={24} />
+            </div>
+          </Link>
         </div>
       </section>
 
