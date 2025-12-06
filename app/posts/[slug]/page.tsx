@@ -1,5 +1,6 @@
 import { getAllPostIds, getPostData } from '@/lib/posts';
 import Head from 'next/head';
+import Comments from '@/components/Comments';
 
 export async function generateStaticParams() {
     const paths = getAllPostIds();
@@ -18,6 +19,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 className="prose dark:prose-invert max-w-none"
                 dangerouslySetInnerHTML={{ __html: postData.contentHtml || '' }}
             />
+            <Comments />
         </article>
     );
 }
