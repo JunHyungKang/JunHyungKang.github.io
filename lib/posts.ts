@@ -16,19 +16,35 @@ export interface PostData {
   [key: string]: any;
 }
 
-export function getSortedPostsData(): PostData[] {
-  // Get file names under /posts
-  if (!fs.existsSync(postsDirectory)) {
-    return [];
-  }
+// Helper to get all files recursively
+function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
+  if (!fs.existsSync(dirPath)) return arrayOfFiles;
+  
+  const files = fs.readdirSync(dirPath);
 
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPostsData = fileNames.map((fileName) => {
-    // Remove ".md" from file name to get slug
+  files.forEach((file) => {
+    const fullPath = path.join(dirPath, file);
+    if (fs.statSync(fullPath).isDirectory()) {
+      getAllFiles(fullPath, arrayOfFiles);
+    } else {
+      if (path.extname(fullPath) === '.md') {
+        arrayOfFiles.push(fullPath);
+      }
+    }
+  });
+
+  return arrayOfFiles;
+}
+
+export function getSortedPostsData(): PostData[] {
+  const allFiles = getAllFiles(postsDirectory);
+
+  const allPostsData = allFiles.map((fullPath) => {
+    // Slug is the filename without extension
+    const fileName = path.basename(fullPath);
     const slug = fileName.replace(/\.md$/, '');
 
     // Read markdown file as string
-    const fullPath = path.join(postsDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Use gray-matter to parse the post metadata section
@@ -63,11 +79,10 @@ export function getSortedPostsData(): PostData[] {
 }
 
 export function getAllPostIds() {
-  if (!fs.existsSync(postsDirectory)) {
-    return [];
-  }
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.map((fileName) => {
+  const allFiles = getAllFiles(postsDirectory);
+  
+  return allFiles.map((fullPath) => {
+    const fileName = path.basename(fullPath);
     return {
       params: {
         slug: fileName.replace(/\.md$/, ''),
@@ -76,9 +91,28 @@ export function getAllPostIds() {
   });
 }
 
+// Helper to find file path by slug
+function findFileBySlug(slug: string): string | null {
+    const allFiles = getAllFiles(postsDirectory);
+    const decodedSlug = decodeURIComponent(slug);
+    
+    // Find the file that has the matching slug (filename)
+    // Note: This assumes slugs are unique across directories!
+    const match = allFiles.find(file => {
+        const fileName = path.basename(file, '.md');
+        return fileName === decodedSlug;
+    });
+
+    return match || null;
+}
+
 export async function getPostData(slug: string): Promise<PostData> {
-  const decodedSlug = decodeURIComponent(slug);
-  const fullPath = path.join(postsDirectory, `${decodedSlug}.md`);
+  const fullPath = findFileBySlug(slug);
+
+  if (!fullPath) {
+      throw new Error(`Post not found for slug: ${slug}`);
+  }
+
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
   // Use gray-matter to parse the post metadata section
@@ -99,8 +133,12 @@ export async function getPostData(slug: string): Promise<PostData> {
 }
 
 export function getPostMetadata(slug: string): PostData {
-  const decodedSlug = decodeURIComponent(slug);
-  const fullPath = path.join(postsDirectory, `${decodedSlug}.md`);
+  const fullPath = findFileBySlug(slug);
+
+  if (!fullPath) {
+      throw new Error(`Post not found for slug: ${slug}`);
+  }
+
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
