@@ -1,5 +1,11 @@
 import Navbar from "@/components/Navbar";
 import { Download, Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: 'About Me',
+    description: 'Generative AI Engineer specializing in LLMs and MLOps. Professional experience in AI model development and serving.',
+};
 
 export default function About() {
     return (

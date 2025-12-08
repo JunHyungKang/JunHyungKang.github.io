@@ -2,6 +2,12 @@ import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import Navbar from '@/components/Navbar';
 import ArticleCard from '@/components/ArticleCard';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Archive',
+    description: 'Archive of all articles, thoughts, and tutorials on AI and Web Development.',
+};
 
 export default function BlogIndex() {
     const allPostsData = getSortedPostsData();

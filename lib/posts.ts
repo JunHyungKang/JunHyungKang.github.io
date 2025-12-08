@@ -12,6 +12,7 @@ export interface PostData {
   date: string;
   image?: string;
   contentHtml?: string;
+  teaser?: string;
   [key: string]: any;
 }
 
@@ -93,6 +94,18 @@ export async function getPostData(slug: string): Promise<PostData> {
   return {
     slug,
     contentHtml,
+    ...(matterResult.data as { date: string; title: string }),
+  };
+}
+
+export function getPostMetadata(slug: string): PostData {
+  const decodedSlug = decodeURIComponent(slug);
+  const fullPath = path.join(postsDirectory, `${decodedSlug}.md`);
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const matterResult = matter(fileContents);
+
+  return {
+    slug,
     ...(matterResult.data as { date: string; title: string }),
   };
 }
