@@ -55,7 +55,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
             />
             <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">{postData.title}</h1>
             <div className="text-gray-500 dark:text-gray-400 mb-8">{postData.date}</div>
-            <div
+            <section
                 className="prose dark:prose-invert max-w-none"
                 dangerouslySetInnerHTML={{ __html: postData.contentHtml || '' }}
             />

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   description: "Portfolio and Blog of JH Kang, an AI Engineer specializing in LLMs, Computer Vision, and Modern Web Development.",
   keywords: ['AI', 'Artificial Intelligence', 'LLM', 'Machine Learning', 'Web Development', 'Next.js', 'React', 'Tech Blog', 'JunHyung Kang', 'JH Kang'],
   alternates: {
-    canonical: 'https://junhyungkang.github.io',
+    canonical: './',
   },
   openGraph: {
     title: "JunHyung's Tech Log - AI Engineer & Full Stack Developer",
