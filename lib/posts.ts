@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
-import html from 'remark-html';
+import remarkRehype from 'remark-rehype';
+import rehypeSlug from 'rehype-slug';
+import rehypeStringify from 'rehype-stringify';
+import GithubSlugger from 'github-slugger';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
 
@@ -13,6 +16,7 @@ export interface PostData {
   image?: string;
   contentHtml?: string;
   teaser?: string;
+  headings?: { id: string; text: string; level: number }[];
   [key: string]: any;
 }
 
@@ -118,9 +122,27 @@ export async function getPostData(slug: string): Promise<PostData> {
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
 
-  // Use remark to convert markdown into HTML string
+  // Extract headings (H2, H3) for TOC
+  const slugger = new GithubSlugger();
+  const headings: { id: string; text: string; level: number }[] = [];
+  const headingRegex = /^(#{2,3})\s+(.*)$/gm;
+  let match;
+  
+  // Reset regex lastIndex just in case
+  headingRegex.lastIndex = 0;
+
+  while ((match = headingRegex.exec(matterResult.content)) !== null) {
+      const level = match[1].length;
+      const text = match[2].trim();
+      const id = slugger.slug(text);
+      headings.push({ id, text, level });
+  }
+
+  // Use remark-rehype ecosystem to convert markdown into HTML string
   const processedContent = await remark()
-    .use(html)
+    .use(remarkRehype)
+    .use(rehypeSlug)
+    .use(rehypeStringify)
     .process(matterResult.content);
   const contentHtml = processedContent.toString();
 
@@ -128,6 +150,7 @@ export async function getPostData(slug: string): Promise<PostData> {
   return {
     slug,
     contentHtml,
+    headings,
     ...(matterResult.data as { date: string; title: string }),
   };
 }
