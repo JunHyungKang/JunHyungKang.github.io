@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import { Download, Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
 import { Metadata } from "next";
 
@@ -10,7 +9,6 @@ export const metadata: Metadata = {
 export default function About() {
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
-            <Navbar />
 
             <div className="pt-32 pb-20 px-6 max-w-4xl mx-auto">
                 {/* Header */}

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
-import Navbar from '@/components/Navbar';
 import ArticleCard from '@/components/ArticleCard';
 import { Metadata } from 'next';
 
@@ -14,7 +13,6 @@ export default function BlogIndex() {
 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
-            <Navbar />
 
             <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
                 <div className="mb-12">
