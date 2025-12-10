@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
+import remarkGfm from 'remark-gfm';
 import remarkRehype from 'remark-rehype';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
@@ -140,6 +141,7 @@ export async function getPostData(slug: string): Promise<PostData> {
 
   // Use remark-rehype ecosystem to convert markdown into HTML string
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
     .use(rehypeStringify)
