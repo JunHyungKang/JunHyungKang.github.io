@@ -4,6 +4,7 @@ import "./globals.css";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import { getSortedPostsData } from "@/lib/posts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,13 +56,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const allPosts = getSortedPostsData();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-200 min-h-screen`}
         suppressHydrationWarning
       >
-        <Navbar />
+        <Navbar posts={allPosts} />
         {children}
         <GoogleAdSense pId="3166603343095810" />
       </body>
