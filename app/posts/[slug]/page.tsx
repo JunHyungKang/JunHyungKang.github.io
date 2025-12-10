@@ -1,6 +1,8 @@
-import { getAllPostIds, getPostData, getPostMetadata } from '@/lib/posts';
+import { getAllPostIds, getPostData, getPostMetadata, getRelatedPosts } from '@/lib/posts';
 import Comments from '@/components/Comments';
 import TableOfContents from '@/components/TableOfContents';
+import ShareButtons from '@/components/ShareButtons';
+import RelatedPosts from '@/components/RelatedPosts';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -30,6 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function Post({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const postData = await getPostData(slug);
+    const relatedPosts = getRelatedPosts(slug, postData.tags || [], 3);
     const siteUrl = 'https://junhyungkang.github.io';
 
     const jsonLd = {
@@ -72,6 +75,11 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                         prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800"
                         dangerouslySetInnerHTML={{ __html: postData.contentHtml || '' }}
                     />
+                    
+                    <ShareButtons title={postData.title} slug={postData.slug} />
+                    
+                    <RelatedPosts posts={relatedPosts} />
+                    
                     <Comments />
                 </article>
 

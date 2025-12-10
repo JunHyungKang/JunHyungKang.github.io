@@ -170,3 +170,35 @@ export function getPostMetadata(slug: string): PostData {
     ...(matterResult.data as { date: string; title: string }),
   };
 }
+
+export function getRelatedPosts(currentSlug: string, tags: string[] = [], limit: number = 3): PostData[] {
+  const allPosts = getSortedPostsData();
+  
+  // Filter out current post
+  const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
+
+  if (tags.length === 0) {
+    // If no tags, just return recent posts
+    return otherPosts.slice(0, limit);
+  }
+
+  // Score posts by matching tags
+  const scoredPosts = otherPosts.map(post => {
+    const postTags = (post.tags as string[]) || [];
+    const matchingTags = postTags.filter(tag => tags.includes(tag));
+    return {
+      post,
+      score: matchingTags.length
+    };
+  });
+
+  // Sort by score (descending) then by date (descending)
+  scoredPosts.sort((a, b) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+    return a.post.date < b.post.date ? 1 : -1;
+  });
+
+  return scoredPosts.map(item => item.post).slice(0, limit);
+}
