@@ -3,7 +3,9 @@ import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
+import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import GithubSlugger from 'github-slugger';
@@ -142,7 +144,9 @@ export async function getPostData(slug: string): Promise<PostData> {
   // Use remark-rehype ecosystem to convert markdown into HTML string
   const processedContent = await remark()
     .use(remarkGfm)
+    .use(remarkMath)
     .use(remarkRehype)
+    .use(rehypeKatex)
     .use(rehypeSlug)
     .use(rehypeStringify)
     .process(matterResult.content);
