@@ -20,17 +20,17 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://junhyungkang.github.io'),
   title: {
-    default: "JunHyung's Tech Log - AI Engineer & Full Stack Developer",
-    template: "%s | JunHyung's Tech Log"
+    default: "JunHyung's Tech Log: AI & Web Dev", // < 40 chars
+    template: "%s | JH's Tech Log"
   },
-  description: "Portfolio and Blog of JH Kang, an AI Engineer specializing in LLMs, Computer Vision, and Modern Web Development.",
-  keywords: ['AI', 'Artificial Intelligence', 'LLM', 'Machine Learning', 'Web Development', 'Next.js', 'React', 'Tech Blog', 'JunHyung Kang', 'JH Kang'],
+  description: "AI Engineer & Full Stack Dev. Specializing in LLMs and Modern Web.", // < 80 chars
+  keywords: ['AI', 'LLM', 'Web Dev', 'Next.js', 'JH Kang'],
   alternates: {
     canonical: './',
   },
   openGraph: {
-    title: "JunHyung's Tech Log - AI Engineer & Full Stack Developer",
-    description: "Portfolio and Blog of JH Kang, an AI Engineer specializing in LLMs, Computer Vision, and Modern Web Development.",
+    title: "JunHyung's Tech Log: AI & Web Dev",
+    description: "AI Engineer & Full Stack Dev. Specializing in LLMs and Modern Web.",
     url: 'https://junhyungkang.github.io',
     siteName: "JunHyung's Tech Log",
     locale: 'en_US',
