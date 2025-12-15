@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 7424",
-    "build": "next build && touch out/.nojekyll",
+    "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "eslint"
   },
@@ -19,6 +20,7 @@
     "katex": "^0.16.27",
     "lucide-react": "^0.555.0",
     "next": "^16.0.7",
+    "next-sitemap": "^4.2.3",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "rehype-katex": "^7.0.1",

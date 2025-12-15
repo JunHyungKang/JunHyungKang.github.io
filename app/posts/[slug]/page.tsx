@@ -3,6 +3,7 @@ import Comments from '@/components/Comments';
 import TableOfContents from '@/components/TableOfContents';
 import ShareButtons from '@/components/ShareButtons';
 import RelatedPosts from '@/components/RelatedPosts';
+import AdBanner from '@/components/AdBanner';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -65,10 +66,16 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                     />
+
+
+                    // ... inside component ...
+
                     <header className="mb-10">
                         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">{postData.title}</h1>
                         <div className="text-slate-400 text-sm">{postData.date}</div>
                     </header>
+
+                    <AdBanner dataAdSlot="TOP_BANNER_SLOT_ID" className="mb-10" />
 
                     <section
                         className="prose prose-invert max-w-none text-slate-300 
@@ -81,6 +88,8 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                     />
 
                     <ShareButtons title={postData.title} slug={postData.slug} />
+
+                    <AdBanner dataAdSlot="BOTTOM_BANNER_SLOT_ID" className="my-10" />
 
                     <RelatedPosts posts={relatedPosts} />
 
