@@ -17,6 +17,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return {
         title: postData.title,
         description: postData.teaser || `Read ${postData.title} on JunHyung's Tech Log`,
+        keywords: postData.tags,
+        alternates: {
+            canonical: `https://junhyungkang.github.io/posts/${slug}`,
+        },
         openGraph: {
             title: postData.title,
             description: postData.teaser || `Read ${postData.title} on JunHyung's Tech Log`,
@@ -54,7 +58,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30 pt-32 pb-20">
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 xl:grid-cols-4 gap-12">
-                
+
                 {/* Main Content */}
                 <article className="xl:col-span-3 max-w-3xl mx-auto w-full">
                     <script
@@ -65,7 +69,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">{postData.title}</h1>
                         <div className="text-slate-400 text-sm">{postData.date}</div>
                     </header>
-                    
+
                     <section
                         className="prose prose-invert max-w-none text-slate-300 
                         prose-headings:text-white prose-headings:font-bold prose-headings:scroll-mt-32
@@ -75,11 +79,11 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                         prose-pre:bg-slate-900 prose-pre:border prose-pre:border-slate-800"
                         dangerouslySetInnerHTML={{ __html: postData.contentHtml || '' }}
                     />
-                    
+
                     <ShareButtons title={postData.title} slug={postData.slug} />
-                    
+
                     <RelatedPosts posts={relatedPosts} />
-                    
+
                     <Comments />
                 </article>
 
