@@ -10,7 +10,7 @@ tags:
   - LLM
   - AdamW
 ---
-![Muon Optimizer Visualization](/images/posts/2025/2025-12-10-Muon-Optimizer/header.png)
+![Muon Optimizer Visualization](/images/posts/2025/2025-12-10-Muon-Optimizer/header.jpg)
 
 지난 10년간 대규모 언어 모델(LLM) 학습 분야는 **아담(Adam)** 옵티마이저의 지배 아래 있었다 해도 과언이 아닙니다.
 
@@ -56,7 +56,7 @@ Muon은 기존 옵티마이저가 파라미터를 단순한 '벡터'로 취급�
 
 ### 제2부: SVD를 대체하는 놀라운 효율, 뉴턴-슐츠 반복
 
-![뉴턴-슐츠 반복 수렴 그래프 (Muon 논문 계수 기반 재현)](/images/posts/2025/2025-12-10-Muon-Optimizer/newton-schulz.png)
+![아담 vs 뮤온 요약](/images/posts/2025/2025-12-10-Muon-Optimizer/adam_vs_muon_recap.png)
 
 이론적으로 행렬을 직교화하는 가장 정확한 방법은 **SVD(특이값 분해)**를 이용해 $UV^\top$ 행렬을 얻는 것입니다. 하지만 SVD 연산은 **계산 비용이 너무 커서** 매 학습 스텝마다 적용하기에는 비현실적입니다.
 
