@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type AdBannerProps = {
     dataAdSlot?: string;
@@ -27,7 +28,7 @@ export default function AdBanner({
     }, []);
 
     return (
-        <div className={`my-8 w-full flex justify-center overflow-hidden min-h-[100px] bg-slate-900/30 rounded-lg ${className}`}>
+        <div className={twMerge("my-4 w-full flex justify-center overflow-hidden min-h-[100px] bg-slate-900/30 rounded-lg", className)}>
             <ins
                 className="adsbygoogle"
                 style={{ display: 'block', width: '100%' }}
