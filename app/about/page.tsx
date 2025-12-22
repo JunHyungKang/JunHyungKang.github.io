@@ -171,10 +171,10 @@ export default function About() {
                                             <span className="text-slate-200">Kang, Junhyung, et al.</span> "A survey of deep learning-based object detection methods and datasets for overhead imagery." <em>IEEE Access</em> 10 (2022).
                                         </li>
                                         <li>
-                                            <span className="text-slate-200">Kang, Junhyung, and Simon S. Woo.</span> "DLPNet: Dynamic Loss Parameter Network using Reinforcement Learning..." <em>AIPR</em> (2021).
+                                            <span className="text-slate-200">Kang, Junhyung, and Simon S. Woo.</span> "DLPNet: Dynamic Loss Parameter Network using Reinforcement Learning for Aerial Imagery Detection." <em>AIPR</em> (2021).
                                         </li>
                                         <li>
-                                            <span className="text-slate-200">Kang, Junhyung, et al.</span> "Sarod: Efficient End-To-End Object Detection On SAR Images..." <em>ICIP</em> (2021).
+                                            <span className="text-slate-200">Kang, Junhyung, et al.</span> "Sarod: Efficient End-To-End Object Detection On SAR Images." <em>ICIP</em> (2021).
                                         </li>
                                     </ul>
                                 </div>
@@ -183,7 +183,7 @@ export default function About() {
                                     <h3 className="text-lg font-semibold text-white mb-3 border-l-4 border-slate-600 pl-3">Co-Author</h3>
                                     <ul className="list-disc list-inside space-y-3 text-slate-400 text-sm">
                                         <li>
-                                            <span className="text-slate-200">Kim, Dongwoo, ... Kang, Junhyung, et al.</span> "Deep Learning for Overseeing Indo-Pacific Bottlenose Dolphin Tourism Law Enforcement." <em>CAI Workshop on AI for Environmental Intelligence</em> (2025). <a href="https://openreview.net/forum?id=bnduW0yJrV" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">[OpenReview]</a>
+                                            <span className="text-slate-200">Kim, Dongwoo, ... Kang, Junhyung, et al.</span> "Deep Learning for Overseeing Indo-Pacific Bottlenose Dolphin Tourism Law Enforcement." <em>CAI Workshop on AI for Environmental Intelligence: The Past, The Present, and The Future</em> (2025). <a href="https://openreview.net/forum?id=bnduW0yJrV" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">[OpenReview]</a>
                                         </li>
                                         <li>
                                             <span className="text-slate-200">An, Jaeju, et al.</span> "VFP290k: A large-scale benchmark dataset for vision-based fallen person detection." <em>NeurIPS Datasets and Benchmarks Track</em> (2021).
