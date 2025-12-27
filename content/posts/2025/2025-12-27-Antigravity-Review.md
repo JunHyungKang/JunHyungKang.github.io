@@ -14,7 +14,7 @@ tags:
 
 ## 들어가며
 
-안녕하세요. **Antigravity**를 즐겁게 사용하고 있는 유저입니다.
+Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있습니다. 오늘은 그동안 이 도구를 사용하며 느꼈던 점들을 솔직하게 풀어보려 합니다.
 
 특히 오늘 **CS146S: The Modern Software Developer** 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
 
@@ -62,7 +62,6 @@ Antigravity는 저 같은 성향의 개발자에게 **IDE 기반이면서도 적
 
 자주 반복되는 테스트 코드 작성이나, 커밋-푸시-PR 같은 정해진 시퀀스(Sequential Action), 혹은 도메인 지식이 많이 필요한 복잡한 작업들을 미리 정의해두고 사용하면 생산성이 크게 오를 것 같습니다. 아직 본격적으로 활용해보진 못했지만, 잠재력만으로도 충분히 장점으로 꼽을 만합니다.
 
-![Workflow Future](/images/posts/2025/2025-12-27-Antigravity-Review/workflow_future.png)
 
 ---
 
@@ -70,21 +69,24 @@ Antigravity는 저 같은 성향의 개발자에게 **IDE 기반이면서도 적
 
 ### 1. 영어로 출력되는 추론 토큰 (Language Barrier)
 
+![English Reasoning](/images/posts/2025/2025-12-27-Antigravity-Review/english_reasoning.png)
+
 제가 설정을 잘못한 것일 수도 있겠지만, Rules나 프롬프트에 분명히 "한글로 진행해줘"라고 가이드를 했음에도 불구하고 **중간 추론 과정(Reasoning)**이 영어로 나오는 경우가 많습니다. (특히 Gemini 사용할 때)
 
 Sync 방식으로 에이전트와 실시간으로 호흡하며 코딩하는 제 입장에서는, 에이전트의 생각 과정을 따라가고 싶은데 **영어-한국어** 사이에서 오는 인지 부하 때문에 순간적으로 버퍼링이 걸리거나 멍해지는 순간들이 있었습니다. 매끄러운 사고의 흐름을 방해하는 요소입니다.
 
 ### 2. 애매한 자율성 (Semi-Async의 딜레마)
 
-![Semi Async](/images/posts/2025/2025-12-27-Antigravity-Review/semi_async_awkward.png)
 
 제가 Cursor를 좋아하는 이유는 코딩 호흡이 짧고, 에이전트의 자율성이 제가 통제 가능한 수준으로 약하기 때문에 실시간 협업(Pair Programming)하는 느낌이 들기 때문입니다. 반대로 극단적인 효율을 추구하며 Planning과 Testing에만 집중하는 개발자라면 아예 여러 에이전트를 Async로 돌리는 방식을 선호하겠죠.
+![Workflow Future](/images/posts/2025/2025-12-27-Antigravity-Review/workflow_future.png)
 
 Antigravity는 이 둘 사이에서 다소 **애매한 포지션**에 있는 느낌입니다.
 
 *   **불완전한 Multi-Agent:** 완전한 비동기 코딩(Vide Coding 느낌)을 위해 여러 에이전트를 동시에 돌려봤을 때는 서비스 자체가 좀 불안정했습니다. 초창기라 그럴 수 있지만, 맥락 없이 끊기거나 무한 로딩(Hang)에 걸리는 경우가 종종 있었습니다.
 *   **과도한 자율성:** 반대로 Agent Mode를 끄고 일반 IDE의 Code Assistant처럼 쓰자니 Cursor보다 자율성이 너무 과하게 느껴집니다. Cursor처럼 명시적으로 Ask, Planning, Agent 모드를 선택할 수 있는 게 아니라, 그냥 'Planning이냐 아니냐' 정도의 옵션밖에 없습니다.
 *   **확인 없는 폭주:** 어떤 Action들은 몇 번 시도해보고 안 되면 사용자에게 확인을 받아야 하는데, 그냥 혼자 챗바퀴 돌듯 무한 루프에 빠져서 잘못된 시도를 계속하는 경우가 보였습니다. 결국 강제로 멈추고 개입해야 했습니다.
+![Semi Async](/images/posts/2025/2025-12-27-Antigravity-Review/semi_async_awkward.png)
 
 ---
 
