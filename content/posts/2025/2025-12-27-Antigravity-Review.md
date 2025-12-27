@@ -17,9 +17,9 @@ Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있
 
 특히 오늘 **CS146S: The Modern Software Developer** 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
 
-![Good News](/images/antigravity-review/software_evolution.png)
+![Good News](/images/posts/2025/2025-12-27-Antigravity-Review/header.png)
 
-![Software 1.0 2.0 3.0](/images/antigravity-review/software_1_2_3.png)
+![Software 1.0 2.0 3.0](/images/posts/2025/2025-12-27-Antigravity-Review/software_1_2_3.png)
 
 소프트웨어 개발의 패러다임이 Software 1.0에서 2.0, 그리고 3.0으로 넘어가고 있다는 이야기가 많습니다. 저 또한 이러한 변화의 흐름 속에서 AI 코딩 도구들이 어떻게 발전하고 있는지 관심 있게 지켜보고 있습니다.
 
@@ -51,7 +51,7 @@ Gemini 모델 기준으로 주말에 사이드 프로젝트를 진행하며 꽤 
 
 ### 3. Sync 코딩의 편안함
 
-![Sync vs Async](/images/antigravity-review/sync_vs_async_quadrant.png)
+![Sync vs Async](/images/posts/2025/2025-12-27-Antigravity-Review/sync_vs_async_quadrant.png)
 
 저는 아직 CLI 기반의 완전한 비동기(Async) 코딩 도구보다는, **Cursor**처럼 호흡(Term)이 짧은 **IDE 기반의 코딩 도구**를 선호하는 편입니다. Gemini CLI가 처음 나왔을 때 잠시 써보다가 결국 안 쓰게 된 이유도 너무 긴 호흡 때문이었죠.
 
@@ -63,7 +63,7 @@ Antigravity는 저 같은 성향의 개발자에게 **IDE 기반이면서도 적
 
 자주 반복되는 테스트 코드 작성이나, 커밋-푸시-PR 같은 정해진 시퀀스(Sequential Action), 혹은 도메인 지식이 많이 필요한 복잡한 작업들을 미리 정의해두고 사용하면 생산성이 크게 오를 것 같습니다. 아직 본격적으로 활용해보진 못했지만, 잠재력만으로도 충분히 장점으로 꼽을 만합니다.
 
-![Workflow Future](/images/antigravity-review/workflow_future.png)
+![Workflow Future](/images/posts/2025/2025-12-27-Antigravity-Review/workflow_future.png)
 
 ---
 
@@ -77,7 +77,7 @@ Sync 방식으로 에이전트와 실시간으로 호흡하며 코딩하는 제 
 
 ### 2. 애매한 자율성 (Semi-Async의 딜레마)
 
-![Semi Async](/images/antigravity-review/semi_async_awkward.png)
+![Semi Async](/images/posts/2025/2025-12-27-Antigravity-Review/semi_async_awkward.png)
 
 제가 Cursor를 좋아하는 이유는 코딩 호흡이 짧고, 에이전트의 자율성이 제가 통제 가능한 수준으로 약하기 때문에 실시간 협업(Pair Programming)하는 느낌이 들기 때문입니다. 반대로 극단적인 효율을 추구하며 Planning과 Testing에만 집중하는 개발자라면 아예 여러 에이전트를 Async로 돌리는 방식을 선호하겠죠.
 
@@ -97,6 +97,6 @@ Antigravity는 이 둘 사이에서 다소 **애매한 포지션**에 있는 느
 
 저 또한 이제는 Cursor 같은 Sync 방식에만 머무르지 않고, **Claude Code**나 **Antigravity** 같은 도구를 활용해 **Multi Code Agent를 Async로 운용하고 관리하는 방식**에 익숙해져야 할 때가 온 것 같습니다.
 
-![History of Software Teams](/images/antigravity-review/history_of_software_teams.png)
+![History of Software Teams](/images/posts/2025/2025-12-27-Antigravity-Review/history_of_software_teams.png)
 
 나의 든든한 사이드 프로젝트 메이트, **Antigravity**의 발전을 응원합니다! 화이팅!
