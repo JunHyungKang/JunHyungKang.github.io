@@ -68,14 +68,10 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                     />
 
 
-                    // ... inside component ...
-
                     <header className="mb-6">
                         <h1 className="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight">{postData.title}</h1>
                         <div className="text-slate-400 text-sm">{postData.date}</div>
                     </header>
-
-                    <AdBanner dataAdSlot="TOP_BANNER_SLOT_ID" className="mb-6" />
 
                     <section
                         className="prose prose-invert max-w-none text-slate-300 
