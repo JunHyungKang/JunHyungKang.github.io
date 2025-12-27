@@ -17,7 +17,7 @@ Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있
 
 특히 오늘 **CS146S: The Modern Software Developer** 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
 
-![Good News](/images/posts/2025/2025-12-27-Antigravity-Review/header.png)
+![Good News](/images/posts/2025/2025-12-27-Antigravity-Review/good_news_korean.png)
 
 ![Software 1.0 2.0 3.0](/images/posts/2025/2025-12-27-Antigravity-Review/software_1_2_3.png)
 
