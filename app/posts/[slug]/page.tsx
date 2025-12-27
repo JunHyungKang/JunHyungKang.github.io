@@ -85,8 +85,6 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
                     <ShareButtons title={postData.title} slug={postData.slug} />
 
-                    <AdBanner dataAdSlot="BOTTOM_BANNER_SLOT_ID" className="my-10" />
-
                     <RelatedPosts posts={relatedPosts} />
 
                     <Comments />
