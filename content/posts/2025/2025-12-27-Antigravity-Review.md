@@ -2,6 +2,7 @@
 title: "Antigravity 사용 후기: 출시부터 지금까지"
 date: "2025-12-27"
 teaser: "Antigravity 출시 후 지금까지 사용해본 후기를 공유합니다. 장점, 단점, 그리고 앞으로의 기대까지 정리해봤습니다."
+image: "/images/posts/2025/2025-12-27-Antigravity-Review/good_news_korean.png"
 tags:
   - Review
   - Antigravity
@@ -13,12 +14,9 @@ tags:
 
 ## 들어가며
 
-Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있습니다. 오늘은 그동안 이 도구를 사용하며 느꼈던 점들을 솔직하게 풀어보려 합니다.
+안녕하세요. **Antigravity**를 즐겁게 사용하고 있는 유저입니다.
 
 특히 오늘 **CS146S: The Modern Software Developer** 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
-
-![Good News](/images/posts/2025/2025-12-27-Antigravity-Review/good_news_korean.png)
-<div align="center" style="font-size: 0.8em; color: gray;">(CS146S 강의 슬라이드 재구성 및 번역)</div>
 
 ![Software 1.0 2.0 3.0](/images/posts/2025/2025-12-27-Antigravity-Review/software_1_2_3.png)
 
