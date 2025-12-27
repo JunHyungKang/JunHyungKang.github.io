@@ -29,7 +29,7 @@ Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있
 *   [Free Utils App](https://www.free-utils.app/)
 *   [개인 블로그](https://junhyungkang.github.io/)
 *   [곳감(Gotgam)](https://gotgam.vercel.app/)
-*   [T1D MCP Server](https://github.com/JunHyungKang/t1d-mcp)
+*   [1형당뇨 환자를 위한 MCP Server](https://github.com/JunHyungKang/t1d-mcp)
 *   그 외 다수
 
 ---
@@ -93,7 +93,7 @@ Antigravity는 이 둘 사이에서 다소 **애매한 포지션**에 있는 느
 
 *"결국 끝까지 가면 구글이 다 이겨"* 라는 말이 있죠. Antigravity를 쓰면서 문득 그 말이 떠올랐습니다.
 
-지금 제가 단점으로 꼽은 부분들은 서비스 초기 단계의 시행착오거나, 모델 성능이 발전함에 따라 자연스럽게 해결될 수 있는 문제들로 보입니다. 오히려 구글이 그리고 있는 방향성 자체는 맞다는 생각이 듭니다. 문득 Rich Sutton의 **[The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)** 이 떠오르기도 하네요. 결국 범용적인 학습 방법이 이긴다는 것이죠.
+지금 제가 단점으로 꼽은 부분들은 서비스 초기 단계의 시행착오거나, 모델 성능이 발전함에 따라 자연스럽게 해결될 수 있는 문제들로 보입니다. 오히려 구글이 그리고 있는 방향성 자체는 맞다는 생각이 듭니다. 문득 Rich Sutton의 **[The Bitter Lesson](http://www.incompleteideas.net/IncIdeas/BitterLesson.html)** 이 떠오르기도 하네요.
 
 저 또한 이제는 Cursor 같은 Sync 방식에만 머무르지 않고, **Claude Code**나 **Antigravity** 같은 도구를 활용해 **Multi Code Agent를 Async로 운용하고 관리하는 방식**에 익숙해져야 할 때가 온 것 같습니다.
 
