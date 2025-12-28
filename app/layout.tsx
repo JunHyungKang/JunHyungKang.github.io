@@ -5,6 +5,7 @@ import "katex/dist/katex.min.css";
 import GoogleAdSense from "@/components/GoogleAdSense";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { getSortedPostsData } from "@/lib/posts";
 
 const geistSans = Geist({
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
     description: "AI Engineer. Specializing in LLMs, Deep Learning, and Generative AI.",
     url: 'https://junhyungkang.github.io',
     siteName: "JunHyung's Tech Log",
-    locale: 'en_US',
+    locale: 'ko_KR',
     type: 'website',
   },
   robots: {
@@ -63,13 +64,14 @@ export default function RootLayout({
   const allPosts = getSortedPostsData();
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-200 min-h-screen`}
         suppressHydrationWarning
       >
         <Navbar posts={allPosts} />
         {children}
+        <Footer />
         <GoogleAdSense pId="3166603343095810" />
       </body>
     </html>
