@@ -2,7 +2,7 @@
 title: "AI 시대, 아키텍처는 여전히 의미가 있을까?"
 date: "2026-01-14"
 teaser: "소프트웨어 아키텍처 강의를 들으며 든 비전공자 AI 개발자의 두서없는 고민들"
-image: "/images/posts/2026/2026-01-14-AI-Agent-Architecture-Reflection/thumbnail.png"
+image: "/images/posts/2026/2026-01-14-AI-Agent-Architecture-Reflection/thumbnail.jpg"
 tags:
   - AI Development
   - Architecture
