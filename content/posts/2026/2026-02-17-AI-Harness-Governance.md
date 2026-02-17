@@ -55,9 +55,6 @@ Claude Code에서 hook과 plugin을 붙여 쓰다가,
 plugin이 활성화되면 skill이 자동 발견되고, `plugin-name:skill-name` 네임스페이스로 충돌도 피합니다.
 즉, "기능 묶음(plugin) + 실행 단위(skill)"를 함께 배포하기가 좋습니다.
 
-![Claude Code Skills Hierarchy](/images/posts/2026/2026-02-17-AI-Harness-Governance/claude-skills.png)
-*Claude Code의 Skills 권장 디렉터리 구조. (출처: [Threads @lucas_flatwhite](https://www.threads.net/@lucas_flatwhite/post/DP53--_EZ37))*
-
 ### Codex 쪽에서 확인한 특징
 
 Codex도 skills 자체는 있습니다.
@@ -95,9 +92,6 @@ Codex도 skills 자체는 있습니다.
 
 **문장 이식성과 동작 이식성은 다릅니다.**
 같은 모양의 플러그라도 전압이 다르면 그대로 꽂아 쓰기 어렵듯, 규칙 문장이 같아도 실행 의미론이 다르면 결과는 달라집니다.
-
-![Cursor Rules Configuration](/images/posts/2026/2026-02-17-AI-Harness-Governance/cursor-rules.png)
-*Cursor의 Rules 설정 화면. Project Rules와 .cursorrules 파일 포함 여부를 관리한다. (출처: [Cursor 공식 문서](https://cursor.com/docs/context/rules))*
 
 ---
 
