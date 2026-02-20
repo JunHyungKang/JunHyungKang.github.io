@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.youtube.com)",
+      "WebSearch",
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:addyosmani.com)",
+      "WebFetch(domain:www.eferro.net)",
+      "WebFetch(domain:addyo.substack.com)",
+      "Bash(bash /Users/a10845/.claude/plugins/cache/team-attention-plugins/youtube-digest/0.2.0/skills/youtube-digest/scripts/extract_metadata.sh \"https://www.youtube.com/watch?v=lqcKquUl3Wk\")",
+      "Bash(pip3 install:*)",
+      "Bash(brew list:*)",
+      "Bash(python3:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "youtube-digest@team-attention-plugins": true
+  }
+}
