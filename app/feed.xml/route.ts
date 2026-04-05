@@ -14,7 +14,7 @@ export async function GET() {
         feed_url: `${site_url}/feed.xml`,
         language: 'ko',
         pubDate: new Date(),
-        copyright: `Agll rights reserved ${new Date().getFullYear()}, JunHyung Kang`,
+        copyright: `All rights reserved ${new Date().getFullYear()}, JunHyung Kang`,
     });
 
     allPosts.forEach((post) => {
