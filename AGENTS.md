@@ -10,6 +10,7 @@ Codex-facing guidance for the public personal blog repository.
 
 ## Skills
 
+- Use `triage` for GitHub issue creation, TODO capture, deduplication, labeling, updates, closure, and backlog summaries.
 - Use `edit-article` when revising Markdown articles, improving Korean/English prose, or restructuring technical writing.
 - Use `korean-editorial-check` for Korean spelling, spacing, title/teaser clarity, public tone, and count-limit checks.
 - Use `publish-post` when creating or publishing posts, moving drafts, adding images, or checking static-export paths.

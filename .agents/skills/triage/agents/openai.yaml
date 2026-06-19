@@ -1,0 +1,7 @@
+interface:
+  display_name: "Triage"
+  short_description: "Turn blog TODOs into issues"
+  default_prompt: "Use $triage to file, dedupe, label, update, or summarize blog and public-site GitHub issues and TODOs."
+
+policy:
+  allow_implicit_invocation: true
