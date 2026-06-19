@@ -1,0 +1,7 @@
+interface:
+  display_name: "Edit Article"
+  short_description: "Revise blog drafts"
+  default_prompt: "Use $edit-article to tighten and restructure a blog post while preserving its technical meaning."
+
+policy:
+  allow_implicit_invocation: true

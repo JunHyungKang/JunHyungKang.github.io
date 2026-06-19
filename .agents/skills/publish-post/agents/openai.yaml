@@ -1,0 +1,7 @@
+interface:
+  display_name: "Publish Post"
+  short_description: "Prepare blog posts for GitHub Pages"
+  default_prompt: "Use $publish-post to create, verify, and publish a blog post with correct frontmatter and image paths."
+
+policy:
+  allow_implicit_invocation: true
