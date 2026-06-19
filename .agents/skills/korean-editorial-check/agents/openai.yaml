@@ -1,0 +1,7 @@
+interface:
+  display_name: "Korean Editorial Check"
+  short_description: "Polish Korean public copy"
+  default_prompt: "Use $korean-editorial-check to review Korean blog or portfolio copy for spacing, clarity, tone, and count limits."
+
+policy:
+  allow_implicit_invocation: true

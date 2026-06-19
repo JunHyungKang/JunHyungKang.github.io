@@ -1,0 +1,7 @@
+interface:
+  display_name: "Source Research"
+  short_description: "Verify sources for blog posts"
+  default_prompt: "Use $source-research to gather current sources and check claims before publishing a blog post."
+
+policy:
+  allow_implicit_invocation: true

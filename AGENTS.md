@@ -11,7 +11,9 @@ Codex-facing guidance for the public personal blog repository.
 ## Skills
 
 - Use `edit-article` when revising Markdown articles, improving Korean/English prose, or restructuring technical writing.
+- Use `korean-editorial-check` for Korean spelling, spacing, title/teaser clarity, public tone, and count-limit checks.
 - Use `publish-post` when creating or publishing posts, moving drafts, adding images, or checking static-export paths.
+- Use `source-research` when a draft needs current public sources, citations, or claim verification before publication.
 - Use `humanizer` for prose tone/structure polishing when the task is specifically about making generated writing sound more natural.
 
 ## Commands
