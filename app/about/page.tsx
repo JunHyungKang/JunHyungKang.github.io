@@ -1,4 +1,4 @@
-import { Download, Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
+import { Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -227,20 +227,6 @@ export default function About() {
                                         <BookOpen size={18} /> Tech Blog (DevOcean)
                                     </a>
                                 </div>
-                            </div>
-
-                            {/* Resume Download */}
-                            <div className="bg-gradient-to-br from-blue-900/20 to-slate-900 border border-blue-500/20 rounded-2xl p-6">
-                                <h3 className="text-lg font-bold text-white mb-2">Full Resume</h3>
-                                <p className="text-slate-400 text-sm mb-6">
-                                    Download the detailed PDF version of my resume.
-                                </p>
-                                <a
-                                    href="/resume.pdf"
-                                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-blue-600/20"
-                                >
-                                    <Download size={18} /> Download PDF
-                                </a>
                             </div>
                         </div>
                     </div>

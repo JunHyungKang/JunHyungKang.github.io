@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Download } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
     return (
@@ -37,12 +37,6 @@ export default function Hero() {
                             className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-medium transition-all flex items-center gap-2 shadow-lg shadow-blue-600/25"
                         >
                             View Projects <ArrowRight size={20} />
-                        </Link>
-                        <Link
-                            href="/resume.pdf"
-                            className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-medium transition-all flex items-center gap-2 border border-slate-700"
-                        >
-                            Download Resume <Download size={20} />
                         </Link>
                     </div>
                 </motion.div>

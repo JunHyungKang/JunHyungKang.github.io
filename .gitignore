@@ -42,3 +42,11 @@ next-env.d.ts
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# Private career/application artifacts
+/_private/
+/JunHyung_Kang*Resume*
+/junhyung-kang*bain*resume*
+/*Additional_Information.txt
+/job_application_pipeline_*.md
+/.agents/skills/bain-ais-resume/
