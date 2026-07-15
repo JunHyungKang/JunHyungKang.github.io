@@ -6,22 +6,22 @@
     <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-opacity=".22"/></filter>
   </defs>
   <rect width="1200" height="620" rx="8" fill="url(#bg)"/>
-  <text x="64" y="76" fill="#f8fafc" font-family="Arial, sans-serif" font-size="32" font-weight="700">7 DAYS OF AUTONOMOUS COMPETITION WORK</text>
-  <text x="64" y="112" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">The loop kept running. The strategy did not converge to first place.</text>
+  <text x="64" y="76" fill="#f8fafc" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="32" font-weight="700">7일 동안 멈추지 않은 에이전트</text>
+  <text x="64" y="112" fill="#94a3b8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="18">실행은 계속됐지만, 전략은 1등에 수렴하지 못했다.</text>
   <line x1="95" y1="274" x2="1105" y2="274" stroke="#334155" stroke-width="8" stroke-linecap="round"/>
-  <g font-family="Arial, sans-serif">
-    <g transform="translate(110 0)"><circle cy="274" r="22" fill="#38bdf8"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">1</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">Harness</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">Goal · skills · ledger</text></g>
-    <g transform="translate(350 0)"><circle cy="274" r="22" fill="#22c55e"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">2</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">Reference</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">400 graph decompile</text></g>
-    <g transform="translate(590 0)"><circle cy="274" r="22" fill="#f59e0b"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">3</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">Hardening</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">Strict output · runtime</text></g>
-    <g transform="translate(830 0)"><circle cy="274" r="22" fill="#e879f9"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">4</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">Optimization</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">Micro graph surgery</text></g>
-    <g transform="translate(1070 0)"><circle cy="274" r="22" fill="#fb7185"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">7</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">Finish</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">Rank 371 / 3034</text></g>
+  <g font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
+    <g transform="translate(110 0)"><circle cy="274" r="22" fill="#38bdf8"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">1</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">하네스 구축</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">목표 · 지침 · 기록</text></g>
+    <g transform="translate(350 0)"><circle cy="274" r="22" fill="#22c55e"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">2</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">기준 분석</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">400개 그래프 역공학</text></g>
+    <g transform="translate(590 0)"><circle cy="274" r="22" fill="#f59e0b"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">3</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">검증 강화</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">원본 출력 · 실행 환경</text></g>
+    <g transform="translate(830 0)"><circle cy="274" r="22" fill="#e879f9"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">4</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">그래프 최적화</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">작고 안전한 개선</text></g>
+    <g transform="translate(1070 0)"><circle cy="274" r="22" fill="#fb7185"/><text x="0" y="280" text-anchor="middle" fill="#07111f" font-size="18" font-weight="700">7</text><text x="0" y="334" text-anchor="middle" fill="#f8fafc" font-size="18" font-weight="700">대회 종료</text><text x="0" y="362" text-anchor="middle" fill="#94a3b8" font-size="15">3034팀 중 371위</text></g>
   </g>
-  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+  <g filter="url(#shadow)" font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
     <rect x="64" y="440" width="310" height="116" rx="8" fill="#0f2638" stroke="#38bdf8"/>
-    <text x="90" y="478" fill="#7dd3fc" font-size="15" font-weight="700">TOKEN TRACE</text><text x="90" y="526" fill="#f8fafc" font-size="30" font-weight="700">2.91B processed</text>
+    <text x="90" y="478" fill="#7dd3fc" font-size="15" font-weight="700">처리한 토큰</text><text x="90" y="526" fill="#f8fafc" font-size="30" font-weight="700">약 29억</text>
     <rect x="445" y="440" width="310" height="116" rx="8" fill="#10281d" stroke="#22c55e"/>
-    <text x="471" y="478" fill="#86efac" font-size="15" font-weight="700">PUBLIC SCORE</text><text x="471" y="526" fill="#f8fafc" font-size="30" font-weight="700">7374.21</text>
+    <text x="471" y="478" fill="#86efac" font-size="15" font-weight="700">공개 점수</text><text x="471" y="526" fill="#f8fafc" font-size="30" font-weight="700">7374.21</text>
     <rect x="826" y="440" width="310" height="116" rx="8" fill="#30171c" stroke="#fb7185"/>
-    <text x="852" y="478" fill="#fda4af" font-size="15" font-weight="700">GAP TO FIRST</text><text x="852" y="526" fill="#f8fafc" font-size="30" font-weight="700">805.78</text>
+    <text x="852" y="478" fill="#fda4af" font-size="15" font-weight="700">1위와의 격차</text><text x="852" y="526" fill="#f8fafc" font-size="30" font-weight="700">805.78</text>
   </g>
 </svg>

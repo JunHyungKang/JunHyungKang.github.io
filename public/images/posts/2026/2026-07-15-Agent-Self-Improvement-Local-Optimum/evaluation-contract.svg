@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="650" viewBox="0 0 1200 650" role="img" aria-labelledby="title desc">
+  <title id="title">하네스 변경을 검증하는 평가 계약</title>
+  <desc id="desc">기대 효과, 고정 검증, 처음 보는 문제, 실패 재현, 비용 변화의 순서로 하네스 변경을 평가하는 흐름</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker>
+  </defs>
+  <rect width="1200" height="650" rx="8" fill="#07111f"/>
+  <g font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
+    <text x="64" y="72" fill="#f8fafc" font-size="32" font-weight="700">다음에는 모든 하네스 변경을 검증 가능한 약속으로 만든다</text>
+    <text x="64" y="108" fill="#94a3b8" font-size="18">“좋아진 것 같다”가 아니라, 바꾸기 전의 예상과 바꾼 뒤의 증거를 연결한다.</text>
+
+    <g stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)">
+      <path d="M258 270 H300"/><path d="M468 270 H510"/><path d="M678 270 H720"/><path d="M888 270 H930"/>
+    </g>
+
+    <g text-anchor="middle">
+      <g><rect x="90" y="178" width="168" height="184" rx="8" fill="#102a43" stroke="#38bdf8"/><circle cx="174" cy="220" r="22" fill="#38bdf8"/><text x="174" y="227" fill="#07111f" font-size="18" font-weight="700">1</text><text x="174" y="275" fill="#f8fafc" font-size="21" font-weight="700">기대 효과</text><text x="174" y="309" fill="#94a3b8" font-size="15">무엇이 얼마나</text><text x="174" y="332" fill="#94a3b8" font-size="15">좋아져야 하는가</text></g>
+      <g><rect x="300" y="178" width="168" height="184" rx="8" fill="#172554" stroke="#818cf8"/><circle cx="384" cy="220" r="22" fill="#818cf8"/><text x="384" y="227" fill="#07111f" font-size="18" font-weight="700">2</text><text x="384" y="275" fill="#f8fafc" font-size="21" font-weight="700">고정 검증</text><text x="384" y="309" fill="#94a3b8" font-size="15">같은 기준으로</text><text x="384" y="332" fill="#94a3b8" font-size="15">전후 비교</text></g>
+      <g><rect x="510" y="178" width="168" height="184" rx="8" fill="#10281d" stroke="#22c55e"/><circle cx="594" cy="220" r="22" fill="#22c55e"/><text x="594" y="227" fill="#07111f" font-size="18" font-weight="700">3</text><text x="594" y="275" fill="#f8fafc" font-size="21" font-weight="700">새 문제</text><text x="594" y="309" fill="#94a3b8" font-size="15">처음 보는 과제에도</text><text x="594" y="332" fill="#94a3b8" font-size="15">효과가 이어지는가</text></g>
+      <g><rect x="720" y="178" width="168" height="184" rx="8" fill="#2a1f0b" stroke="#f59e0b"/><circle cx="804" cy="220" r="22" fill="#f59e0b"/><text x="804" y="227" fill="#07111f" font-size="18" font-weight="700">4</text><text x="804" y="275" fill="#f8fafc" font-size="21" font-weight="700">실패 재현</text><text x="804" y="309" fill="#94a3b8" font-size="15">과거의 실패를</text><text x="804" y="332" fill="#94a3b8" font-size="15">다시 막는가</text></g>
+      <g><rect x="930" y="178" width="168" height="184" rx="8" fill="#30171c" stroke="#fb7185"/><circle cx="1014" cy="220" r="22" fill="#fb7185"/><text x="1014" y="227" fill="#07111f" font-size="18" font-weight="700">5</text><text x="1014" y="275" fill="#f8fafc" font-size="21" font-weight="700">자원 변화</text><text x="1014" y="309" fill="#94a3b8" font-size="15">시간 · 토큰 · 비용이</text><text x="1014" y="332" fill="#94a3b8" font-size="15">실제로 줄었는가</text></g>
+    </g>
+
+    <rect x="214" y="432" width="772" height="92" rx="8" fill="#111827" stroke="#334155"/>
+    <text x="600" y="470" text-anchor="middle" fill="#f8fafc" font-size="20" font-weight="700">다섯 증거가 연결될 때만 “하네스가 개선됐다”고 판단한다</text>
+    <text x="600" y="500" text-anchor="middle" fill="#94a3b8" font-size="16">중간 지표만 좋아지거나 비용만 늘었다면 다음 변경의 입력으로 되돌린다.</text>
+  </g>
+</svg>

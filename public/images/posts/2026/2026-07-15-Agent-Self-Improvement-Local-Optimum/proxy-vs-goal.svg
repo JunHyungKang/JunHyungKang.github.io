@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">중간 지표와 최종 목표의 불일치</title>
+  <desc id="desc">검증과 결과물 생산 같은 중간 지표는 계속 좋아졌지만 1위와의 격차는 충분히 줄지 않은 개념도</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#f59e0b"/></marker>
+  </defs>
+  <rect width="1200" height="680" rx="8" fill="#07111f"/>
+  <g font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
+    <text x="64" y="72" fill="#f8fafc" font-size="32" font-weight="700">하네스는 좋아졌지만, 목표에는 가까워지지 않았다</text>
+    <text x="64" y="108" fill="#94a3b8" font-size="18">아래 선은 실제 측정값이 아니라 프로젝트에서 관찰한 방향을 설명하는 개념도다.</text>
+
+    <g transform="translate(92 158)">
+      <line x1="0" y1="390" x2="1015" y2="390" stroke="#475569" stroke-width="2"/>
+      <line x1="0" y1="0" x2="0" y2="390" stroke="#475569" stroke-width="2"/>
+      <g stroke="#1e293b" stroke-width="1">
+        <line x1="0" y1="95" x2="1015" y2="95"/><line x1="0" y1="195" x2="1015" y2="195"/><line x1="0" y1="295" x2="1015" y2="295"/>
+      </g>
+
+      <path d="M0 330 C150 300 245 250 350 205 C500 145 650 105 1015 48" fill="none" stroke="#38bdf8" stroke-width="7" stroke-linecap="round"/>
+      <path d="M0 306 C180 296 330 282 490 270 C680 258 835 250 1015 244" fill="none" stroke="#fb7185" stroke-width="7" stroke-linecap="round"/>
+
+      <rect x="650" y="36" width="315" height="62" rx="6" fill="#102a43" stroke="#38bdf8"/>
+      <text x="672" y="62" fill="#7dd3fc" font-size="15" font-weight="700">중간 지표</text>
+      <text x="672" y="84" fill="#f8fafc" font-size="18">검증 통과 · 결과물 · 안전성</text>
+
+      <rect x="650" y="230" width="315" height="62" rx="6" fill="#30171c" stroke="#fb7185"/>
+      <text x="672" y="256" fill="#fda4af" font-size="15" font-weight="700">최종 목표</text>
+      <text x="672" y="278" fill="#f8fafc" font-size="18">1위와의 격차 축소</text>
+
+      <line x1="540" y1="128" x2="540" y2="245" stroke="#f59e0b" stroke-width="3" stroke-dasharray="8 7" marker-end="url(#arrow)"/>
+      <text x="558" y="176" fill="#fcd34d" font-size="16" font-weight="700">둘을 다시 연결하는</text>
+      <text x="558" y="199" fill="#fcd34d" font-size="16" font-weight="700">상위 평가가 없었다</text>
+
+      <text x="0" y="427" fill="#94a3b8" font-size="15">초기</text>
+      <text x="455" y="427" fill="#94a3b8" font-size="15">하네스 강화</text>
+      <text x="976" y="427" fill="#94a3b8" font-size="15">종료</text>
+    </g>
+  </g>
+</svg>
