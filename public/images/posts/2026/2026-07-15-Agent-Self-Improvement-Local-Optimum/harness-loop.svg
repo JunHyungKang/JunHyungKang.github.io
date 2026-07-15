@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">NeuroGolf 장기 실행 에이전트 하네스</title>
+  <desc id="desc">Goal에서 작업 선택, 실행, 검증, 기록, 하네스 개선을 거쳐 다시 작업 선택으로 돌아오는 피드백 루프</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#64748b"/></marker></defs>
+  <rect width="1200" height="700" rx="8" fill="#07111f"/>
+  <text x="60" y="72" fill="#f8fafc" font-family="Arial, sans-serif" font-size="32" font-weight="700">THE LONG-RUNNING AGENT HARNESS</text>
+  <text x="60" y="108" fill="#94a3b8" font-family="Arial, sans-serif" font-size="18">Continuity came from executable state, not chat memory.</text>
+  <g stroke="#64748b" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M370 205 H485"/><path d="M715 205 H830"/><path d="M945 280 V384"/><path d="M830 460 H715"/><path d="M485 460 H370"/><path d="M255 384 V280"/>
+  </g>
+  <g font-family="Arial, sans-serif" text-anchor="middle">
+    <g><rect x="140" y="130" width="230" height="150" rx="8" fill="#102a43" stroke="#38bdf8"/><text x="255" y="178" fill="#7dd3fc" font-size="16" font-weight="700">01 · OBJECTIVE</text><text x="255" y="220" fill="#f8fafc" font-size="25" font-weight="700">Goal</text><text x="255" y="250" fill="#94a3b8" font-size="15">Win · protect root</text></g>
+    <g><rect x="485" y="130" width="230" height="150" rx="8" fill="#172554" stroke="#818cf8"/><text x="600" y="178" fill="#a5b4fc" font-size="16" font-weight="700">02 · SELECT</text><text x="600" y="220" fill="#f8fafc" font-size="25" font-weight="700">Ranking</text><text x="600" y="250" fill="#94a3b8" font-size="15">Cost · risk · upside</text></g>
+    <g><rect x="830" y="130" width="230" height="150" rx="8" fill="#2a1f0b" stroke="#f59e0b"/><text x="945" y="178" fill="#fcd34d" font-size="16" font-weight="700">03 · EXECUTE</text><text x="945" y="220" fill="#f8fafc" font-size="25" font-weight="700">Skills + Agents</text><text x="945" y="250" fill="#94a3b8" font-size="15">Analyze · build · review</text></g>
+    <g><rect x="830" y="384" width="230" height="150" rx="8" fill="#30171c" stroke="#fb7185"/><text x="945" y="432" fill="#fda4af" font-size="16" font-weight="700">04 · EVALUATE</text><text x="945" y="474" fill="#f8fafc" font-size="25" font-weight="700">Validation</text><text x="945" y="504" fill="#94a3b8" font-size="15">Exact · cost · Kaggle</text></g>
+    <g><rect x="485" y="384" width="230" height="150" rx="8" fill="#10281d" stroke="#22c55e"/><text x="600" y="432" fill="#86efac" font-size="16" font-weight="700">05 · REMEMBER</text><text x="600" y="474" fill="#f8fafc" font-size="25" font-weight="700">Wiki + Ledger</text><text x="600" y="504" fill="#94a3b8" font-size="15">Evidence · SHA · failure</text></g>
+    <g><rect x="140" y="384" width="230" height="150" rx="8" fill="#281638" stroke="#e879f9"/><text x="255" y="432" fill="#f0abfc" font-size="16" font-weight="700">06 · IMPROVE</text><text x="255" y="474" fill="#f8fafc" font-size="25" font-weight="700">Harness</text><text x="255" y="504" fill="#94a3b8" font-size="15">Scripts · gates · skills</text></g>
+  </g>
+  <rect x="260" y="594" width="680" height="58" rx="8" fill="#111827" stroke="#334155"/>
+  <text x="600" y="630" text-anchor="middle" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="18">Every loop had to leave a concrete, resumable artifact.</text>
+</svg>
