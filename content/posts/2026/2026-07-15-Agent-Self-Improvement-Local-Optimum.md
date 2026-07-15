@@ -1,7 +1,7 @@
 ---
-title: "자가개선 에이전트도 Local Optimum에 빠진다: Kaggle을 7일간 맡겨본 기록"
+title: "29억 토큰을 처리하고도 371등: 자가개선 에이전트의 Local Optimum"
 date: "2026-07-15"
-teaser: "Codex 하네스는 약 7일간 쉬지 않고 실행되며 스스로 검증과 작업 방식을 개선했다. 하지만 개선할수록 더 안전한 작은 일에 갇혔다."
+teaser: "Codex 하네스는 약 7일간 29억 토큰을 처리하며 스스로 작업 방식을 개선했다. 하지만 개선할수록 더 안전한 작은 일에 갇혔다."
 image: "/images/posts/2026/2026-07-15-Agent-Self-Improvement-Local-Optimum/seven-day-run.svg"
 tags:
   - AI Agent
@@ -23,10 +23,13 @@ AI 에이전트에게 Kaggle 대회를 맡기면 어디까지 갈 수 있을까?
 
 | 항목 | 최종 결과 |
 |---|---:|
+| 처리한 tokens | `2,908,485,828` |
 | Public score | `7374.21` |
 | Public rank | `371 / 3034` |
 | 1위 점수 | `8179.99` |
 | 1위와의 격차 | `805.78` |
+
+토큰 수는 마지막 7일 구간의 로컬 Codex session log에서 메인 에이전트와 subagent의 `token_count` 누적 증가분을 합산한 값이다. 총 input은 약 `28.99억`, 그중 cached input은 약 `27.91억`으로 input의 약 `96.3%`였고, output은 약 `919만` tokens였다. 따라서 이 숫자는 API 청구량이나 비용이 아니라, 캐시를 포함해 하네스가 **처리한 전체 token usage**를 뜻한다.
 
 **실행 지속성은 성공했고, 대회 목표는 실패했다.** 더 중요한 사실은 하네스가 실패를 겪을 때마다 실제로 개선됐는데도 1등과 가까워지지 않았다는 점이다.
 

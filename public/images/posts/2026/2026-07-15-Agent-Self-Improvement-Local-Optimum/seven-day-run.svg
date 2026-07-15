@@ -18,7 +18,7 @@
   </g>
   <g filter="url(#shadow)" font-family="Arial, sans-serif">
     <rect x="64" y="440" width="310" height="116" rx="8" fill="#0f2638" stroke="#38bdf8"/>
-    <text x="90" y="478" fill="#7dd3fc" font-size="15" font-weight="700">SYSTEM RESULT</text><text x="90" y="526" fill="#f8fafc" font-size="30" font-weight="700">7 days running</text>
+    <text x="90" y="478" fill="#7dd3fc" font-size="15" font-weight="700">TOKEN TRACE</text><text x="90" y="526" fill="#f8fafc" font-size="30" font-weight="700">2.91B processed</text>
     <rect x="445" y="440" width="310" height="116" rx="8" fill="#10281d" stroke="#22c55e"/>
     <text x="471" y="478" fill="#86efac" font-size="15" font-weight="700">PUBLIC SCORE</text><text x="471" y="526" fill="#f8fafc" font-size="30" font-weight="700">7374.21</text>
     <rect x="826" y="440" width="310" height="116" rx="8" fill="#30171c" stroke="#fb7185"/>
