@@ -1,5 +1,5 @@
 ---
-title: "29억 토큰을 처리하고도 371등: 자가개선 에이전트의 Local Optimum"
+title: "7일간 29억 토큰을 처리하고도 371등: 자가개선 에이전트의 Local Optimum"
 date: "2026-07-15"
 teaser: "Codex 하네스는 약 7일간 29억 토큰을 처리하며 스스로 작업 방식을 개선했다. 하지만 개선할수록 더 안전한 작은 일에 갇혔다."
 image: "/images/posts/2026/2026-07-15-Agent-Self-Improvement-Local-Optimum/seven-day-run.svg"
@@ -23,6 +23,7 @@ AI 에이전트에게 Kaggle 대회를 맡기면 어디까지 갈 수 있을까?
 
 | 항목 | 최종 결과 |
 |---|---:|
+| 실행 기간 | 약 `7일` |
 | 처리한 tokens | `2,908,485,828` |
 | Public score | `7374.21` |
 | Public rank | `371 / 3034` |
