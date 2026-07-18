@@ -1,5 +1,6 @@
 ---
 title:  "창의적 문제해결"
+date: "2022-11-01"
 teaser: "창의적 문제해결 Skill"
 noindex: true
 tags:
@@ -34,5 +35,4 @@ tags:
    * 고객 데이터 빈틈을 확인 할 수 있음
 
   
-
 

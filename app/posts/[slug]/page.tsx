@@ -4,6 +4,7 @@ import TableOfContents from '@/components/TableOfContents';
 import ShareButtons from '@/components/ShareButtons';
 import RelatedPosts from '@/components/RelatedPosts';
 import { Metadata } from 'next';
+import GoogleAdSense from '@/components/GoogleAdSense';
 
 export async function generateStaticParams() {
     const paths = getAllPostIds();
@@ -61,6 +62,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30 pt-24 pb-20">
+            {!postData.noindex && <GoogleAdSense pId="3166603343095810" />}
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 xl:grid-cols-4 gap-12">
 
                 {/* Main Content */}

@@ -44,10 +44,10 @@ function getAllFiles(dirPath: string, arrayOfFiles: string[] = []): string[] {
   return arrayOfFiles;
 }
 
-export function getSortedPostsData(): PostData[] {
+export function getSortedPostsData({ includeNoindex = false }: { includeNoindex?: boolean } = {}): PostData[] {
   const allFiles = getAllFiles(postsDirectory);
 
-  const allPostsData = allFiles.map((fullPath) => {
+  const allPostsData: PostData[] = allFiles.map((fullPath) => {
     // Slug is the filename without extension
     const fileName = path.basename(fullPath);
     const slug = fileName.replace(/\.md$/, '');
@@ -76,8 +76,12 @@ export function getSortedPostsData(): PostData[] {
     };
   });
 
+  const visiblePosts = includeNoindex
+    ? allPostsData
+    : allPostsData.filter((post) => !post.noindex);
+
   // Sort posts by date
-  return allPostsData.sort((a, b) => {
+  return visiblePosts.sort((a, b) => {
     if (a.date < b.date) {
       return 1;
     } else {

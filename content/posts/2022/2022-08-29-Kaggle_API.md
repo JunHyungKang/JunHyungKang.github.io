@@ -2,6 +2,7 @@
 title:  "Kaggle API"
 date: "2022-08-29"
 teaser: "Kaggle API 사용방법 / official document 정리"
+noindex: true
 tags:
   - Kaggle
   - API

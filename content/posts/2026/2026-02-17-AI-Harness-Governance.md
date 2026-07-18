@@ -219,4 +219,3 @@ Codex도 skills 자체는 있습니다.
 - [Cursor Rules Docs](https://docs.cursor.com/en/context/rules)
 - [rulesync (GitHub)](https://github.com/jpcaparas/rulesync)
 - [skills CLI Docs](https://skills.sh/docs/cli)
-- [add-skill](https://add-skill.org/)

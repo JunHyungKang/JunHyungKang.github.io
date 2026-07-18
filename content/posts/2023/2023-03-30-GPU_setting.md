@@ -2,6 +2,7 @@
 title:  "딥러닝 용 GPU 환경 세팅"
 date: "2023-03-30"
 teaser: "딥러닝 학습을 위한 gpu driver, cuda, cudnn 세팅"
+noindex: true
 tags:
   - gpu
   - cuda

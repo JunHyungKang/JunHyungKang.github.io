@@ -3,6 +3,7 @@ import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import GoogleAdSense from '@/components/GoogleAdSense';
 
 export default function Home() {
   const allPostsData = getSortedPostsData();
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
+      <GoogleAdSense pId="3166603343095810" />
 
       {/* Featured Post Hero */}
       <section className="pt-32 pb-12 px-6 max-w-7xl mx-auto">

@@ -1,6 +1,7 @@
 import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { Metadata } from 'next';
+import GoogleAdSense from '@/components/GoogleAdSense';
 
 export const metadata: Metadata = {
     title: 'Archive',
@@ -12,6 +13,7 @@ export default function BlogIndex() {
 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
+            <GoogleAdSense pId="3166603343095810" />
 
             <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
                 <div className="mb-12">

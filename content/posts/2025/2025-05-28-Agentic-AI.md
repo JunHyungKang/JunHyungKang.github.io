@@ -40,7 +40,7 @@ tags:
 | --- | ----- | --- |
 | **OpenAI** | Agent는 당신을 대신해 스스로 작업을 수행하는 시스템 | [A practical guide to building agents](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf) |
 | **Anthropic** | Agent: LLM이 자율적으로 프로세스를 조정하고 도구 사용을 결정하며 작업을 수행하는 시스템.<br>Workflow: LLM과 도구가 사전에 정의된 코드 경로를 따라 오케스트레이션되는 시스템.<br>둘을 합친 모든 변형을 **Agentic System**이라 부름. | [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents?ref=blog.langchain.dev) |
-| **Google** | 자신이 가진 도구를 활용해 목표를 달성하려는 애플리케이션.<br>자율적이며 목표가 주어지면 인간 개입 없이 행동 가능.<br>능동적으로(proactive) 다음 행동을 스스로 추론. | [Agents (white paper)](https://www.kaggle.com/whitepaper-agents?utm_source=pytorchkr&ref=pytorchkr) |
+| **Google** | 목표를 추구하고 사용자를 대신해 작업을 완료하는 AI 소프트웨어 시스템. 추론, 계획, 기억을 활용하고 일정 수준의 자율성으로 의사결정함. | [What are AI agents?](https://cloud.google.com/discover/what-are-ai-agents) |
 | **LangChain** | LLM을 사용해 애플리케이션의 제어 흐름을 결정하는 시스템 | [What is an agent?](https://blog.langchain.dev/what-is-an-agent/) |
 | **NVIDIA** | LLM을 활용해 문제를 **추론 → 계획 → 실행**하는 시스템 | NVIDIA Tech Blog |
 | **Microsoft** | 언어 모델 위에 얹혀 정보를 관찰·수집하고, 입력을 제공하며, 함께 실행 계획을 수립하거나 독자적으로 행동하는 계층 | [Microsoft Source](https://news.microsoft.com/source/features/ai/ai-agents-what-they-are-and-how-theyll-change-the-way-we-work/) |
