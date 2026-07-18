@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  trailingSlash: true,
-  /* config options here */
+  // GitHub Pages serves exported `.html` routes without a trailing slash.
+  trailingSlash: false,
   reactCompiler: true,
 };
 

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Home() {
   const allPostsData = getSortedPostsData();
@@ -34,9 +35,12 @@ export default function Home() {
 
               <div className="order-1 md:order-2 relative aspect-video rounded-2xl overflow-hidden bg-slate-800 border border-slate-700 shadow-2xl group-hover:shadow-blue-900/20 transition-all">
                 {featuredPost.image ? (
-                  <img
+                  <Image
                     src={featuredPost.image}
                     alt={featuredPost.title}
+                    fill
+                    priority
+                    sizes="(min-width: 768px) 50vw, 100vw"
                     className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
                 ) : (
@@ -84,7 +88,7 @@ export default function Home() {
           <div className="flex justify-between items-end mb-12">
             <div>
               <h2 className="text-2xl font-bold text-white mb-2">Selected Projects</h2>
-              <p className="text-slate-400 text-sm">Check out what I've been building.</p>
+              <p className="text-slate-400 text-sm">Check out what I’ve been building.</p>
             </div>
             <Link href="/projects" className="text-slate-400 hover:text-white text-sm font-medium">
               View all projects →

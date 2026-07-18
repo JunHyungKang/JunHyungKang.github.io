@@ -3,7 +3,6 @@ import Comments from '@/components/Comments';
 import TableOfContents from '@/components/TableOfContents';
 import ShareButtons from '@/components/ShareButtons';
 import RelatedPosts from '@/components/RelatedPosts';
-import AdBanner from '@/components/AdBanner';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -22,6 +21,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         alternates: {
             canonical: `https://junhyungkang.github.io/posts/${slug}`,
         },
+        robots: postData.noindex ? {
+            index: false,
+            follow: true,
+        } : undefined,
         openGraph: {
             title: postData.title,
             description: postData.teaser || `Read ${postData.title} on JunHyung's Tech Log`,

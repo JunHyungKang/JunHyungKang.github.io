@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar } from "lucide-react";
 
 interface ArticleCardProps {
@@ -17,10 +18,12 @@ export default function ArticleCard({ title, excerpt, date, slug, readTime = "5 
         <Link href={`/posts/${slug}`} className="group block h-full">
             <div className="bg-slate-900/50 rounded-xl border border-slate-800 overflow-hidden hover:bg-slate-800/50 hover:border-slate-700 transition-all duration-300 h-full flex flex-col">
                 {image && (
-                    <div className="aspect-video w-full overflow-hidden bg-slate-800">
-                        <img
+                    <div className="relative aspect-video w-full overflow-hidden bg-slate-800">
+                        <Image
                             src={image}
                             alt={title}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
                     </div>

@@ -4,14 +4,14 @@ import { useEffect, useRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 type AdBannerProps = {
-    dataAdSlot?: string;
+    dataAdSlot: string;
     dataAdFormat?: string;
     dataFullWidthResponsive?: boolean;
     className?: string;
 };
 
 export default function AdBanner({
-    dataAdSlot = "YOUR_AD_SLOT_ID", // Replace with valid slot ID when available
+    dataAdSlot,
     dataAdFormat = "auto",
     dataFullWidthResponsive = true,
     className = "",
@@ -20,8 +20,8 @@ export default function AdBanner({
 
     useEffect(() => {
         try {
-            // @ts-ignore
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
+            const adsWindow = window as Window & { adsbygoogle?: object[] };
+            (adsWindow.adsbygoogle = adsWindow.adsbygoogle || []).push({});
         } catch (err) {
             console.error('AdSense error:', err);
         }
@@ -32,7 +32,7 @@ export default function AdBanner({
             <ins
                 className="adsbygoogle"
                 style={{ display: 'block', width: '100%' }}
-                data-ad-client="ca-pub-3166603343095810" // Using ID from layout.tsx
+                data-ad-client="ca-pub-3166603343095810"
                 data-ad-slot={dataAdSlot}
                 data-ad-format={dataAdFormat}
                 data-full-width-responsive={dataFullWidthResponsive ? "true" : "false"}

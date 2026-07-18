@@ -19,8 +19,9 @@ export interface PostData {
   image?: string;
   contentHtml?: string;
   teaser?: string;
+  tags?: string[];
+  noindex?: boolean;
   headings?: { id: string; text: string; level: number }[];
-  [key: string]: any;
 }
 
 // Helper to get all files recursively

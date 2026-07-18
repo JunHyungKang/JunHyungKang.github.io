@@ -2,6 +2,7 @@
 title:  "matplotlib"
 date: "2022-10-27"
 teaser: "python matplotlib 사용하기"
+noindex: true
 tags:
   - todo
 ---

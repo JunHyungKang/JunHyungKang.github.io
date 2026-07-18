@@ -6,6 +6,7 @@
     "dev": "next dev -p 7424",
     "build": "next build",
     "postbuild": "next-sitemap",
+    "verify:export": "node scripts/verify-static-export.mjs",
     "start": "next start",
     "lint": "eslint"
   },

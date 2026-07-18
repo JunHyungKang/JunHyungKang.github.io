@@ -1,65 +1,60 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Terms of Service',
-    description: 'Terms of Service for JunHyung\'s Tech Log',
+    title: 'Terms of Use',
+    description: 'Terms of use for JunHyung’s Tech Log.',
 };
 
 export default function TermsOfService() {
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 pt-32 pb-20 px-6">
-            <div className="max-w-4xl mx-auto prose prose-invert">
-                <h1>Terms of Service</h1>
-                <p>Last updated: December 28, 2025</p>
+            <div className="max-w-4xl mx-auto prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-300">
+                <h1>Terms of Use</h1>
+                <p>Last updated: July 18, 2026</p>
 
-                <h2>1. Acceptance of Terms</h2>
                 <p>
-                    By accessing and using this website (https://junhyungkang.github.io), you accept and agree to be bound by the terms and provision of this agreement.
+                    By using JunHyung’s Tech Log, you agree to these terms. If you do not agree, please stop using the site.
                 </p>
 
-                <h2>2. Use License</h2>
+                <h2>Purpose of the site</h2>
                 <p>
-                    Permission is granted to temporarily download one copy of the materials (information or software) on JunHyung's Tech Log's website for personal, non-commercial transitory viewing only.
-                </p>
-                <p>
-                    This is the grant of a license, not a transfer of title, and under this license you may not:
-                </p>
-                <ul>
-                    <li>modify or copy the materials;</li>
-                    <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-                    <li>attempt to decompile or reverse engineer any software contained on JunHyung's Tech Log's website;</li>
-                    <li>remove any copyright or other proprietary notations from the materials; or</li>
-                    <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
-                </ul>
-
-                <h2>3. Disclaimer</h2>
-                <p>
-                    The materials on JunHyung's Tech Log's website are provided on an 'as is' basis. JunHyung's Tech Log makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.
+                    This site shares technical notes, opinions, experiments, and project information for general educational purposes. It does not provide
+                    professional legal, financial, medical, or security advice.
                 </p>
 
-                <h2>4. Limitations</h2>
+                <h2>Accuracy and availability</h2>
                 <p>
-                    In no event shall JunHyung's Tech Log or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on JunHyung's Tech Log's website.
+                    Technical information can become outdated and may contain mistakes. Examples may not work in every environment. Content and site features
+                    are provided as available without a guarantee of accuracy, completeness, fitness for a particular purpose, or uninterrupted access.
                 </p>
 
-                <h2>5. Revisions and Errata</h2>
+                <h2>Use of content</h2>
                 <p>
-                    The materials appearing on JunHyung's Tech Log's website could include technical, typographical, or photographic errors. JunHyung's Tech Log does not warrant that any of the materials on its website are accurate, complete or current.
+                    Unless a page states otherwise, the original writing and site materials belong to the site operator. You may quote short portions with clear
+                    attribution and a link to the original page. Republishing substantial portions, presenting the work as your own, or using it in a way that
+                    violates applicable law is not permitted without prior permission.
                 </p>
 
-                <h2>6. Links</h2>
+                <h2>External services and links</h2>
                 <p>
-                    JunHyung's Tech Log has not reviewed all of the sites linked to its website and is not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by JunHyung's Tech Log of the site. Use of any such linked website is at the user's own risk.
+                    The site links to third-party services and may use services such as GitHub, Giscus, and Google AdSense. Those services have their own terms
+                    and policies. The site operator does not control or endorse all third-party content reached through external links.
                 </p>
 
-                <h2>7. Site Terms of Use Modifications</h2>
+                <h2>Limitation of responsibility</h2>
                 <p>
-                    JunHyung's Tech Log may revise these terms of use for its website at any time without notice. By using this website you are agreeing to be bound by the then current version of these Terms and Conditions of Use.
+                    You are responsible for evaluating and testing information before relying on it. To the extent permitted by applicable law, the site operator
+                    is not responsible for loss resulting from the use of the site or reliance on its content.
                 </p>
 
-                <h2>8. Governing Law</h2>
+                <h2>Changes and governing law</h2>
                 <p>
-                    Any claim relating to JunHyung's Tech Log's website shall be governed by the laws of the Republic of Korea without regard to its conflict of law provisions.
+                    These terms may be updated as the site changes. The laws of the Republic of Korea apply to these terms, without regard to conflict-of-law rules.
+                </p>
+
+                <h2>Contact</h2>
+                <p>
+                    Questions about these terms can be sent to <a href="mailto:gogo0920007@gmail.com">gogo0920007@gmail.com</a>.
                 </p>
             </div>
         </main>

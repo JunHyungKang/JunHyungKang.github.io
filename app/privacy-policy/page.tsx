@@ -1,56 +1,66 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Privacy Policy',
-    description: 'Privacy Policy for JunHyung\'s Tech Log',
+    description: 'Privacy and cookie policy for JunHyung’s Tech Log.',
 };
 
 export default function PrivacyPolicy() {
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 pt-32 pb-20 px-6">
-            <div className="max-w-4xl mx-auto prose prose-invert">
+            <div className="max-w-4xl mx-auto prose prose-invert prose-a:text-blue-400 hover:prose-a:text-blue-300">
                 <h1>Privacy Policy</h1>
-                <p>Last updated: December 15, 2025</p>
+                <p>Last updated: July 18, 2026</p>
 
                 <p>
-                    At JunHyung's Tech Log, accessible from https://junhyungkang.github.io, one of our main priorities is the privacy of our visitors.
-                    This Privacy Policy document contains types of information that is collected and recorded by JunHyung's Tech Log and how we use it.
+                    This policy explains how JunHyung’s Tech Log handles information when you visit
+                    <a href="https://junhyungkang.github.io"> junhyungkang.github.io</a>. The site is a public technical blog operated by JH Kang.
                 </p>
 
-                <h2>Log Files</h2>
+                <h2>Information handled by the site</h2>
                 <p>
-                    JunHyung's Tech Log follows a standard procedure of using log files. These files log visitors when they visit websites.
-                    All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses,
-                    browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks.
-                    These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends,
-                    administering the site, tracking users' movement on the website, and gathering demographic information.
+                    The blog does not require an account and does not directly collect names, passwords, or payment information. Like most hosted websites,
+                    infrastructure providers may process technical data such as an IP address, browser type, referring page, requested URL, and request time
+                    to deliver, secure, and maintain the service.
                 </p>
 
-                <h2>Cookies and Web Beacons</h2>
+                <h2>Google AdSense</h2>
                 <p>
-                    Like any other website, JunHyung's Tech Log uses 'cookies'. These cookies are used to store information including visitors' preferences,
-                    and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing
-                    our web page content based on visitors' browser type and/or other information.
+                    This site uses Google AdSense to verify the publisher account and, after approval, to provide advertising. Google and its partners may use
+                    cookies, web beacons, IP addresses, and other identifiers to serve, personalize, and measure ads. Ad selection may be based on a visitor’s
+                    previous visits to this and other websites where permitted.
+                </p>
+                <p>
+                    You can learn how Google uses information from sites that use its services in
+                    <a href="https://policies.google.com/technologies/partner-sites"> Google’s partner sites policy</a>. You can manage personalized advertising in
+                    <a href="https://myadcenter.google.com/"> My Ad Center</a> and review Google advertising technologies in
+                    <a href="https://policies.google.com/technologies/ads"> Google’s advertising policy</a>.
                 </p>
 
-                <h2>Google DoubleClick DART Cookie</h2>
+                <h2>Comments through Giscus</h2>
                 <p>
-                    Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon
-                    their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting
-                    the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a>
+                    Article pages use Giscus for optional comments. Giscus loads content from GitHub Discussions. If you choose to sign in or comment,
+                    GitHub and Giscus process the information needed for that interaction under their own policies. You can read the
+                    <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"> GitHub Privacy Statement</a> and the
+                    <a href="https://github.com/giscus/giscus/blob/main/PRIVACY-POLICY.md"> Giscus Privacy Policy</a>.
                 </p>
 
-                <h2>Privacy Policies</h2>
+                <h2>Cookies and consent</h2>
                 <p>
-                    You may consult this list to find the Privacy Policy for each of the advertising partners of JunHyung's Tech Log.
+                    Third-party services described above may store or read cookies and similar technologies. Where consent is legally required, advertising
+                    is configured through Google’s certified consent tools. Browser settings can also be used to delete or block cookies, although doing so
+                    may affect comments or advertising preferences.
                 </p>
+
+                <h2>External links</h2>
                 <p>
-                    Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements
-                    and links that appear on JunHyung's Tech Log, which are sent directly to users' browser. They automatically receive your IP address when this occurs.
-                    These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.
+                    Articles may link to external websites. Their privacy practices are controlled by their respective operators, not by this blog.
                 </p>
+
+                <h2>Changes and contact</h2>
                 <p>
-                    Note that JunHyung's Tech Log has no access to or control over these cookies that are used by third-party advertisers.
+                    This policy may be updated when the site or its third-party services change. Questions about this policy can be sent to
+                    <a href="mailto:gogo0920007@gmail.com"> gogo0920007@gmail.com</a>.
                 </p>
             </div>
         </main>

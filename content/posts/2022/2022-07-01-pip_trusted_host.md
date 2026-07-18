@@ -2,6 +2,7 @@
 title:  "Pytorch installation 문제 해결"
 date: "2022-07-01"
 teaser: "Pytorch 설치시에 발행하는 문제 해결 log"
+noindex: true
 tags:
   - install
   - pytorch

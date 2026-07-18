@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { Metadata } from 'next';
