@@ -15,11 +15,27 @@ const noindexPostPaths = getMarkdownFiles(path.join(process.cwd(), 'content/post
   .filter((file) => matter.read(file).data.noindex === true)
   .map((file) => `/posts/${path.basename(file, '.md')}`);
 
+const postLastModified = new Map(
+  getMarkdownFiles(path.join(process.cwd(), 'content/posts')).map((file) => {
+    const data = matter.read(file).data;
+    const postPath = `/posts/${path.basename(file, '.md')}`;
+    return [postPath, data.updated || data.date];
+  }),
+);
+
 module.exports = {
   siteUrl: 'https://junhyungkang.github.io',
   generateRobotsTxt: true,
   outDir: 'out',
   generateIndexSitemap: false,
   trailingSlash: false,
+  autoLastmod: false,
   exclude: noindexPostPaths,
+  transform: async (_config, urlPath) => {
+    const lastmod = postLastModified.get(urlPath);
+    return {
+      loc: urlPath,
+      ...(lastmod ? { lastmod } : {}),
+    };
+  },
 };

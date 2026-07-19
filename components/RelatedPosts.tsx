@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { PostData } from "@/lib/posts";
 import { ArrowRight } from "lucide-react";
@@ -14,7 +12,7 @@ export default function RelatedPosts({ posts }: RelatedPostsProps) {
   return (
     <section className="mt-16 mb-8">
       <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
-        You might also like
+        함께 읽을 글
         <ArrowRight className="w-5 h-5 text-slate-500" />
       </h3>
       

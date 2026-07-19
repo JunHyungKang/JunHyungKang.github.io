@@ -25,10 +25,11 @@ export default function Navbar({ posts = [] }: NavbarProps) {
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "About", href: "/about" },
-        { name: "Projects", href: "/projects" },
-        { name: "Blog", href: "/posts" },
+        { name: "홈", href: "/" },
+        { name: "소개", href: "/about" },
+        { name: "프로젝트", href: "/projects" },
+        { name: "주제", href: "/topics" },
+        { name: "글", href: "/posts" },
     ];
 
     return (
@@ -64,7 +65,7 @@ export default function Navbar({ posts = [] }: NavbarProps) {
                             className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors bg-slate-800/50 hover:bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700/50 hover:border-slate-600 group"
                         >
                             <Search size={14} className="group-hover:text-blue-400 transition-colors" />
-                            <span className="text-xs font-medium pr-1">Search...</span>
+                            <span className="text-xs font-medium pr-1">검색</span>
                             <div className="flex items-center gap-0.5 text-[10px] text-slate-500 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-700/50">
                                 <span>⌘</span>
                                 <span>K</span>

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { ArrowUpRight, BookOpen, Github, Wrench } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'Projects',
-    description: 'Selected public tools, open-source work, and technical writing by AI engineer JH Kang.',
+    title: 'AI 엔지니어링 프로젝트',
+    description: 'AI 엔지니어 강준형이 직접 만들고 운영한 공개 도구, 오픈소스 작업과 기술 프로젝트를 소개합니다.',
 };
 
 const projects = [

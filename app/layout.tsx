@@ -19,21 +19,28 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://junhyungkang.github.io'),
   title: {
-    default: "JunHyung's Tech Log: AI Engineer",
+    default: "강준형의 AI 에이전트·LLM 엔지니어링 블로그",
     template: "%s | JH's Tech Log"
   },
-  description: "AI Engineer. Specializing in LLMs, Deep Learning, and Generative AI.",
-  keywords: ['AI', 'LLM', 'Deep Learning', 'Generative AI', 'JH Kang'],
+  description: "AI 엔지니어 강준형이 직접 수행한 AI 에이전트, LLM, 딥러닝 실험과 개발 경험을 기록합니다.",
   alternates: {
     canonical: './',
+    types: {
+      'application/rss+xml': '/feed.xml',
+    },
   },
   openGraph: {
-    title: "JunHyung's Tech Log: AI Engineer",
-    description: "AI Engineer. Specializing in LLMs, Deep Learning, and Generative AI.",
+    title: "강준형의 AI 에이전트·LLM 엔지니어링 블로그",
+    description: "직접 수행한 AI 에이전트, LLM, 딥러닝 실험과 개발 경험을 기록합니다.",
     url: 'https://junhyungkang.github.io',
     siteName: "JunHyung's Tech Log",
     locale: 'ko_KR',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "강준형의 AI 에이전트·LLM 엔지니어링 블로그",
+    description: "직접 수행한 AI 에이전트, LLM, 딥러닝 실험과 개발 경험을 기록합니다.",
   },
   robots: {
     index: true,

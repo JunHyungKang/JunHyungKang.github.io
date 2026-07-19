@@ -9,15 +9,29 @@ export default function Home() {
   const allPostsData = getSortedPostsData();
   const featuredPost = allPostsData[0];
   const recentPosts = allPostsData.slice(1, 7); // Next 6 posts (2 rows of 3)
+  const siteUrl = 'https://junhyungkang.github.io';
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${siteUrl}/#website`,
+    url: siteUrl,
+    name: "JH's Tech Log",
+    alternateName: '강준형의 AI 엔지니어링 블로그',
+    inLanguage: 'ko-KR',
+  };
 
   return (
     <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       <GoogleAdSense pId="3166603343095810" />
 
       {/* Featured Post Hero */}
       <section className="pt-32 pb-12 px-6 max-w-7xl mx-auto">
         <div className="mb-8">
-          <span className="text-blue-400 font-medium tracking-wider text-sm uppercase">Featured Article</span>
+          <span className="text-blue-400 font-medium tracking-wider text-sm">주요 글</span>
         </div>
 
         {featuredPost ? (
@@ -31,7 +45,7 @@ export default function Home() {
                   {featuredPost.teaser || "Read the latest insights and tutorials on AI, Engineering, and Tech."}
                 </p>
                 <div className="flex items-center gap-2 text-blue-400 font-medium group-hover:translate-x-2 transition-transform">
-                  Read Article <ArrowRight size={20} />
+                  글 읽기 <ArrowRight size={20} />
                 </div>
               </div>
 
@@ -64,14 +78,14 @@ export default function Home() {
       {/* Recent Articles Grid */}
       <section className="py-20 px-6 max-w-7xl mx-auto border-t border-slate-800">
         <div className="flex justify-between items-end mb-12">
-          <h2 className="text-3xl font-bold text-white">Recent Articles</h2>
+          <h2 className="text-3xl font-bold text-white">최근 글</h2>
           <Link href="/posts" className="text-blue-400 hover:text-blue-300 text-sm font-medium flex items-center gap-1">
-            View Archive <ArrowRight size={16} />
+            전체 글 보기 <ArrowRight size={16} />
           </Link>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {recentPosts.map(({ slug, date, title, teaser, image }) => (
+          {recentPosts.map(({ slug, date, title, teaser, image, readingTime }) => (
             <ArticleCard
               key={slug}
               title={title}
@@ -79,6 +93,7 @@ export default function Home() {
               date={date}
               slug={slug}
               image={image}
+              readingTime={readingTime}
             />
           ))}
         </div>
@@ -89,19 +104,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12">
             <div>
-              <h2 className="text-2xl font-bold text-white mb-2">Selected Projects</h2>
-              <p className="text-slate-400 text-sm">Check out what I’ve been building.</p>
+              <h2 className="text-2xl font-bold text-white mb-2">주요 프로젝트</h2>
+              <p className="text-slate-400 text-sm">직접 만들고 운영한 공개 프로젝트를 소개합니다.</p>
             </div>
             <Link href="/projects" className="text-slate-400 hover:text-white text-sm font-medium">
-              View all projects →
+              프로젝트 전체 보기 →
             </Link>
           </div>
 
           <Link href="/projects" className="group block p-8 bg-slate-900 rounded-2xl border border-slate-800 hover:border-blue-500/50 transition-all hover:shadow-lg hover:shadow-blue-500/10">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">View Project Portfolio</h3>
-                <p className="text-slate-400">Visit free-utils.app to see all my deployed projects and tools.</p>
+                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">프로젝트 포트폴리오</h3>
+                <p className="text-slate-400">배포한 도구와 오픈소스 프로젝트의 문제·역할·검증 결과를 확인하세요.</p>
               </div>
               <ArrowRight className="text-slate-500 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" size={24} />
             </div>

@@ -16,12 +16,26 @@ export interface PostData {
   slug: string;
   title: string;
   date: string;
+  updated?: string;
   image?: string;
+  readingTime?: number;
   contentHtml?: string;
   teaser?: string;
   tags?: string[];
   noindex?: boolean;
   headings?: { id: string; text: string; level: number }[];
+}
+
+function getPostImage(data: Record<string, unknown>, content: string): string | undefined {
+  if (typeof data.image === 'string' && data.image.trim() !== '') return data.image;
+
+  const match = content.match(/!\[.*?\]\((.*?)\)/);
+  return match?.[1];
+}
+
+function getReadingTime(content: string) {
+  const words = content.trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil(words / 250));
 }
 
 // Helper to get all files recursively
@@ -58,20 +72,13 @@ export function getSortedPostsData({ includeNoindex = false }: { includeNoindex?
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
-    // Extract first image from content if not in frontmatter
-    let image = matterResult.data.image;
-    if (!image) {
-      const imageRegex = /!\[.*?\]\((.*?)\)/;
-      const match = matterResult.content.match(imageRegex);
-      if (match) {
-        image = match[1];
-      }
-    }
+    const image = getPostImage(matterResult.data, matterResult.content);
 
     // Combine the data with the slug
     return {
       slug,
       image,
+      readingTime: getReadingTime(matterResult.content),
       ...(matterResult.data as { date: string; title: string }),
     };
   });
@@ -129,6 +136,7 @@ export async function getPostData(slug: string): Promise<PostData> {
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
+  const image = getPostImage(matterResult.data, matterResult.content);
 
   // Extract headings (H2, H3) for TOC
   const slugger = new GithubSlugger();
@@ -160,6 +168,8 @@ export async function getPostData(slug: string): Promise<PostData> {
   // Combine the data with the slug and contentHtml
   return {
     slug,
+    image,
+    readingTime: getReadingTime(matterResult.content),
     contentHtml,
     headings,
     ...(matterResult.data as { date: string; title: string }),
@@ -175,9 +185,12 @@ export function getPostMetadata(slug: string): PostData {
 
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
+  const image = getPostImage(matterResult.data, matterResult.content);
 
   return {
     slug,
+    image,
+    readingTime: getReadingTime(matterResult.content),
     ...(matterResult.data as { date: string; title: string }),
   };
 }
