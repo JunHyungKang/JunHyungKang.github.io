@@ -2,7 +2,7 @@
 title: "FastMCP 사용자라고 모두 MCP Python SDK v2로 옮겨야 하는 건 아니었다"
 date: "2026-07-28"
 teaser: "공식 SDK의 FastMCP는 mcp<2로 막아야 했고, 별도 패키지인 FastMCP 3은 서두를 이유가 없었다. 두 import 경로를 나눈 뒤 호환성과 운영 전환 지점을 직접 확인했다."
-image: "/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/cover.svg"
+image: "/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/cover.png"
 tags:
   - MCP
   - FastMCP
