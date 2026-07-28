@@ -1,0 +1,43 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="90" y1="44" x2="1080" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07182E"/>
+      <stop offset="1" stop-color="#10294A"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="260" y1="408" x2="955" y2="408" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59D8FF"/>
+      <stop offset="1" stop-color="#8B7CFF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#000D1D" flood-opacity="0.38"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" rx="32" fill="url(#bg)"/>
+  <circle cx="1090" cy="88" r="210" fill="#3E66FF" fill-opacity="0.09"/>
+  <circle cx="88" cy="620" r="245" fill="#00C2FF" fill-opacity="0.07"/>
+
+  <text x="80" y="88" fill="#72DFFF" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">MIGRATION NOTE · 2026-07-28</text>
+  <text x="78" y="177" fill="white" font-family="Arial, sans-serif" font-size="70" font-weight="800">MCP Python SDK v2</text>
+  <text x="80" y="229" fill="#BDD2ED" font-family="Arial, sans-serif" font-size="28" font-weight="500">FastMCP users: choose your migration path by import</text>
+
+  <g filter="url(#shadow)">
+    <rect x="80" y="303" width="455" height="190" rx="22" fill="#102A48" stroke="#31557C"/>
+    <rect x="665" y="303" width="455" height="190" rx="22" fill="#102A48" stroke="#31557C"/>
+  </g>
+
+  <rect x="111" y="333" width="136" height="34" rx="17" fill="#173B60"/>
+  <text x="128" y="357" fill="#83E3FF" font-family="Arial, sans-serif" font-size="17" font-weight="700">OFFICIAL v1</text>
+  <text x="112" y="411" fill="white" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">mcp.server.fastmcp</text>
+  <text x="112" y="454" fill="#AFC6E0" font-family="Arial, sans-serif" font-size="21">Pin &lt;2 or migrate to MCPServer</text>
+
+  <rect x="696" y="333" width="172" height="34" rx="17" fill="#27345F"/>
+  <text x="713" y="357" fill="#BEB4FF" font-family="Arial, sans-serif" font-size="17" font-weight="700">STANDALONE v3</text>
+  <text x="697" y="411" fill="white" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">fastmcp</text>
+  <text x="697" y="454" fill="#AFC6E0" font-family="Arial, sans-serif" font-size="21">Stable today, still resolves mcp&lt;2</text>
+
+  <text x="567" y="421" fill="#79B9FF" font-family="Arial, sans-serif" font-size="62" font-weight="700">≠</text>
+
+  <rect x="80" y="548" width="1040" height="2" fill="url(#accent)" fill-opacity="0.72"/>
+  <text x="80" y="590" fill="#8EABC9" font-family="Arial, sans-serif" font-size="19">Verified with mcp 1.29.0 · mcp 2.0.0 · fastmcp 3.4.5</text>
+</svg>
