@@ -16,6 +16,7 @@ Codex-facing guidance for the public personal blog repository.
 - Use `publish-post` when creating or publishing posts, moving drafts, adding images, or checking static-export paths.
 - Use `source-research` when a draft needs current public sources, citations, or claim verification before publication.
 - Use `humanizer` for prose tone/structure polishing when the task is specifically about making generated writing sound more natural.
+- Use `technical-blog-writing-core` for technical deep dives, benchmarks, architecture articles, and postmortems that need explicit evidence, reproducibility, and tradeoff analysis.
 
 ## Commands
 
@@ -29,3 +30,11 @@ Codex-facing guidance for the public personal blog repository.
 - Drafts live under `content/drafts/`.
 - Post assets live under `public/images/posts/YYYY/YYYY-MM-DD-Slug/`.
 - Markdown and frontmatter image paths should use `/images/posts/YYYY/YYYY-MM-DD-Slug/file.ext`.
+
+## Technical Credibility and Distribution
+
+- Apply the `technical-blog-writing-core` credibility gate before publishing or substantially revising a technical deep dive, benchmark, architecture article, or postmortem.
+- Keep reusable/public baselines, the author's owned contribution, evidence strength, and reproducible artifacts explicit; do not let scale metrics obscure the technical contribution.
+- For Korean technical writing, lead with the author's concrete observation, failed check, or changed judgment. Use `humanizer` before publication, remove translated jargon where Korean is clearer, and avoid the repeated `summary table → numbered sections → exhaustive checklist` shape that reads like an AI-generated release-note recap.
+- For LinkedIn technical posts, use one focused build note, technical note, correction, or question; do not imitate follower-dependent length or authority.
+- Evaluate social distribution with an explicit impression-to-outcome funnel and account baseline. Do not infer sentiment or credibility from reactions alone, especially when the linked article received little traffic.
