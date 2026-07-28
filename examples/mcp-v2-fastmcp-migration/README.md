@@ -3,7 +3,23 @@
 This directory contains the two executable examples referenced by
 `2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration.md`.
 
-Run each example in an isolated environment:
+Check the import split in isolated environments:
+
+```bash
+uv run --python 3.12 --with "mcp==1.29.0" \
+  python -c 'import importlib.util; print(importlib.util.find_spec("mcp.server.fastmcp").origin)'
+
+uv run --python 3.12 --with "mcp==2.0.0" \
+  python -c 'import importlib.util; print(importlib.util.find_spec("mcp.server.fastmcp"))'
+
+uv run --python 3.12 --with "fastmcp==3.4.5" \
+  python -c 'import importlib.metadata; print(importlib.metadata.version("mcp"))'
+```
+
+Expected results are an import path for `mcp==1.29.0`, `None` for
+`mcp==2.0.0`, and `1.29.0` for FastMCP 3.4.5's resolved MCP dependency.
+
+Run each tool-call example in an isolated environment:
 
 ```bash
 uv run official_sdk_v2.py
