@@ -1,0 +1,76 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">MCP Python SDK v2 전환 전 서비스 수준 작업</title>
+  <desc id="desc">트래픽 확인, 상태와 흐름 감사, 배포 보호, 두 protocol 시대 검증 순서로 MCP v2 전환 작업을 보여준다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="60" y1="26" x2="1140" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07182E"/>
+      <stop offset="1" stop-color="#10294A"/>
+    </linearGradient>
+    <linearGradient id="line" x1="110" y1="0" x2="1090" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#59D8FF"/>
+      <stop offset="1" stop-color="#9B8CFF"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000B18" flood-opacity="0.34"/>
+    </filter>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10Z" fill="#6BDFFF"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="720" rx="30" fill="url(#bg)"/>
+  <circle cx="1100" cy="82" r="180" fill="#6C63FF" fill-opacity="0.08"/>
+  <circle cx="68" cy="704" r="190" fill="#00C2FF" fill-opacity="0.07"/>
+
+  <text x="64" y="68" fill="#76DFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20" font-weight="700" letter-spacing="2">SERVICE ACTION PLAN</text>
+  <text x="64" y="122" fill="#FFFFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="40" font-weight="800">SDK를 올리기 전에 확인할 네 가지</text>
+
+  <g filter="url(#shadow)">
+    <rect x="64" y="177" width="248" height="315" rx="22" fill="#102B48" stroke="#3B6B8A"/>
+    <rect x="338" y="177" width="248" height="315" rx="22" fill="#112D4B" stroke="#3E718F"/>
+    <rect x="612" y="177" width="248" height="315" rx="22" fill="#152D4D" stroke="#536C9D"/>
+    <rect x="886" y="177" width="248" height="315" rx="22" fill="#1B2D50" stroke="#6B63A0"/>
+  </g>
+
+  <circle cx="102" cy="219" r="23" fill="#174966"/>
+  <text x="102" y="227" text-anchor="middle" fill="#87E8FF" font-family="Arial, sans-serif" font-size="21" font-weight="800">1</text>
+  <text x="91" y="283" fill="#FFFFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="800">트래픽 확인</text>
+  <text x="91" y="334" fill="#B9D0E4" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">protocol version 비율</text>
+  <text x="91" y="369" fill="#B9D0E4" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">legacy session 유무</text>
+  <text x="91" y="424" fill="#83ABC7" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">sticky session을 언제</text>
+  <text x="91" y="452" fill="#83ABC7" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">걷을지 결정하는 근거</text>
+
+  <circle cx="376" cy="219" r="23" fill="#174966"/>
+  <text x="376" y="227" text-anchor="middle" fill="#87E8FF" font-family="Arial, sans-serif" font-size="21" font-weight="800">2</text>
+  <text x="365" y="283" fill="#FFFFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="800">상태·흐름 감사</text>
+  <text x="365" y="334" fill="#B9D0E4" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">process memory</text>
+  <text x="365" y="369" fill="#B9D0E4" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">callback · subscription</text>
+  <text x="365" y="424" fill="#83ABC7" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">sessionless가 없애지</text>
+  <text x="365" y="452" fill="#83ABC7" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">않는 상태를 찾는다</text>
+
+  <circle cx="650" cy="219" r="23" fill="#263D68"/>
+  <text x="650" y="227" text-anchor="middle" fill="#B5C8FF" font-family="Arial, sans-serif" font-size="21" font-weight="800">3</text>
+  <text x="639" y="283" fill="#FFFFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="800">현재 배포 보호</text>
+  <text x="639" y="334" fill="#C7D1EA" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">dependency pin</text>
+  <text x="639" y="369" fill="#C7D1EA" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">lockfile · rollback</text>
+  <text x="639" y="424" fill="#98A9CF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">준비되지 않은 2.x가</text>
+  <text x="639" y="452" fill="#98A9CF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">배포되는 일을 막는다</text>
+
+  <circle cx="924" cy="219" r="23" fill="#403B70"/>
+  <text x="924" y="227" text-anchor="middle" fill="#D0C9FF" font-family="Arial, sans-serif" font-size="21" font-weight="800">4</text>
+  <text x="913" y="283" fill="#FFFFFF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="26" font-weight="800">두 경로 검증</text>
+  <text x="913" y="334" fill="#D1CCE9" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">2025 + 2026 client</text>
+  <text x="913" y="369" fill="#D1CCE9" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="20">2 replicas + restart</text>
+  <text x="913" y="424" fill="#A9A3CD" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">같은 endpoint에서</text>
+  <text x="913" y="452" fill="#A9A3CD" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="17">canary로 확인한다</text>
+
+  <path d="M312 334H330" stroke="#6BDFFF" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M586 334H604" stroke="#6BDFFF" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M860 334H878" stroke="#6BDFFF" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="94" y="548" width="1012" height="82" rx="20" fill="#143452" stroke="url(#line)"/>
+  <text x="600" y="582" text-anchor="middle" fill="#8EE7FF" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18" font-weight="700">운영 판단의 기준</text>
+  <text x="600" y="611" text-anchor="middle" fill="#E5F1FA" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="23" font-weight="800">SDK upgrade ≠ 서비스 전체가 곧바로 stateless</text>
+
+  <text x="600" y="679" text-anchor="middle" fill="#819FBC" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="18">protocol session과 application state를 분리해서 본다</text>
+</svg>

@@ -1,4 +1,6 @@
-<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">MCP Python SDK v2 서비스 마이그레이션</title>
+  <desc id="desc">2025 계열 session client와 2026 계열 sessionless client를 한 MCPServer endpoint에서 함께 운영할 때 상태, 확장, 호환성을 먼저 확인해야 한다는 내용의 표지.</desc>
   <defs>
     <linearGradient id="bg" x1="90" y1="44" x2="1080" y2="620" gradientUnits="userSpaceOnUse">
       <stop stop-color="#07182E"/>
@@ -17,27 +19,25 @@
   <circle cx="1090" cy="88" r="210" fill="#3E66FF" fill-opacity="0.09"/>
   <circle cx="88" cy="620" r="245" fill="#00C2FF" fill-opacity="0.07"/>
 
-  <text x="80" y="88" fill="#72DFFF" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="3">MIGRATION NOTE · 2026-07-28</text>
-  <text x="78" y="177" fill="white" font-family="Arial, sans-serif" font-size="70" font-weight="800">MCP Python SDK v2</text>
-  <text x="80" y="229" fill="#BDD2ED" font-family="Arial, sans-serif" font-size="28" font-weight="500">FastMCP users: choose your migration path by import</text>
+  <text x="80" y="82" fill="#72DFFF" font-family="Arial, sans-serif" font-size="21" font-weight="700" letter-spacing="3">SERVICE MIGRATION NOTE · 2026-07-28</text>
+  <text x="78" y="169" fill="white" font-family="Arial, sans-serif" font-size="68" font-weight="800">MCP Python SDK v2</text>
+  <text x="80" y="223" fill="#BDD2ED" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="29" font-weight="600">코드보다 먼저 봐야 할 상태 · 확장 · 호환성</text>
 
   <g filter="url(#shadow)">
-    <rect x="80" y="303" width="455" height="190" rx="22" fill="#102A48" stroke="#31557C"/>
-    <rect x="665" y="303" width="455" height="190" rx="22" fill="#102A48" stroke="#31557C"/>
+    <rect x="80" y="295" width="455" height="186" rx="22" fill="#102A48" stroke="#31557C"/>
+    <rect x="665" y="295" width="455" height="186" rx="22" fill="#102A48" stroke="#31557C"/>
   </g>
 
-  <rect x="111" y="333" width="136" height="34" rx="17" fill="#173B60"/>
-  <text x="128" y="357" fill="#83E3FF" font-family="Arial, sans-serif" font-size="17" font-weight="700">OFFICIAL v1</text>
-  <text x="112" y="411" fill="white" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">mcp.server.fastmcp</text>
-  <text x="112" y="454" fill="#AFC6E0" font-family="Arial, sans-serif" font-size="21">Pin &lt;2 or migrate to MCPServer</text>
+  <rect x="111" y="325" width="136" height="34" rx="17" fill="#173B60"/>
+  <text x="179" y="348" text-anchor="middle" fill="#B8D5EC" font-family="Arial, sans-serif" font-size="17" font-weight="700">2025 CLIENT</text>
+  <text x="112" y="405" fill="white" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800">session 유지</text>
+  <text x="112" y="447" fill="#AFC6E0" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21">sticky routing이 아직 필요할 수 있다</text>
 
-  <rect x="696" y="333" width="172" height="34" rx="17" fill="#27345F"/>
-  <text x="713" y="357" fill="#BEB4FF" font-family="Arial, sans-serif" font-size="17" font-weight="700">STANDALONE v3</text>
-  <text x="697" y="411" fill="white" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21">fastmcp</text>
-  <text x="697" y="454" fill="#AFC6E0" font-family="Arial, sans-serif" font-size="21">Stable today, still resolves mcp&lt;2</text>
+  <rect x="696" y="325" width="136" height="34" rx="17" fill="#27345F"/>
+  <text x="764" y="348" text-anchor="middle" fill="#BEB4FF" font-family="Arial, sans-serif" font-size="17" font-weight="700">2026 CLIENT</text>
+  <text x="697" y="405" fill="white" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="27" font-weight="800">sessionless 요청</text>
+  <text x="697" y="447" fill="#AFC6E0" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="21">어느 replica가 요청을 받아도 된다</text>
 
-  <text x="567" y="421" fill="#79B9FF" font-family="Arial, sans-serif" font-size="62" font-weight="700">≠</text>
-
-  <rect x="80" y="548" width="1040" height="2" fill="url(#accent)" fill-opacity="0.72"/>
-  <text x="80" y="590" fill="#8EABC9" font-family="Arial, sans-serif" font-size="19">Verified with mcp 1.29.0 · mcp 2.0.0 · fastmcp 3.4.5</text>
+  <rect x="80" y="530" width="1040" height="58" rx="18" fill="#122F50" stroke="url(#accent)"/>
+  <text x="600" y="566" text-anchor="middle" fill="#DDEAF7" font-family="Pretendard, Apple SD Gothic Neo, Noto Sans KR, sans-serif" font-size="22" font-weight="700">하나의 MCPServer endpoint · 서로 다른 두 운영 경로</text>
 </svg>

@@ -1,7 +1,7 @@
 ---
-title: "MCP Python SDK v2를 설치해보니 FastMCP가 둘이었다"
+title: "MCP Python SDK v2가 바꾼 건 import보다 서버 운영 방식이었다"
 date: "2026-07-28"
-teaser: "mcp 1.29.0과 2.0.0, fastmcp 3.4.5를 따로 설치했다. 같은 FastMCP 이름이 서로 다른 업그레이드 경로를 가리켰다."
+teaser: "2026 client 요청에는 session이 없지만 구형 client는 여전히 session을 쓴다. 기존 운영 환경에서 무엇을 남기고 무엇을 바꿔야 하는지 확인했다."
 image: "/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/cover.svg"
 tags:
   - MCP
@@ -11,11 +11,82 @@ tags:
   - Migration
 ---
 
-## import 한 줄에서 판단이 갈렸다
+## 처음에는 FastMCP 마이그레이션 글을 쓰려 했다
 
-7월 28일 밤 [MCP Python SDK v2.0.0](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)이 정식으로 나왔다. 버전을 고정하지 않고 `pip install mcp`를 실행하면 이제 2.x가 설치된다.
+7월 28일 밤 [MCP Python SDK v2.0.0](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)이 정식으로 나왔다. 처음에는 `FastMCP`가 `MCPServer`로 바뀐 부분과 import 수정 방법을 정리하려고 했다.
 
-릴리스 노트에서 `FastMCP`가 `MCPServer`로 바뀌었다는 문장을 보고 먼저 내 코드를 떠올렸다. 그런데 Python에서 `FastMCP`라고 부르는 것은 하나가 아니다.
+그런데 SDK 문서와 배포 가이드를 같이 읽고 나니 우선순위가 달라졌다. 이름 변경보다 먼저 볼 것은 서비스가 요청을 다루는 방식이었다.
+
+여기서 `v2`는 Python SDK의 버전이다. 이 SDK가 구현한 프로토콜은 `2026-07-28`이다. 글을 확인할 때 Python SDK는 stable이었지만 specification 저장소에는 final tag가 없었다. RC만 공개된 상태였다. 이 글은 “최종 spec 해설”이 아니라 **현재 공개된 stable SDK를 운영 서비스에 적용해도 될지 검토한 기록**이다.
+
+문서에서 내가 가장 먼저 표시한 문장은 2026 경로에 `initialize` handshake와 `Mcp-Session-Id`가 없다는 대목이었다. 프로토콜 버전과 client capability는 요청마다 `_meta`에 실린다.
+
+![MCP 2025 계열의 session 기반 요청과 2026 계열의 sessionless 요청 비교](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/request-lifecycle.svg)
+
+이 문장만 보면 “이제 MCP 서버는 stateless다”라고 요약하기 쉽다. 운영에서는 그렇게 단순하지 않았다.
+
+## sessionless는 무상태 서비스가 됐다는 뜻이 아니다
+
+2026 client가 보내는 Streamable HTTP 요청은 특정 worker에 묶이지 않는다. 첫 요청을 worker A가 받고 다음 요청을 worker B가 받아도 프로토콜 session 때문에 실패하지 않는다. `stateless_http=True`를 켜서 얻는 효과가 아니다. 2026 경로 자체가 그렇게 동작한다.
+
+tool의 업무 상태까지 저절로 사라지는 것은 아니다. 이전 요청의 결과를 process memory에 넣어두고 다음 요청에서 꺼내는 코드라면 여전히 외부 저장소나 명시적인 상태 키가 필요하다. `sessionless`가 없애는 것은 MCP session affinity다. 장바구니나 승인 대기, 작업 진행 상태까지 없애 주지는 않는다.
+
+lifespan의 의미도 달라졌다. v2의 Streamable HTTP lifespan은 서버 시작 때 한 번 실행되고 모든 session과 요청이 같은 값을 공유한다. DB pool이나 공용 HTTP client에는 자연스러운 구조다. 반대로 v1에서 lifespan에 넣어둔 per-session resource가 있다면 사용자 간 상태가 섞이지 않는지 확인해야 한다.
+
+## 같은 endpoint에 두 시대의 client가 들어온다
+
+v2 `MCPServer`는 한 endpoint에서 2026 client와 2025 계열 client를 모두 받는다. 새 `Client`는 `server/discover`를 먼저 시도하고 구형 서버라면 기존 handshake로 돌아간다.
+
+구형 client를 한 번에 끊지 않아도 된다는 건 좋다. 대신 운영 환경도 단번에 2026 방식으로 바뀌지는 않는다. 구형 client는 여전히 `Mcp-Session-Id`를 사용한다. 여러 worker에 나눠 배포했다면 기존 sticky session이나 `stateless_http=True` 설정이 계속 영향을 준다.
+
+그래서 SDK를 올렸다는 이유만으로 load balancer의 stickiness를 바로 제거하면 안 된다. 실제 트래픽에서 협상된 protocol version 비율을 먼저 봐야 한다. 구형 client가 남아 있는 동안에는 한 서비스 안에 session 기반 경로와 sessionless 경로가 같이 존재한다.
+
+## 요청 도중 client를 호출하던 흐름은 다시 설계해야 한다
+
+2026 경로에서는 서버가 client로 요청을 밀어낼 수 없다. 기존의 push elicitation, sampling, `roots/list` 같은 server-initiated request는 이 경로에서 동작하지 않는다.
+
+대신 tool이 질문을 결과로 돌려준다. client가 답을 붙여 다시 호출하는 multi-round-trip 방식이다. SDK의 `Resolve`를 쓰면 같은 tool이 구형 client에는 기존 elicitation을 쓰고 2026 client에는 새 round trip을 쓴다.
+
+호출 방향만 바뀐 것이 아니다. 사용자 확인을 기다리는 동안 요청이 끊겼다가 재개될 수 있다. 재시도는 다른 replica로 갈 수도 있다. 여러 worker를 쓴다면 모든 instance가 같은 `request_state` key를 써야 한다. server name도 맞추거나 명시적인 audience를 공유해야 한다. 결제나 삭제, 승인처럼 부수 효과가 있는 tool은 최종 round에서 딱 한 번 실행되는지 따로 검증하겠다.
+
+## 알림을 쓰는 서비스라면 공용 bus가 필요하다
+
+2026 경로에서는 기존 HTTP GET stream과 `resources/subscribe` 대신 `subscriptions/listen`을 쓴다. client는 받고 싶은 알림 종류를 지정해 하나의 긴 stream을 연다.
+
+이 stream은 어느 한 replica에 연결된다. 다른 replica에서 `notify_resource_updated()`를 호출해도 process 내부 bus만으로는 알림이 건너가지 않는다. 여러 process나 pod에서 알림을 제공하려면 Redis나 NATS 같은 기존 pub/sub 위에 공용 `SubscriptionBus` 구현을 붙여야 한다.
+
+현재 SDK의 subscription stream은 replay나 resume을 제공하지 않는다. 연결이 끊기면 client가 다시 listen하고 최신 상태를 조회해야 한다. 이 복구 절차까지 client와 맞춰 둬야 한다.
+
+## 배포 경계에서 드러나는 변화도 있다
+
+`streamable_http_app()`은 별도 설정이 없으면 localhost만 허용한다. 실제 hostname 뒤에 배포하려면 `TransportSecuritySettings`에 허용할 Host와 Origin을 넣어야 한다. v1 생성자에 있던 transport 설정을 v2의 `run()`이나 app builder로 옮기다가 이 값을 빼먹으면, 애플리케이션은 뜨지만 외부 요청은 `421`로 막힌다.
+
+SDK 내부 HTTP client가 `httpx2`로 바뀐 영향도 import 에러로만 끝나지 않는다. `httpx2`는 OS trust store로 인증서를 검증한다. system CA가 없는 작은 container나 private CA를 쓰는 환경은 TLS handshake부터 확인해야 한다. Streamable HTTP request body가 4 MiB를 넘으면 이제 `413`을 돌려준다는 제한도 생겼다.
+
+OAuth를 붙인 서비스라면 authorization code와 함께 돌아온 issuer 검증까지 포함해 redirect부터 token exchange까지 다시 통과시켜 보는 게 낫다. 이 세 가지는 unit test보다 staging의 실제 hostname과 인증서, 운영에 가까운 payload에서 먼저 드러난다.
+
+## 그래서 지금 해야 할 일
+
+![MCP Python SDK v2 전환 전에 확인할 서비스 수준 작업 네 가지](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/service-action-plan.svg)
+
+**운영 트래픽부터 확인한다.** 어떤 client가 어떤 protocol version으로 접속하는지, legacy session이 얼마나 남아 있는지 기록한다. 이 수치가 sticky session을 유지할 기간과 rollback 범위를 결정한다.
+
+**상태와 역방향 호출을 찾는다.** process memory, session별 lifespan resource, `ctx.elicit()`, sampling, roots, resource subscription을 검색한다. 코드 줄 수보다 이 항목들이 서비스 전환 비용을 더 잘 보여준다.
+
+**현재 배포를 먼저 보호한다.** 공식 SDK v1의 `mcp.server.fastmcp`를 쓰고 있다면 `mcp<2` 상한을 둔다. standalone FastMCP 3라면 정확한 버전을 고정한다. lockfile만 믿지 말고 직접 dependency 범위도 적어 둔다. staging에서는 실제 Host와 Origin, CA, 최대 payload, OAuth callback을 한 번씩 통과시킨다.
+
+**두 시대를 같은 endpoint에서 검증한다.** 적어도 아래 네 경로는 통합 테스트로 남기겠다.
+
+- 2025 client가 initialize 후 두 번째 요청까지 정상 처리되는가
+- 2026 client의 연속 요청을 서로 다른 replica가 처리해도 되는가
+- multi-round-trip의 재시도가 다른 replica나 재시작 뒤에도 이어지는가
+- replica A가 연 subscription에 replica B의 변경 알림이 도착하는가
+
+이 테스트를 통과한 뒤 canary에서 protocol version별 오류율과 latency를 나눠 본다. 구형 client 비율이 충분히 낮아진 뒤에야 legacy session 운영 비용을 걷어낼 수 있다.
+
+## FastMCP 사용자에게는 즉시 할 일이 다르다
+
+Python 생태계에는 `FastMCP`라는 이름이 두 경로에 있다.
 
 ```python
 # 공식 MCP Python SDK v1에 포함됐던 FastMCP
@@ -25,9 +96,25 @@ from mcp.server.fastmcp import FastMCP
 from fastmcp import FastMCP
 ```
 
-이 둘을 같은 프로젝트의 구버전과 신버전 정도로 생각하면 마이그레이션 판단부터 어긋난다.
+![FastMCP import 경로에 따라 달라지는 MCP Python SDK v2 대응 방법](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/fastmcp-action-path.svg)
 
-그래서 Python 3.12.4 격리 환경을 세 개 만들었다. `mcp==1.29.0`, `mcp==2.0.0`, `fastmcp==3.4.5`를 따로 설치하고 import와 tool 호출을 확인했다.
+첫 번째 경로는 v2에서 사라졌다. 아직 이 import를 쓰는 서비스라면 먼저 아래처럼 현재 배포를 보호하고, 별도 변경으로 `MCPServer` 이관을 준비해야 한다.
+
+```toml
+dependencies = [
+  "mcp>=1.28,<2",
+]
+```
+
+두 번째 경로인 standalone FastMCP 3는 당장 깨지는 쪽이 아니다. FastMCP 3.4.5는 공식 SDK dependency를 `mcp>=1.24.0,<2.0`으로 제한한다. 격리 환경에서 설치했을 때도 `mcp==1.29.0`이 잡혔다. 즉, FastMCP 3 서버가 어느 날 자동으로 2026 protocol 서버가 된 것은 아니다.
+
+운영 중이라면 `fastmcp==3.4.5`처럼 정확한 버전을 고정하겠다. [FastMCP의 versioning policy](https://gofastmcp.com/getting-started/installation#versioning-policy)도 production에서는 exact pin을 권한다. 새 프로토콜이 정말 필요해졌을 때 이관 경로를 골라도 늦지 않다. FastMCP 4.0.0a2는 아직 alpha다. 확인 시점의 [패키지 메타데이터](https://pypi.org/pypi/fastmcp-slim/4.0.0a2/json)는 최종 SDK가 아닌 `mcp==2.0.0b2`를 가리켰다. production 전환 대상으로 보기에는 이르다.
+
+## 코드 수정은 서비스 판단 다음이다
+
+공식 SDK v1에서 v2로 옮기기로 했다면 `FastMCP`를 `MCPServer`로 바꾸는 작업 자체는 크지 않을 수 있다. decorator API도 대부분 유지된다. 깨지는 곳은 그 주변이었다. transport 설정은 생성자에서 `run()`이나 `streamable_http_app()`으로 옮겨갔다. `httpx`는 `httpx2`로 바뀌었다. Starlette에 mount했다면 lifespan도 직접 열어야 한다.
+
+나는 Python 3.12.4 격리 환경을 세 개 만들어 import와 가장 작은 tool 호출부터 확인했다.
 
 ```text
 mcp==1.29.0    mcp.server.fastmcp  → import 성공
@@ -38,165 +125,21 @@ fastmcp==3.4.5 의존성 해석 결과   → mcp==1.29.0
 FastMCP 3 tool 호출                → {'result': 5}
 ```
 
-여기까지만 돌려봐도 import 한 줄로 판단이 갈린다. `mcp.server.fastmcp`를 썼다면 v2의 직접 영향권이다. `from fastmcp import FastMCP`를 썼다면 당장 깨질 가능성은 낮지만 새 프로토콜로 올라간 것도 아니다.
+이 테스트는 코드 경로가 맞다는 증거일 뿐 운영 호환성을 보장하지 않는다. 인증, 여러 worker, 재시작, long-lived stream이 붙은 서비스라면 앞의 네 가지 통합 테스트가 더 중요하다. 실행 파일과 version pin은 [재현 코드](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/mcp-v2-fastmcp-migration)에 넣었다.
 
-![FastMCP import 경로에 따라 달라지는 MCP Python SDK v2 대응 방법](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/fastmcp-action-path.svg)
+정리하고 보니 내 결론은 단순했다. 이번 업데이트는 dependency bump가 아니다. 공식 SDK v1 사용자는 우선 `<2`로 배포를 보호한 뒤 서비스의 session과 상태 사용을 확인해야 한다. FastMCP 3 사용자는 급히 코드를 바꿀 이유는 없다. 다만 지금 상태가 2026 protocol을 도입한 것은 아니다.
 
-## v2에서 더 신경 쓰인 것은 session이 사라진 점이다
+내가 운영 서버를 맡고 있다면 새 기능보다 먼저 두 시대의 client가 같은 endpoint를 통과하는지 확인하겠다. import 변경은 그다음이다.
 
-클래스 이름 변경은 검색해서 고칠 수 있다. 운영 방식을 다시 보게 만든 변화는 따로 있었다.
-
-MCP `2026-07-28` 경로에는 `initialize`와 `initialized` handshake가 없다. `Mcp-Session-Id`도 쓰지 않는다. 프로토콜 버전과 `clientCapabilities`는 요청마다 `_meta`에 들어간다. 새 `Client`는 먼저 `server/discover`를 시도하고, 상대가 구형 서버면 기존 handshake로 돌아간다.
-
-![MCP 2025 계열의 session 기반 요청과 2026 계열의 sessionless 요청 비교](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/request-lifecycle.svg)
-
-신규 클라이언트만 상대한다면 특정 워커에 session을 붙잡아 둘 이유가 줄어든다. 반대로 이전 요청에서 만든 메모리 상태가 다음 요청에도 같은 프로세스에 남아 있을 것이라고 가정한 tool은 다시 봐야 한다.
-
-다만 v2의 `MCPServer`는 같은 엔드포인트에서 2025 계열 클라이언트도 받는다. 구형 클라이언트는 여전히 session을 만든다. SDK를 v2로 올렸다고 기존 트래픽까지 한 번에 stateless가 되는 것은 아니다.
-
-`subscriptions/listen`, multi-round-trip request, extension API처럼 새로 들어온 기능도 많다. 그 목록은 공식 문서가 더 정확하고 더 빨리 갱신된다. 이 글에서는 기존 Python 서버를 올릴 때 실제로 걸릴 만한 부분만 다룬다.
-
-## `mcp.server.fastmcp`를 썼다면 먼저 `<2`로 막는다
-
-현재 코드가 아래 import를 쓴다면 의존성 상한부터 확인한다.
-
-```python
-from mcp.server.fastmcp import FastMCP
-```
-
-공식 릴리스 노트도 마이그레이션이 끝나지 않은 프로젝트에는 `<2`를 권한다.
-
-```toml
-dependencies = [
-  "mcp>=1.28,<2",
-]
-```
-
-이 버전 상한이 문제를 해결해 주지는 않는다. 준비 없이 2.x가 설치되는 일을 막을 뿐이다. v1은 유지보수 모드로 들어갔고 앞으로는 보안 수정만 받는다.
-
-그다음 import와 생성자를 바꾼다.
-
-```diff
-- from mcp.server.fastmcp import FastMCP
-+ from mcp.server import MCPServer
-
-- mcp = FastMCP("demo", transport_security=transport_security)
-+ mcp = MCPServer("demo", version="1.4.0")
-
-  if __name__ == "__main__":
--     mcp.run(transport="streamable-http")
-+     mcp.run(
-+         transport="streamable-http",
-+         transport_security=transport_security,
-+     )
-```
-
-`@mcp.tool()`, `@mcp.resource()`, `@mcp.prompt()`는 그대로 쓸 수 있다. 대개 문제는 그 바깥에서 나온다. host, port, transport security 같은 전송 설정은 생성자에서 `run()` 또는 `streamable_http_app()` 쪽으로 이동했다.
-
-저장소가 크다면 일단 이 검색부터 돌리겠다.
-
-```bash
-rg 'mcp\.server\.fastmcp|ClientSession|streamablehttp_client|McpError|inputSchema|ctx\.fastmcp'
-```
-
-검색 결과가 거의 그대로 작업 목록이 된다. `McpError`는 `MCPError`가 됐고 Python attribute는 camelCase에서 snake_case로 바뀌었다. `streamablehttp_client`는 제거됐다. `ctx.fastmcp`는 `ctx.mcp_server`로 읽어야 한다.
-
-## `from fastmcp import FastMCP`는 다른 경로다
-
-FastMCP 3.4.5는 공식 SDK를 `mcp>=1.24.0,<2.0`으로 제한한다. 격리 환경에서 설치했을 때도 `mcp==1.29.0`이 잡혔다. `mcp` v2가 공개됐다고 FastMCP 3 서버가 몰래 v2로 바뀌지는 않는다.
-
-운영 중인 FastMCP 3 서버라면 나는 정확한 버전부터 고정하겠다.
-
-```toml
-dependencies = [
-  "fastmcp==3.4.5",
-]
-```
-
-[FastMCP 버전 정책](https://gofastmcp.com/getting-started/installation#versioning-policy)은 minor 버전에서도 깨지는 변경을 허용한다. 운영 서버라면 범위로 열어두지 말고 정확한 버전을 적는 편이 낫다.
-
-FastMCP 4.0.0a2도 공개돼 있지만 아직 alpha다. [패키지 메타데이터](https://pypi.org/pypi/fastmcp-slim/4.0.0a2/json)를 확인하면 최종 SDK가 아닌 `mcp==2.0.0b2`에 의존한다. 운영 서버를 v4 alpha로 바로 넘기면 v2 마이그레이션과 무관한 위험까지 함께 떠안는다.
-
-FastMCP의 composition, proxy, auth 기능이 꼭 필요하다면 v4 stable을 기다리겠다. 2026 프로토콜이 먼저 필요하다면 공식 `MCPServer` v2를 따로 검토하는 편이 낫다.
-
-공식 SDK v1에서 독립 FastMCP 3로 옮기는 선택지도 있다. 작은 서버는 import 변경만으로 시작할 수 있지만 transport 설정과 prompt message type까지 같지는 않다. 이 경로는 [FastMCP 전환 가이드](https://gofastmcp.com/getting-started/upgrading/from-mcp-sdk)를 기준으로 별도 작업으로 잡는 편이 안전하다.
-
-## import를 고친 뒤에야 보이는 문제도 있다
-
-`httpx2`가 그중 하나다. SDK 내부 HTTP client가 `httpx`에서 `httpx2`로 바뀌면서 v2는 `httpx`를 더 이상 설치하지 않는다. 내 코드가 `httpx`를 직접 import하면서 dependency 선언은 빼먹었다면 이제 `ModuleNotFoundError`가 난다.
-
-더 까다로운 경우는 HTTP client나 OAuth provider를 SDK에 주입했을 때다. `httpx`와 `httpx2` 객체는 런타임 타입이 다르다. 예전 `except httpx.ConnectError`는 SDK가 던진 `httpx2.ConnectError`를 잡지 못한다. `httpx.MockTransport`로 만든 테스트도 같은 이유로 다시 봐야 한다.
-
-Starlette mount도 작은 in-memory 테스트만으로는 확인이 안 된다. `streamable_http_app()`을 하위 앱으로 mount하면 그 앱의 lifespan은 실행되지 않는다. 최상위 앱이 `mcp.session_manager.run()`을 직접 열어야 한다.
-
-```python
-from contextlib import asynccontextmanager
-
-from mcp.server import MCPServer
-from starlette.applications import Starlette
-from starlette.routing import Mount
-
-mcp = MCPServer("demo", version="1.4.0")
-
-
-@asynccontextmanager
-async def lifespan(app: Starlette):
-    async with mcp.session_manager.run():
-        yield
-
-
-app = Starlette(
-    routes=[Mount("/", app=mcp.streamable_http_app(json_response=True))],
-    lifespan=lifespan,
-)
-```
-
-lifespan을 빼도 애플리케이션은 시작된다. 첫 MCP 요청에서야 `Task group is not initialized`가 난다. 시작과 종료를 포함한 통합 테스트가 필요한 이유다.
-
-## 최소 테스트 하나는 남겨두는 편이 낫다
-
-v2의 `Client`에는 서버 객체를 직접 넘길 수 있다. 네트워크 없이 decorator, schema, 호출 결과를 한 번에 확인할 수 있어서 마이그레이션 첫 테스트로 쓰기 좋았다.
-
-```python
-import asyncio
-
-from mcp import Client
-from mcp.server import MCPServer
-
-mcp = MCPServer("migration-check", version="1.0.0")
-
-
-@mcp.tool()
-def add(a: int, b: int) -> int:
-    return a + b
-
-
-async def main() -> None:
-    async with Client(mcp) as client:
-        result = await client.call_tool("add", {"a": 2, "b": 3})
-
-    assert result.structured_content == {"result": 5}
-
-
-asyncio.run(main())
-```
-
-이 테스트는 실제로 `{'result': 5}`를 반환했다. 같은 tool을 FastMCP 3에서도 돌려 결과를 맞췄다. 실행 파일과 버전 pin은 [재현 코드](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/mcp-v2-fastmcp-migration)에 넣었다.
-
-이 결과가 운영 호환성까지 보장하지는 않는다. 인증과 외부 API, 장시간 stream이 붙으면 확인 범위가 달라진다. session에 상태를 두었거나 Starlette에 mount한 서버라면 HTTP 통합 테스트를 별도로 붙여야 한다.
-
-내가 운영 서버를 옮긴다면 lockfile과 import를 먼저 확인한다. 공식 SDK v1 경로가 발견되면 `<2`로 현재 배포를 보호하고, 별도 브랜치에서 `MCPServer`와 새 `Client`로 가장 작은 테스트부터 만든다. 그 테스트가 통과한 뒤 `httpx2`, lifespan, 상태 저장 방식을 본다. 마지막에 구형 클라이언트와 새 클라이언트를 같은 엔드포인트에 붙인다.
-
-버전 숫자만 보고 의존성을 올리는 것보다 손이 더 간다. 그래도 문제가 생겼을 때 어느 경로에서 깨졌는지는 설명할 수 있다.
-
-> **공개 상태 메모 — 2026-07-28 23:32 KST**
-> Python SDK `v2.0.0`은 stable로 공개됐다. 다만 글을 확인한 시점에는 specification 저장소에서 final `2026-07-28` tag를 찾지 못했다. 프로토콜 준수 여부를 판정해야 하는 작업이라면 final tag 공개 후 세부 항목을 다시 대조할 생각이다.
+> **공개 상태 메모 — 2026-07-29 00:02 KST**
+> Python SDK `v2.0.0`은 stable로 공개됐다. 다만 글을 확인한 시점에는 specification 저장소에서 final `2026-07-28` tag를 찾지 못했고 `2026-07-28-RC`가 최신이었다. 최종 spec 준수 여부를 판정해야 하는 작업이라면 final tag 공개 후 세부 항목을 다시 대조해야 한다.
 
 ## 참고한 문서
 
 - [MCP Python SDK v2.0.0 릴리스 노트](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)
-- [MCP Python SDK v2 마이그레이션 가이드](https://py.sdk.modelcontextprotocol.io/migration/)
 - [MCP Python SDK v2에서 달라진 점](https://py.sdk.modelcontextprotocol.io/whats-new/)
-- [MCP 2026-07-28 RC 개요](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate/)
+- [MCP Python SDK v2 배포와 확장 가이드](https://py.sdk.modelcontextprotocol.io/run/deploy/)
+- [MCP Python SDK v2 마이그레이션 가이드](https://py.sdk.modelcontextprotocol.io/migration/)
+- [MCP specification 릴리스 목록](https://github.com/modelcontextprotocol/modelcontextprotocol/releases)
+- [FastMCP versioning policy](https://gofastmcp.com/getting-started/installation#versioning-policy)
 - [FastMCP 3.4.5 dependency](https://github.com/PrefectHQ/fastmcp/blob/v3.4.5/fastmcp_slim/pyproject.toml)
-- [FastMCP 4.0.0a2 릴리스](https://github.com/PrefectHQ/fastmcp/releases/tag/v4.0.0a2)
