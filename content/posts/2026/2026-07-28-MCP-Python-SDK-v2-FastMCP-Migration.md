@@ -1,7 +1,7 @@
 ---
 title: "MCP Python SDK v2가 바꾼 건 import보다 서버 운영 방식이었다"
 date: "2026-07-28"
-teaser: "2026 client 요청에는 session이 없지만 구형 client는 여전히 session을 쓴다. 기존 운영 환경에서 무엇을 남기고 무엇을 바꿔야 하는지 확인했다."
+teaser: "mcp.server.fastmcp 사용자는 먼저 mcp<2로 배포를 보호해야 한다. 별도 패키지인 FastMCP 3 사용자는 서두를 이유가 없다. 그다음 SDK v2가 바꾼 운영 경계를 살펴봤다."
 image: "/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/cover.svg"
 tags:
   - MCP
@@ -20,6 +20,38 @@ tags:
 `v2`라는 이름도 헷갈렸다. 프로토콜까지 최종판이 나온 줄 알았는데 아니었다. 정식으로 나온 건 Python SDK v2다. 이 SDK가 `2026-07-28` 프로토콜을 구현하지만, 내가 확인했을 때 spec 저장소의 최신 릴리스는 여전히 RC였다.
 
 그래서 spec 전체를 설명하려 들지 않았다. 지금 이 SDK를 운영 서버에 올리면 어디서 문제가 날지만 봤다.
+
+## FastMCP 사용자라면 import 경로부터 확인하면 된다
+
+`FastMCP`를 쓴다고 모두 같은 대응을 하면 안 된다. Python 생태계에는 이름이 같은 `FastMCP`가 두 경로에 있다. 먼저 지금 서비스의 import를 확인해야 한다.
+
+```python
+# 공식 MCP Python SDK v1에 포함됐던 FastMCP
+from mcp.server.fastmcp import FastMCP
+
+# 별도 패키지로 배포되는 FastMCP
+from fastmcp import FastMCP
+```
+
+![FastMCP import 경로에 따라 달라지는 MCP Python SDK v2 대응 방법](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/fastmcp-action-path.svg)
+
+**`from mcp.server.fastmcp import FastMCP`를 쓴다면** 우선 `mcp<2`로 현재 배포를 보호해야 한다. 이 import는 SDK v2에서 사라졌다. 준비 없이 의존성 버전만 올리면 서버가 시작되지 않는다.
+
+```toml
+dependencies = [
+  "mcp>=1.28,<2",
+]
+```
+
+그다음 별도 작업으로 `MCPServer` 이관을 준비한다. import를 바꾸는 것보다 session에 상태를 저장했는지, 여러 worker를 쓰는지, tool 실행 중 client에 다시 요청하는 코드가 있는지 먼저 확인해야 한다.
+
+**`from fastmcp import FastMCP`를 쓴다면** 당장 v2 코드로 바꿀 필요는 없다. 내가 확인한 FastMCP 3.4.5는 공식 SDK 의존성 범위를 `mcp>=1.24.0,<2.0`으로 제한했고, 격리 환경에서도 `mcp==1.29.0`이 설치됐다. 즉, FastMCP 3 서버가 저절로 2026 프로토콜 서버가 된 것은 아니다.
+
+운영 중인 버전을 `fastmcp==3.4.5`처럼 정확히 고정하는 것으로 충분하다. [FastMCP의 versioning policy](https://gofastmcp.com/getting-started/installation#versioning-policy)도 운영 환경에서는 정확한 버전 고정을 권한다. FastMCP 4.0.0a2는 아직 alpha이고, 확인 시점의 [패키지 메타데이터](https://pypi.org/pypi/fastmcp-slim/4.0.0a2/json)는 최종 SDK가 아닌 `mcp==2.0.0b2`를 가리켰다. 새 프로토콜이 꼭 필요한 상황이 아니라면 기다리는 쪽이 낫다.
+
+여기까지가 기존 FastMCP 사용자가 지금 할 일이다. 아래부터는 공식 SDK v1에서 v2로 옮기거나, 2026 프로토콜을 실제 서비스에 적용하려는 경우에 확인할 내용이다.
+
+## 왜 import 변경보다 운영 방식을 먼저 봐야 했나
 
 기존 session 기반 HTTP MCP에서는 client가 서버를 처음 만날 때 자신이 쓰는 프로토콜 버전과 지원 기능을 알려줬다. 서버가 돌려준 session ID는 이후 요청마다 다시 보냈다. 서버는 이 ID를 보고 “아까 연결한 client의 다음 요청”이라고 알아봤다.
 
@@ -120,7 +152,7 @@ SDK 내부 HTTP client가 `httpx2`로 바뀐 영향도 import 에러로만 끝�
 
 OAuth를 붙인 서비스라면 authorization code와 함께 돌아온 issuer 검증까지 포함해 redirect부터 token exchange까지 다시 통과시켜 보는 게 낫다. 이 세 가지는 unit test보다 staging의 실제 hostname과 인증서, 운영에 가까운 payload에서 먼저 드러난다.
 
-## 그래서 지금 해야 할 일
+## 2026 프로토콜까지 옮긴다면 해야 할 일
 
 ![MCP Python SDK v2 전환 전에 확인할 서비스 수준 작업 네 가지](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/service-action-plan.svg)
 
@@ -138,32 +170,6 @@ OAuth를 붙인 서비스라면 authorization code와 함께 돌아온 issuer �
 - replica A가 연 subscription에 replica B의 변경 알림이 도착하는가
 
 이 테스트를 통과한 뒤 canary에서 protocol version별 오류율과 latency를 나눠 본다. 구형 client 비율이 충분히 낮아진 뒤에야 legacy session 운영 비용을 걷어낼 수 있다.
-
-## FastMCP 사용자에게는 즉시 할 일이 다르다
-
-Python 생태계에는 `FastMCP`라는 이름이 두 경로에 있다.
-
-```python
-# 공식 MCP Python SDK v1에 포함됐던 FastMCP
-from mcp.server.fastmcp import FastMCP
-
-# 별도 패키지로 배포되는 FastMCP
-from fastmcp import FastMCP
-```
-
-![FastMCP import 경로에 따라 달라지는 MCP Python SDK v2 대응 방법](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/fastmcp-action-path.svg)
-
-첫 번째 경로는 v2에서 사라졌다. 아직 이 import를 쓰는 서비스라면 먼저 아래처럼 현재 배포를 보호하고, 별도 변경으로 `MCPServer` 이관을 준비해야 한다.
-
-```toml
-dependencies = [
-  "mcp>=1.28,<2",
-]
-```
-
-두 번째 경로인 standalone FastMCP 3는 당장 깨지는 쪽이 아니다. FastMCP 3.4.5는 공식 SDK dependency를 `mcp>=1.24.0,<2.0`으로 제한한다. 격리 환경에서 설치했을 때도 `mcp==1.29.0`이 잡혔다. 즉, FastMCP 3 서버가 어느 날 자동으로 2026 protocol 서버가 된 것은 아니다.
-
-운영 중이라면 `fastmcp==3.4.5`처럼 정확한 버전을 고정하겠다. [FastMCP의 versioning policy](https://gofastmcp.com/getting-started/installation#versioning-policy)도 production에서는 exact pin을 권한다. 새 프로토콜이 정말 필요해졌을 때 이관 경로를 골라도 늦지 않다. FastMCP 4.0.0a2는 아직 alpha다. 확인 시점의 [패키지 메타데이터](https://pypi.org/pypi/fastmcp-slim/4.0.0a2/json)는 최종 SDK가 아닌 `mcp==2.0.0b2`를 가리켰다. production 전환 대상으로 보기에는 이르다.
 
 ## 코드 수정은 서비스 판단 다음이다
 
