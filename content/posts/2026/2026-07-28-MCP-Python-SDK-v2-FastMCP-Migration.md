@@ -88,13 +88,21 @@ auto fallback: 2025-11-25 -> {'result': 'legacy server'}
 
 그래서 SDK를 올렸다는 이유만으로 load balancer의 stickiness를 바로 제거하면 안 된다. 실제 트래픽에서 협상된 protocol version 비율을 먼저 봐야 한다. 구형 client가 남아 있는 동안에는 한 서비스 안에 session 기반 경로와 sessionless 경로가 같이 존재한다.
 
-## 요청 도중 client를 호출하던 흐름은 다시 설계해야 한다
+## tool 실행 중 사용자에게 다시 묻는 방식이 달라졌다
 
-2026 경로에서는 서버가 client로 요청을 밀어낼 수 없다. 기존의 push elicitation, sampling, `roots/list` 같은 server-initiated request는 이 경로에서 동작하지 않는다.
+MCP의 평소 요청은 단순하다. ChatGPT나 IDE 같은 client가 MCP server의 tool을 호출하고, 서버가 결과를 돌려준다. 그런데 tool이 한 번에 끝나지 않는 경우가 있다. 파일을 지우기 전에 사용자 확인을 받아야 하거나, 작업할 폴더를 client에게 물어봐야 할 때다.
 
-대신 tool이 질문을 결과로 돌려준다. client가 답을 붙여 다시 호출하는 multi-round-trip 방식이다. SDK의 `Resolve`를 쓰면 같은 tool이 구형 client에는 기존 elicitation을 쓰고 2026 client에는 새 round trip을 쓴다.
+MCP는 이런 역방향 질문에도 이름을 붙여뒀다. 사용자에게 확인창이나 입력 폼을 보여달라는 요청은 `elicitation`, client가 쓰는 LLM에 생성을 부탁하는 것은 `sampling`, client가 열어둔 작업 폴더를 묻는 것은 `roots/list`다. 여기서 client는 단순한 HTTP 호출자가 아니라 사용자 화면과 LLM, 로컬 작업 공간을 가진 ChatGPT·Claude Desktop·IDE 같은 host를 뜻한다.
 
-호출 방향만 바뀐 것이 아니다. 사용자 확인을 기다리는 동안 요청이 끊겼다가 재개될 수 있다. 재시도는 다른 replica로 갈 수도 있다. 여러 worker를 쓴다면 모든 instance가 같은 `request_state` key를 써야 한다. server name도 맞추거나 명시적인 audience를 공유해야 한다. 결제나 삭제, 승인처럼 부수 효과가 있는 tool은 최종 round에서 딱 한 번 실행되는지 따로 검증하겠다.
+2025 계열에서는 server가 tool 호출을 처리하던 연결을 그대로 붙잡고 client에 다시 요청을 보냈다. 예를 들어 `delete_files`를 호출받은 server가 작업을 잠시 멈춘 뒤 “정말 삭제할까요?”라는 `elicitation/create` 요청을 거꾸로 보낸다. client가 사용자 답을 돌려주면 server가 삭제를 마치고 처음 tool 호출의 최종 결과를 반환한다. 문서에서 말하는 server-initiated request나 back-channel이 이 흐름이다.
+
+2026 방식에는 이 역방향 요청 통로가 없다. server는 질문이 필요하다는 `input_required` 결과를 일단 반환한다. client가 사용자 답을 받은 뒤, 그 답을 붙여 같은 tool을 다시 호출한다. SDK를 쓰는 쪽에서는 한 번의 `call_tool()`처럼 보일 수 있지만 실제 통신은 여러 차례 오간다. 그래서 이름도 multi-round-trip이다.
+
+![MCP 2025 계열의 역방향 요청과 2026 계열의 multi-round-trip 비교](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/multi-round-trip.svg)
+
+정확히 말하면 2026에서 `elicitation`, `sampling`, `roots` 기능이 사라진 것은 아니다. server가 독립적인 JSON-RPC 요청을 client에 바로 보내는 push 방식이 사라졌다. Python SDK의 `Resolve`를 사용하면 같은 tool 코드가 구형 client에는 기존 back-channel을, 2026 client에는 multi-round-trip을 사용한다. 다만 `sampling`과 `roots`는 2026 specification에서 deprecated 상태다. 새 서비스라면 이 기능을 전제로 설계하지 않는 편이 낫다.
+
+운영에서 중요한 차이는 처음 받은 tool 요청이 같은 process 안에서 답을 기다리며 계속 살아 있지 않는다는 점이다. 첫 호출과 답을 담은 재호출이 서로 다른 replica로 갈 수 있고, 그 사이 server가 재시작될 수도 있다. `MCPServer`가 왕복 상태를 담은 `request_state`를 보호해 주지만 기본 key는 process마다 다르다. 여러 worker나 instance를 쓴다면 모든 server가 같은 `RequestStateSecurity` key와 audience 설정을 사용해야 한다. 결제나 삭제처럼 부수 효과가 있는 동작은 답이 모두 모인 마지막 round에서 한 번만 실행되는지도 확인해야 한다.
 
 ## 알림을 쓰는 서비스라면 공용 bus가 필요하다
 
@@ -186,6 +194,8 @@ FastMCP 3 tool 호출                → {'result': 5}
 - [MCP Python SDK v2.0.0 릴리스 노트](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)
 - [MCP Python SDK v2에서 달라진 점](https://py.sdk.modelcontextprotocol.io/whats-new/)
 - [MCP Python SDK v2에서 구형 client 함께 제공하기](https://py.sdk.modelcontextprotocol.io/run/legacy-clients/)
+- [MCP Python SDK v2 multi-round-trip 요청](https://py.sdk.modelcontextprotocol.io/handlers/multi-round-trip/)
+- [MCP Python SDK v2 sampling과 roots](https://py.sdk.modelcontextprotocol.io/handlers/sampling-and-roots/)
 - [MCP Python SDK v2 배포와 확장 가이드](https://py.sdk.modelcontextprotocol.io/run/deploy/)
 - [MCP Python SDK v2 마이그레이션 가이드](https://py.sdk.modelcontextprotocol.io/migration/)
 - [MCP specification 릴리스 목록](https://github.com/modelcontextprotocol/modelcontextprotocol/releases)
