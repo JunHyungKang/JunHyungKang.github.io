@@ -1,7 +1,7 @@
 ---
-title: "MCP Python SDK v2가 바꾼 건 import보다 서버 운영 방식이었다"
+title: "FastMCP 사용자라고 모두 MCP Python SDK v2로 옮겨야 하는 건 아니었다"
 date: "2026-07-28"
-teaser: "mcp.server.fastmcp 사용자는 먼저 mcp<2로 배포를 보호해야 한다. 별도 패키지인 FastMCP 3 사용자는 서두를 이유가 없다. 그다음 SDK v2가 바꾼 운영 경계를 살펴봤다."
+teaser: "공식 SDK의 FastMCP는 mcp<2로 막아야 했고, 별도 패키지인 FastMCP 3은 서두를 이유가 없었다. 두 import 경로를 나눈 뒤 호환성과 운영 전환 지점을 직접 확인했다."
 image: "/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/cover.svg"
 tags:
   - MCP
@@ -11,19 +11,13 @@ tags:
   - Migration
 ---
 
-## 처음에는 FastMCP 마이그레이션 글을 쓰려 했다
+## 같은 FastMCP인데 대응은 반대였다
 
 7월 28일 밤 [MCP Python SDK v2.0.0](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)이 정식으로 나왔다. 처음에는 `FastMCP`가 `MCPServer`로 바뀐 부분과 import 수정 방법을 정리하려고 했다.
 
-그런데 SDK 문서와 배포 가이드를 같이 읽고 나니 우선순위가 달라졌다. 이름 변경보다 먼저 볼 것은 서비스가 요청을 다루는 방식이었다.
+격리 환경에서 기존 import부터 실행해 보니 상황이 둘로 갈렸다. 공식 SDK에 들어 있던 `FastMCP`는 v2에서 import 자체가 깨졌다. 별도 패키지인 FastMCP 3은 여전히 SDK v1을 설치하고 정상적으로 실행됐다.
 
-`v2`라는 이름도 헷갈렸다. 프로토콜까지 최종판이 나온 줄 알았는데 아니었다. 정식으로 나온 건 Python SDK v2다. 이 SDK가 `2026-07-28` 프로토콜을 구현하지만, 내가 확인했을 때 spec 저장소의 최신 릴리스는 여전히 RC였다.
-
-그래서 spec 전체를 설명하려 들지 않았다. 지금 이 SDK를 운영 서버에 올리면 어디서 문제가 날지만 봤다.
-
-## FastMCP 사용자라면 import 경로부터 확인하면 된다
-
-`FastMCP`를 쓴다고 모두 같은 대응을 하면 안 된다. Python 생태계에는 이름이 같은 `FastMCP`가 두 경로에 있다. 먼저 지금 서비스의 import를 확인해야 한다.
+이름만 같을 뿐 마이그레이션 경로는 달랐다. 프로토콜 변경점을 읽기 전에 지금 서비스가 어느 쪽을 쓰는지부터 확인해야 한다.
 
 ```python
 # 공식 MCP Python SDK v1에 포함됐던 FastMCP
@@ -49,7 +43,7 @@ dependencies = [
 
 운영 중인 버전을 `fastmcp==3.4.5`처럼 정확히 고정하는 것으로 충분하다. [FastMCP의 versioning policy](https://gofastmcp.com/getting-started/installation#versioning-policy)도 운영 환경에서는 정확한 버전 고정을 권한다. FastMCP 4.0.0a2는 아직 alpha이고, 확인 시점의 [패키지 메타데이터](https://pypi.org/pypi/fastmcp-slim/4.0.0a2/json)는 최종 SDK가 아닌 `mcp==2.0.0b2`를 가리켰다. 새 프로토콜이 꼭 필요한 상황이 아니라면 기다리는 쪽이 낫다.
 
-여기까지가 기존 FastMCP 사용자가 지금 할 일이다. 아래부터는 공식 SDK v1에서 v2로 옮기거나, 2026 프로토콜을 실제 서비스에 적용하려는 경우에 확인할 내용이다.
+기존 FastMCP 사용자가 지금 할 일은 여기까지다. 아래 내용은 공식 SDK v1에서 v2로 옮기거나 2026 프로토콜을 실제 서비스에 적용할 때 확인하면 된다.
 
 ## 왜 import 변경보다 운영 방식을 먼저 봐야 했나
 
@@ -188,12 +182,14 @@ FastMCP 3 tool 호출                → {'result': 5}
 
 이 테스트는 코드 경로가 맞다는 증거일 뿐 운영 호환성을 보장하지 않는다. 인증, 여러 worker, 재시작, long-lived stream이 붙은 서비스라면 앞의 네 가지 통합 테스트가 더 중요하다. 실행 파일과 version pin은 [재현 코드](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/mcp-v2-fastmcp-migration)에 넣었다.
 
-정리하고 보니 내 결론은 단순했다. 이번 업데이트는 dependency bump가 아니다. 공식 SDK v1 사용자는 우선 `<2`로 배포를 보호한 뒤 서비스의 session과 상태 사용을 확인해야 한다. FastMCP 3 사용자는 급히 코드를 바꿀 이유는 없다. 다만 지금 상태가 2026 protocol을 도입한 것은 아니다.
+내가 바꾼 판단은 `FastMCP`를 곧바로 `MCPServer`로 치환하자는 게 아니었다. 먼저 import 경로를 확인하고, 운영 트래픽에서 두 프로토콜 버전의 비율을 보자는 쪽이었다.
 
-내가 운영 서버를 맡고 있다면 새 기능보다 먼저 두 시대의 client가 같은 endpoint를 통과하는지 확인하겠다. import 변경은 그다음이다.
+공식 SDK v1 사용자는 `<2`로 배포를 보호한 뒤 session과 상태 사용을 찾아야 한다. FastMCP 3 사용자는 급히 코드를 바꿀 이유가 없다. 다만 지금 상태가 2026 프로토콜을 도입한 것은 아니다.
 
-> **2026-07-29 00:15 KST에 다시 확인했다.**
-> Python SDK `v2.0.0`은 stable이고 spec 저장소의 최신 릴리스는 여전히 `2026-07-28-RC`였다. final tag가 올라오면 이 글도 다시 대조할 예정이다.
+두 시대의 client가 같은 endpoint를 통과한다는 증거가 생기기 전에는 stickiness도 걷어내지 않겠다. import 변경은 그다음이다.
+
+> **2026-07-29 01:02 KST 확인**
+> Python SDK `v2.0.0`은 stable이다. specification 저장소에는 아직 `2026-07-28` final tag가 없고, 최신 후보 릴리스가 `2026-07-28-RC`로 남아 있다. final tag가 올라오면 다시 대조할 예정이다.
 
 ## 참고한 문서
 
