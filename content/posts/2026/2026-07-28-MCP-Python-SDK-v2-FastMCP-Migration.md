@@ -21,11 +21,13 @@ tags:
 
 그래서 spec 전체를 설명하려 들지 않았다. 지금 이 SDK를 운영 서버에 올리면 어디서 문제가 날지만 봤다.
 
-문서에서 내가 가장 먼저 표시한 문장은 2026 경로에 `initialize` handshake와 `Mcp-Session-Id`가 없다는 대목이었다. 프로토콜 버전과 client capability는 요청마다 `_meta`에 실린다.
+기존 session 기반 HTTP MCP에서는 client가 서버를 처음 만날 때 자신이 쓰는 프로토콜 버전과 지원 기능을 알려줬다. 서버가 돌려준 session ID는 이후 요청마다 다시 보냈다. 서버는 이 ID를 보고 “아까 연결한 client의 다음 요청”이라고 알아봤다.
+
+2026 방식은 이 과정을 없앴다. 요청 하나에 필요한 정보를 모두 넣어 보내기 때문에 서버가 앞선 연결을 기억하지 않아도 된다. 프로토콜 문서에서는 이를 `initialize` handshake와 `Mcp-Session-Id`가 사라지고, 프로토콜 버전과 client capability가 요청의 `_meta`로 옮겨갔다고 설명한다.
 
 ![MCP 2025 계열의 session 기반 요청과 2026 계열의 sessionless 요청 비교](/images/posts/2026/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration/request-lifecycle.svg)
 
-이 문장만 보면 “이제 MCP 서버는 stateless다”라고 요약하기 쉽다. 운영에서는 그렇게 단순하지 않았다.
+여기까지만 보면 “이제 MCP 서버는 stateless다”라고 요약하기 쉽다. 운영에서는 그렇게 단순하지 않았다.
 
 ## sessionless는 무상태 서비스가 됐다는 뜻이 아니다
 
