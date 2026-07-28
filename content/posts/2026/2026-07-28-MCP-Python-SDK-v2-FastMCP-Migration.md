@@ -41,6 +41,49 @@ lifespan의 의미도 달라졌다. v2의 Streamable HTTP lifespan은 서버 시
 
 v2 `MCPServer`는 한 endpoint에서 2026 client와 2025 계열 client를 모두 받는다. 새 `Client`는 `server/discover`를 먼저 시도하고 구형 서버라면 기존 handshake로 돌아간다.
 
+문장만 읽어서는 얼마나 자동으로 처리되는지 감이 오지 않았다. 그래서 Python 3.12.4와 `mcp==2.0.0`으로 실제 Streamable HTTP endpoint를 하나 띄우고, 두 client를 동시에 연결했다. Uvicorn을 시작하고 종료하는 부분까지 포함한 코드는 [실행 파일](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/dual_protocol_http.py)에 뒀다.
+
+```python
+from mcp import Client
+from mcp.server import MCPServer
+
+URL = "http://127.0.0.1:8765/mcp"
+mcp = MCPServer("dual-era-check", version="1.0.0")
+
+
+@mcp.tool()
+def identify() -> str:
+    return "same handler"
+
+
+# mcp.streamable_http_app()을 URL에 띄운 뒤 실행
+async with (
+    Client(URL, mode="legacy") as legacy,
+    Client(URL) as modern,
+):
+    for label, client in (("legacy", legacy), ("modern", modern)):
+        result = await client.call_tool("identify", {})
+        print(
+            f"{label}: {client.protocol_version}"
+            f" -> {result.structured_content}"
+        )
+```
+
+`mode="legacy"`는 이전 방식의 handshake를 강제로 사용한다. 아무 옵션도 주지 않은 `Client(URL)`은 새 방식으로 접속한다. 같은 endpoint와 같은 `identify` handler를 호출한 결과는 이랬다.
+
+```text
+legacy: 2025-11-25 -> {'result': 'same handler'}
+modern: 2026-07-28 -> {'result': 'same handler'}
+```
+
+구형 서버로 돌아가는 경로도 따로 확인했다. `mcp==1.29.0` [서버](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/legacy_sdk_v1_server.py)를 띄우고 기본 설정의 v2 [client](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/v2_client_fallback.py)를 연결했다. 서버는 첫 `server/discover` 요청을 거절했고, client는 곧바로 기존 handshake를 다시 시도했다.
+
+```text
+auto fallback: 2025-11-25 -> {'result': 'legacy server'}
+```
+
+여기까지 돌리고 나니 “한 서버가 두 시대를 받는다”는 말의 범위가 분명해졌다. tool 코드는 나뉘지 않는다. 어느 경로를 탔는지는 연결할 때 협상된 `client.protocol_version`에서 확인할 수 있다.
+
 구형 client를 한 번에 끊지 않아도 된다는 건 좋다. 대신 운영 환경도 단번에 2026 방식으로 바뀌지는 않는다. 구형 client는 여전히 `Mcp-Session-Id`를 사용한다. 여러 worker에 나눠 배포했다면 기존 sticky session이나 `stateless_http=True` 설정이 계속 영향을 준다.
 
 그래서 SDK를 올렸다는 이유만으로 load balancer의 stickiness를 바로 제거하면 안 된다. 실제 트래픽에서 협상된 protocol version 비율을 먼저 봐야 한다. 구형 client가 남아 있는 동안에는 한 서비스 안에 session 기반 경로와 sessionless 경로가 같이 존재한다.
@@ -142,6 +185,7 @@ FastMCP 3 tool 호출                → {'result': 5}
 
 - [MCP Python SDK v2.0.0 릴리스 노트](https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.0.0)
 - [MCP Python SDK v2에서 달라진 점](https://py.sdk.modelcontextprotocol.io/whats-new/)
+- [MCP Python SDK v2에서 구형 client 함께 제공하기](https://py.sdk.modelcontextprotocol.io/run/legacy-clients/)
 - [MCP Python SDK v2 배포와 확장 가이드](https://py.sdk.modelcontextprotocol.io/run/deploy/)
 - [MCP Python SDK v2 마이그레이션 가이드](https://py.sdk.modelcontextprotocol.io/migration/)
 - [MCP specification 릴리스 목록](https://github.com/modelcontextprotocol/modelcontextprotocol/releases)
