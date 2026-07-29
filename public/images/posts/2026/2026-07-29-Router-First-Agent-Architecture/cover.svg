@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
-  <title id="title">나는 왜 새 Agent 서비스의 첫 상자에 Router를 두지 않는가</title>
+  <title id="title">나는 왜 새 Agent 서비스에 Router부터 두지 않는가</title>
   <desc id="desc">왼쪽에는 사용자 요청을 router가 여러 전문 agent로 보내는 구조, 오른쪽에는 하나의 agent가 tools와 harness를 사용하고 필요할 때만 subagent를 호출하는 구조가 있다.</desc>
   <defs>
     <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
@@ -25,8 +25,8 @@
   <circle cx="1076" cy="72" r="160" fill="#22D3EE" opacity="0.06"/>
   <circle cx="86" cy="584" r="190" fill="#34D399" opacity="0.05"/>
 
-  <text x="70" y="70" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">나는 왜 새 Agent 서비스의</text>
-  <text x="70" y="112" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">첫 상자에 Router를 두지 않는가</text>
+  <text x="70" y="70" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">나는 왜 새 Agent 서비스에</text>
+  <text x="70" y="112" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">Router부터 두지 않는가</text>
   <text x="72" y="147" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="20">별도 LLM router를 추가하기 전에 routing eval부터 본다</text>
 
   <rect x="65" y="170" width="485" height="380" rx="24" fill="#0B1728" stroke="#334155" stroke-width="2"/>

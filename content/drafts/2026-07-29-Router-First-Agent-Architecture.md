@@ -1,7 +1,7 @@
 ---
-title: "나는 왜 새 Agent 서비스의 첫 상자에 Router를 두지 않는가"
+title: "나는 왜 새 Agent 서비스에 Router부터 두지 않는가"
 date: "2026-07-29"
-teaser: "약 1년간 별도 LLM Router 대신 primary agent와 tools를 새 agent 프로젝트의 출발점으로 삼았다. 첫 routing 경계를 추가하기 전에 확인할 운영 신호를 정리했다."
+teaser: "별도 Router나 Planner Agent보다 primary agent와 harness를 새 agent 프로젝트의 출발점으로 삼아 왔다. 첫 조율 경계를 추가하기 전에 확인할 운영 신호를 정리했다."
 image: "/images/posts/2026/2026-07-29-Router-First-Agent-Architecture/cover.svg"
 tags:
   - AI Agent
@@ -12,19 +12,15 @@ tags:
   - Evals
 ---
 
-## 나는 아키텍처 그림보다 routing eval을 먼저 찾는다
+## Router나 Planner부터 두는 구조
 
 최근 여러 agent 서비스를 점검하면서 아래 구조를 자주 봤다.
 
-`User → Router → Researcher·Planner·Executor → Supervisor`
+`User → Router/Planner → Researcher·Reviewer·Executor → Supervisor`
 
-이 그림을 보면 routing eval과 trace부터 찾는다. Router가 없을 때 어떤 요청이 실패했고, 넣은 뒤 end-to-end 성공률이 얼마나 달라졌는지 보기 위해서다.
+팀에 따라 이 첫 agent를 Router나 Planner라고 부른다. 이 글에서는 사용자 요청을 받은 뒤 **별도의 LLM 호출로 담당 agent를 고르거나 실행 계획을 만들어 다른 agent에게 넘기는 첫 관문**을 Router라고 부르겠다. 권한이나 tenant를 코드로 나누는 결정론적 분기, primary agent가 실행 중에 tool이나 subagent를 고르는 일은 포함하지 않는다.
 
-개별 서비스의 trace와 수치는 공개할 수 없어 아래 주장의 근거로 쓰지 않았다. 여기서는 점검할 때 사용하는 질문과 공개 연구로 확인할 수 있는 범위만 다룬다.
-
-이 글에서 Router는 사용자 요청을 받은 뒤 **별도의 LLM 호출로 담당 agent를 고르는, 상태를 유지하지 않는 첫 관문**을 뜻한다. 권한이나 tenant를 코드로 나누는 결정론적 분기, primary agent가 실행 중에 tool이나 subagent를 고르는 일은 포함하지 않는다.
-
-나는 약 1년 전부터 새 agent 프로젝트를 primary agent 하나로 시작해 왔다. 사용자 요청과 작업 상태, 최종 결과를 계속 들고 가는 agent다. 저장소 규칙은 `AGENTS.md`, 반복 절차는 skill, 외부 기능은 tool로 붙인다.
+예전에는 나도 역할별 agent를 먼저 나누는 구조를 썼다. 하지만 한 agent가 작업을 끝까지 소유하고 필요한 기능을 harness로 보완하는 방식으로 바꾼 지는 꽤 됐다. 지금은 새 agent 프로젝트를 primary agent 하나로 시작한다. 사용자 요청과 작업 상태, 최종 결과를 이 agent가 계속 들고 간다.
 
 Subagent도 쓴다. 조사 범위가 크면 몇 갈래로 나눠 동시에 돌리고, 긴 context를 떼어놓아야 할 때는 별도 작업으로 보낸다. 그래도 사용자 요청을 소유하는 agent는 바뀌지 않는다. Primary agent가 실행 중에 subagent를 호출하고 결과를 돌려받는다.
 
@@ -36,11 +32,7 @@ Subagent도 쓴다. 조사 범위가 크면 몇 갈래로 나눠 동시에 돌�
 
 ![Router-first 구조와 single-agent baseline 비교](/images/posts/2026/2026-07-29-Router-First-Agent-Architecture/cover.svg)
 
-## “Single agent로 시작하라”는 새로운 얘기가 아니다
-
-[LangChain은 2026년 1월 공개한 아키텍처 가이드](https://www.langchain.com/blog/choosing-the-right-multi-agent-architecture)에서 single agent와 잘 설계한 tool로 시작하라고 권한다. 한계가 확인되면 subagent, skill, handoff, router 가운데 맞는 패턴을 고르라는 내용이다. 결론만 놓고 보면 이 글과 상당히 가깝다.
-
-내가 더 확인하고 싶었던 건 패턴의 종류가 아니었다. 모델이 tool을 직접 고르고 필요한 지침을 그때그때 불러오는 환경에서도, 왜 운영 서비스의 앞단에는 여전히 별도 LLM Router가 자주 놓일까? 그리고 Router를 빼면 원래 맡던 조율은 누가 가져가야 할까?
+내가 확인하고 싶었던 건 single agent와 multi-agent 패턴의 종류가 아니었다. 모델이 tool을 직접 고르고 필요한 지침을 그때그때 불러오는 환경에서도, 왜 운영 서비스의 앞단에는 여전히 별도 LLM Router가 자주 놓일까? 그리고 Router를 빼면 원래 맡던 조율은 누가 가져가야 할까?
 
 그래서 아래에서는 일반적인 single-agent 대 multi-agent 비교보다 작업 소유권과 운영 실패를 중심으로 본다.
 
@@ -140,7 +132,7 @@ Router를 붙인 실험에서는 오분류율과 원문 조건 유실, route별 
 
 ## 이 글이 아직 증명하지 못한 것
 
-이 글은 통제된 운영 benchmark가 아니다. 설계 리뷰에서 약 1년간 사용한 기준을 공개 연구와 대조한 기록이다. 점검한 서비스의 trace와 수치를 공개할 수 없으므로 “Router를 빼면 성능이 오른다”는 주장은 하지 않는다.
+이 글은 통제된 운영 benchmark가 아니다. 여러 agent 서비스를 설계하고 점검하며 써온 기준을 공개 연구와 대조한 기록이다. 점검한 서비스의 trace와 수치를 공개할 수 없으므로 “Router를 빼면 성능이 오른다”는 주장은 하지 않는다.
 
 인용한 연구도 front-door Router 하나의 효과를 직접 측정하지 않았다. OpenHands-Versa는 비교 대상의 model과 비용이 달랐고, Anthropic의 `90.2%`는 자사 Research 시스템의 내부 평가다. Nature 연구와 SILO-BENCH, MAST 역시 과제와 구조가 서로 다르다.
 
@@ -148,7 +140,6 @@ Router를 붙인 실험에서는 오분류율과 원문 조건 유실, route별 
 
 ## 참고 자료
 
-- [Choosing the Right Multi-Agent Architecture — LangChain](https://www.langchain.com/blog/choosing-the-right-multi-agent-architecture)
 - [How we built our multi-agent research system — Anthropic](https://www.anthropic.com/engineering/multi-agent-research-system)
 - [Magentic-One: A Generalist Multi-Agent System for Solving Complex Tasks — Microsoft Research](https://www.microsoft.com/en-us/research/publication/magentic-one-a-generalist-multi-agent-system-for-solving-complex-tasks/)
 - [Coding Agents with Multimodal Browsing are Generalist Problem Solvers — Findings of EACL 2026](https://aclanthology.org/2026.findings-eacl.318/)
