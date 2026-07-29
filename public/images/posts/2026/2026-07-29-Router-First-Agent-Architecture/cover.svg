@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">나는 왜 새 Agent 서비스의 첫 상자에 Router를 두지 않는가</title>
+  <desc id="desc">왼쪽에는 사용자 요청을 router가 여러 전문 agent로 보내는 구조, 오른쪽에는 하나의 agent가 tools와 harness를 사용하고 필요할 때만 subagent를 호출하는 구조가 있다.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111F"/>
+      <stop offset="1" stop-color="#13223A"/>
+    </linearGradient>
+    <linearGradient id="agent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#34D399"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#718096"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34D399"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="630" rx="28" fill="url(#background)"/>
+  <circle cx="1076" cy="72" r="160" fill="#22D3EE" opacity="0.06"/>
+  <circle cx="86" cy="584" r="190" fill="#34D399" opacity="0.05"/>
+
+  <text x="70" y="70" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">나는 왜 새 Agent 서비스의</text>
+  <text x="70" y="112" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">첫 상자에 Router를 두지 않는가</text>
+  <text x="72" y="147" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="20">별도 LLM router를 추가하기 전에 routing eval부터 본다</text>
+
+  <rect x="65" y="170" width="485" height="380" rx="24" fill="#0B1728" stroke="#334155" stroke-width="2"/>
+  <text x="95" y="215" fill="#FCA5A5" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700">ROUTER-FIRST</text>
+  <text x="95" y="247" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="17">역할부터 나누고 요청을 분류한다</text>
+
+  <rect x="93" y="277" width="118" height="54" rx="12" fill="#172033" stroke="#64748B"/>
+  <text x="152" y="311" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="18">User</text>
+  <path d="M 211 304 H 263" stroke="#718096" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="274" y="270" width="154" height="68" rx="14" fill="#3A1821" stroke="#F87171" stroke-width="2" filter="url(#shadow)"/>
+  <text x="351" y="299" text-anchor="middle" fill="#FECACA" font-family="Pretendard, sans-serif" font-size="18" font-weight="700">Router</text>
+  <text x="351" y="322" text-anchor="middle" fill="#FDA4AF" font-family="Pretendard, sans-serif" font-size="13">추가 model call</text>
+
+  <path d="M 351 338 V 376 M 351 376 H 165 V 402 M 351 376 V 402 M 351 376 H 473 V 402" fill="none" stroke="#718096" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="98" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="165" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Researcher</text>
+  <text x="165" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context A</text>
+
+  <rect x="284" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="351" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Executor</text>
+  <text x="351" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context B</text>
+
+  <rect x="406" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="473" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Reviewer</text>
+  <text x="473" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context C</text>
+
+  <text x="95" y="522" fill="#FCA5A5" font-family="Pretendard, sans-serif" font-size="16">routing · context 전달 · 합성 비용을 함께 감수</text>
+
+  <rect x="585" y="170" width="550" height="380" rx="24" fill="#0A1B28" stroke="#1E9B86" stroke-width="2"/>
+  <text x="615" y="215" fill="#6EE7B7" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700">SINGLE-AGENT BASELINE</text>
+  <text x="615" y="247" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="17">하나가 상태를 소유하고 필요한 능력만 불러온다</text>
+
+  <rect x="613" y="277" width="118" height="54" rx="12" fill="#172033" stroke="#64748B"/>
+  <text x="672" y="311" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="18">User</text>
+  <path d="M 731 304 H 785" stroke="#34D399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+  <rect x="797" y="266" width="210" height="80" rx="16" fill="url(#agent)" filter="url(#shadow)"/>
+  <text x="902" y="299" text-anchor="middle" fill="#052E2B" font-family="Pretendard, sans-serif" font-size="20" font-weight="800">Primary Agent</text>
+  <text x="902" y="325" text-anchor="middle" fill="#064E3B" font-family="Pretendard, sans-serif" font-size="13">state · final ownership</text>
+
+  <path d="M 902 346 V 386" stroke="#34D399" stroke-width="3"/>
+  <path d="M 902 386 H 686 V 410 M 902 386 V 410 M 902 386 H 1070 V 410" fill="none" stroke="#34D399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+
+  <rect x="615" y="416" width="142" height="62" rx="13" fill="#102C30" stroke="#2DD4BF"/>
+  <text x="686" y="443" text-anchor="middle" fill="#CCFBF1" font-family="Pretendard, sans-serif" font-size="16">Tools</text>
+  <text x="686" y="463" text-anchor="middle" fill="#5EEAD4" font-family="Pretendard, sans-serif" font-size="12">필요한 것만 노출</text>
+
+  <rect x="831" y="416" width="142" height="62" rx="13" fill="#102C30" stroke="#2DD4BF"/>
+  <text x="902" y="443" text-anchor="middle" fill="#CCFBF1" font-family="Pretendard, sans-serif" font-size="16">Skills · Harness</text>
+  <text x="902" y="463" text-anchor="middle" fill="#5EEAD4" font-family="Pretendard, sans-serif" font-size="12">context · gate · eval</text>
+
+  <rect x="999" y="416" width="142" height="62" rx="13" fill="#13243A" stroke="#38BDF8" stroke-dasharray="7 6"/>
+  <text x="1070" y="443" text-anchor="middle" fill="#E0F2FE" font-family="Pretendard, sans-serif" font-size="16">Subagent</text>
+  <text x="1070" y="463" text-anchor="middle" fill="#7DD3FC" font-family="Pretendard, sans-serif" font-size="12">필요할 때만</text>
+
+  <text x="615" y="522" fill="#6EE7B7" font-family="Pretendard, sans-serif" font-size="16">측정된 병렬성 · 격리 · 소유권 경계에서 확장</text>
+</svg>

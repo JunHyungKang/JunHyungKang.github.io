@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Single-agent에서 multi-agent로 확장하는 판단 순서</title>
+  <desc id="desc">단일 agent에 tools, skills, harness를 붙인 뒤 실패 신호에 따라 deterministic gate, subagent, handoff, supervisor를 선택하는 의사결정 흐름이다.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#ECFDF5"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0F766E"/>
+      <stop offset="1" stop-color="#0891B2"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/>
+    </marker>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0F172A" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="760" rx="28" fill="url(#bg)"/>
+  <text x="64" y="72" fill="#0F172A" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="800">Agent architecture는 실패 신호를 따라 확장한다</text>
+  <text x="65" y="108" fill="#475569" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="19">역할 이름보다 병렬성, context 결합도, 권한과 작업 소유권을 먼저 본다</text>
+
+  <rect x="64" y="152" width="1072" height="122" rx="22" fill="url(#primary)" filter="url(#shadow)"/>
+  <circle cx="121" cy="213" r="32" fill="#CCFBF1"/>
+  <text x="121" y="222" text-anchor="middle" fill="#0F766E" font-family="Pretendard, sans-serif" font-size="25" font-weight="800">1</text>
+  <text x="178" y="197" fill="#FFFFFF" font-family="Pretendard, sans-serif" font-size="25" font-weight="800">Single agent + tools + skills + harness</text>
+  <text x="178" y="232" fill="#CCFBF1" font-family="Pretendard, sans-serif" font-size="17">한 agent가 사용자 대화, 작업 상태, 최종 결과를 소유한다. 가장 강한 모델로 기준선을 먼저 측정한다.</text>
+
+  <path d="M 600 274 V 319" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="356" y="329" width="488" height="82" rx="18" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2" filter="url(#shadow)"/>
+  <text x="600" y="363" text-anchor="middle" fill="#0F172A" font-family="Pretendard, sans-serif" font-size="21" font-weight="700">같은 실패가 반복되는가?</text>
+  <text x="600" y="390" text-anchor="middle" fill="#64748B" font-family="Pretendard, sans-serif" font-size="15">tool schema · prompt · retrieval · checkpoint 개선 후 다시 측정</text>
+
+  <path d="M 356 370 H 177 V 448" fill="none" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 600 411 V 448" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 844 370 H 1024 V 448" fill="none" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <text x="206" y="438" text-anchor="middle" fill="#64748B" font-family="Pretendard, sans-serif" font-size="14">권한·승인 규칙</text>
+  <text x="600" y="438" text-anchor="middle" fill="#64748B" font-family="Pretendard, sans-serif" font-size="14">독립적인 병렬 작업</text>
+  <text x="994" y="438" text-anchor="middle" fill="#64748B" font-family="Pretendard, sans-serif" font-size="14">대화·판단 소유권 변경</text>
+
+  <rect x="64" y="458" width="286" height="130" rx="20" fill="#FFF7ED" stroke="#FB923C" stroke-width="2"/>
+  <text x="92" y="497" fill="#9A3412" font-family="Pretendard, sans-serif" font-size="21" font-weight="800">Deterministic gate</text>
+  <text x="92" y="528" fill="#7C2D12" font-family="Pretendard, sans-serif" font-size="15">인증 · 승인 · 비용 · 보안</text>
+  <text x="92" y="553" fill="#7C2D12" font-family="Pretendard, sans-serif" font-size="15">답이 정해진 분기는 코드로 처리</text>
+
+  <rect x="457" y="458" width="286" height="130" rx="20" fill="#EFF6FF" stroke="#38BDF8" stroke-width="2"/>
+  <text x="485" y="497" fill="#075985" font-family="Pretendard, sans-serif" font-size="21" font-weight="800">On-demand subagent</text>
+  <text x="485" y="528" fill="#0C4A6E" font-family="Pretendard, sans-serif" font-size="15">병렬 탐색 · context 격리</text>
+  <text x="485" y="553" fill="#0C4A6E" font-family="Pretendard, sans-serif" font-size="15">결과는 primary agent로 반환</text>
+
+  <rect x="850" y="458" width="286" height="130" rx="20" fill="#F5F3FF" stroke="#A78BFA" stroke-width="2"/>
+  <text x="878" y="497" fill="#5B21B6" font-family="Pretendard, sans-serif" font-size="21" font-weight="800">Handoff</text>
+  <text x="878" y="528" fill="#4C1D95" font-family="Pretendard, sans-serif" font-size="15">다른 agent가 대화를 이어감</text>
+  <text x="878" y="553" fill="#4C1D95" font-family="Pretendard, sans-serif" font-size="15">작업 소유권도 함께 이전</text>
+
+  <path d="M 600 588 V 630" stroke="#64748B" stroke-width="3" marker-end="url(#arrow)"/>
+  <rect x="356" y="640" width="488" height="78" rx="18" fill="#172033" filter="url(#shadow)"/>
+  <text x="600" y="673" text-anchor="middle" fill="#F8FAFC" font-family="Pretendard, sans-serif" font-size="21" font-weight="800">여러 장기 작업의 상태를 계속 조율한다면 Supervisor</text>
+  <text x="600" y="700" text-anchor="middle" fill="#CBD5E1" font-family="Pretendard, sans-serif" font-size="15">동시성 · 우선순위 · memory isolation이 실제 병목일 때만 추가</text>
+</svg>
