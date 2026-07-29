@@ -27,7 +27,7 @@
 
   <text x="70" y="70" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">나는 왜 새 Agent 서비스에</text>
   <text x="70" y="112" fill="#F8FAFC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="36" font-weight="750">Router부터 두지 않는가</text>
-  <text x="72" y="147" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="20">별도 LLM router를 추가하기 전에 routing eval부터 본다</text>
+  <text x="72" y="147" fill="#94A3B8" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="20">먼저 single-agent baseline을 만들고 반복되는 실패를 본다</text>
 
   <rect x="65" y="170" width="485" height="380" rx="24" fill="#0B1728" stroke="#334155" stroke-width="2"/>
   <text x="95" y="215" fill="#FCA5A5" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700">ROUTER-FIRST</text>
