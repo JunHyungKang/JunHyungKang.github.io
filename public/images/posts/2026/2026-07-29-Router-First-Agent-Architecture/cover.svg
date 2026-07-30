@@ -40,19 +40,19 @@
   <text x="351" y="299" text-anchor="middle" fill="#FECACA" font-family="Pretendard, sans-serif" font-size="18" font-weight="700">Router</text>
   <text x="351" y="322" text-anchor="middle" fill="#FDA4AF" font-family="Pretendard, sans-serif" font-size="13">추가 model call</text>
 
-  <path d="M 351 338 V 376 M 351 376 H 165 V 402 M 351 376 V 402 M 351 376 H 473 V 402" fill="none" stroke="#718096" stroke-width="3" marker-end="url(#arrow)"/>
+  <path d="M 351 338 V 376 M 351 376 H 156 V 402 M 351 376 H 322 V 402 M 351 376 H 483 V 402" fill="none" stroke="#718096" stroke-width="3" marker-end="url(#arrow)"/>
 
-  <rect x="98" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
-  <text x="165" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Researcher</text>
-  <text x="165" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context A</text>
+  <rect x="91" y="409" width="130" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="156" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Researcher</text>
+  <text x="156" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context A</text>
 
-  <rect x="284" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
-  <text x="351" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Executor</text>
-  <text x="351" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context B</text>
+  <rect x="257" y="409" width="130" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="322" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Executor</text>
+  <text x="322" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context B</text>
 
-  <rect x="406" y="409" width="134" height="67" rx="13" fill="#162235" stroke="#64748B"/>
-  <text x="473" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Reviewer</text>
-  <text x="473" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context C</text>
+  <rect x="423" y="409" width="120" height="67" rx="13" fill="#162235" stroke="#64748B"/>
+  <text x="483" y="439" text-anchor="middle" fill="#E2E8F0" font-family="Pretendard, sans-serif" font-size="16">Reviewer</text>
+  <text x="483" y="460" text-anchor="middle" fill="#94A3B8" font-family="Pretendard, sans-serif" font-size="12">context C</text>
 
   <text x="95" y="522" fill="#FCA5A5" font-family="Pretendard, sans-serif" font-size="16">routing · context 전달 · 합성 비용을 함께 감수</text>
 
@@ -66,10 +66,10 @@
 
   <rect x="797" y="266" width="210" height="80" rx="16" fill="url(#agent)" filter="url(#shadow)"/>
   <text x="902" y="299" text-anchor="middle" fill="#052E2B" font-family="Pretendard, sans-serif" font-size="20" font-weight="800">Primary Agent</text>
-  <text x="902" y="325" text-anchor="middle" fill="#064E3B" font-family="Pretendard, sans-serif" font-size="13">state · final ownership</text>
+  <text x="902" y="325" text-anchor="middle" fill="#064E3B" font-family="Pretendard, sans-serif" font-size="13">작업 · state 소유</text>
 
   <path d="M 902 346 V 386" stroke="#34D399" stroke-width="3"/>
-  <path d="M 902 386 H 686 V 410 M 902 386 V 410 M 902 386 H 1070 V 410" fill="none" stroke="#34D399" stroke-width="3" marker-end="url(#arrowGreen)"/>
+  <path d="M 902 386 H 686 V 410 M 902 386 V 410 M 902 386 H 1063 V 410" fill="none" stroke="#34D399" stroke-width="3" marker-end="url(#arrowGreen)"/>
 
   <rect x="615" y="416" width="142" height="62" rx="13" fill="#102C30" stroke="#2DD4BF"/>
   <text x="686" y="443" text-anchor="middle" fill="#CCFBF1" font-family="Pretendard, sans-serif" font-size="16">Tools</text>
@@ -79,9 +79,9 @@
   <text x="902" y="443" text-anchor="middle" fill="#CCFBF1" font-family="Pretendard, sans-serif" font-size="16">Skills · Harness</text>
   <text x="902" y="463" text-anchor="middle" fill="#5EEAD4" font-family="Pretendard, sans-serif" font-size="12">context · gate · eval</text>
 
-  <rect x="999" y="416" width="142" height="62" rx="13" fill="#13243A" stroke="#38BDF8" stroke-dasharray="7 6"/>
-  <text x="1070" y="443" text-anchor="middle" fill="#E0F2FE" font-family="Pretendard, sans-serif" font-size="16">Subagent</text>
-  <text x="1070" y="463" text-anchor="middle" fill="#7DD3FC" font-family="Pretendard, sans-serif" font-size="12">필요할 때만</text>
+  <rect x="992" y="416" width="142" height="62" rx="13" fill="#13243A" stroke="#38BDF8" stroke-dasharray="7 6"/>
+  <text x="1063" y="443" text-anchor="middle" fill="#E0F2FE" font-family="Pretendard, sans-serif" font-size="16">Subagent</text>
+  <text x="1063" y="463" text-anchor="middle" fill="#7DD3FC" font-family="Pretendard, sans-serif" font-size="12">필요할 때만</text>
 
-  <text x="615" y="522" fill="#6EE7B7" font-family="Pretendard, sans-serif" font-size="16">측정된 병렬성 · 격리 · 소유권 경계에서 확장</text>
+  <text x="615" y="522" fill="#6EE7B7" font-family="Pretendard, sans-serif" font-size="16">병렬 실행 · context 격리 · 소유권 이전이 필요할 때 확장</text>
 </svg>
