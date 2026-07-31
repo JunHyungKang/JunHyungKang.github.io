@@ -23,6 +23,8 @@ export interface PostData {
   teaser?: string;
   tags?: string[];
   noindex?: boolean;
+  contentType?: string;
+  evidence?: string;
   headings?: { id: string; text: string; level: number }[];
 }
 

@@ -2,6 +2,7 @@
 title:  "논문 리뷰: Towards Real-Time Multi-Object Tracking"
 date: "2022-10-04"
 teaser: "Wang, Zhongdao, et al. 'Towards real-time multi-object tracking.' European Conference on Computer Vision. Springer, Cham, 2020."
+noindex: true
 tags:
   - object tracking
   - MOT
@@ -133,7 +134,6 @@ input 해상도는 $$1088 \times 608$$을 사용하였다.\
 * smooth upper bound of the triplet loss (Sohn, Kihyuk. "Improved deep metric learning with multi-class n-pair loss objective." Advances in neural information processing systems 29 (2016).)
 * speculate: 1) form a theory or conjecture about a subject without firm evidence. 2)  invest in stocks, property, or other ventures in the hope of gain but with the risk of loss.
 * SORT algorithm (Bewley, Alex, et al. "Simple online and realtime tracking." 2016 IEEE international conference on image processing (ICIP). IEEE, 2016.)
-
 
 
 

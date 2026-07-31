@@ -3,6 +3,8 @@ title: "AI 개발자로서 신입분들에게 전하고 싶은 이야기"
 date: "2026-01-07"
 teaser: "LangChain, LangGraph 기반 AI 개발 경험을 바탕으로 신입 개발자들에게 전하고 싶은 실무 팁과 마인드셋을 정리했습니다."
 image: "/images/posts/2026/2026-01-07-AI-Developer-Advice/thumbnail.png"
+contentType: "실무 경험"
+evidence: "생성형 AI 프로젝트에서 workflow·agent 구조와 팀 협업을 운영하며 얻은 판단을 정리했습니다."
 tags:
   - AI Development
   - LangChain

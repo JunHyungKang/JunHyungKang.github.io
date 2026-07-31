@@ -3,6 +3,7 @@ title: "Antigravity 사용 후기: 출시부터 지금까지"
 date: "2025-12-27"
 teaser: "Antigravity 출시 후 지금까지 사용해본 후기를 공유합니다. 장점, 단점, 그리고 앞으로의 기대까지 정리해봤습니다."
 image: "/images/posts/2025/2025-12-27-Antigravity-Review/good_news_korean.png"
+noindex: true
 tags:
   - Review
   - Antigravity

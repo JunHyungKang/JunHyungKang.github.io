@@ -2,6 +2,7 @@
 title: "딥러닝 왕좌에 도전장을 던진 Muon 옵티마이저: AdamW를 넘어 Kimi K2가 선택한 혁신"
 date: "2025-12-10"
 teaser: "Kimi K2와 1조 파라미터 모델이 선택한 새로운 최적화 기법, Muon Optimizer에 대해 알아봅니다. AdamW의 한계를 넘어 행렬 직교화를 통해 학습 효율과 안정성을 동시에 잡은 혁신적인 방법을 소개합니다."
+noindex: true
 tags:
   - Deep Learning
   - Optimizer
@@ -114,4 +115,3 @@ Muon 옵티마이저에 QK-Clip과 기존의 안정화 기법(가중치 감소, 
 
 *   [Muon: Only 1% overhead for >30% training cost savings (Keller Jordan)](https://kellerjordan.github.io/posts/muon/)
 *   [New Optimizer for LLMs - Muon (YouTube)](https://www.youtube.com/watch?v=bO5nvE289ec)
-

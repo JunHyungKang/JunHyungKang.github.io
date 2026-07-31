@@ -28,8 +28,24 @@ export default function Home() {
       />
       <GoogleAdSense pId="3166603343095810" />
 
+      <section className="px-6 pt-32">
+        <div className="mx-auto max-w-7xl rounded-2xl border border-slate-800 bg-slate-900/50 px-6 py-8 md:px-10">
+          <p className="mb-3 text-sm font-medium tracking-wider text-blue-400">JH&apos;S TECH LOG</p>
+          <h1 className="max-w-4xl text-3xl font-bold leading-tight text-white md:text-4xl">
+            AI 에이전트와 LLM 시스템을 직접 만들고 검증하며 배운 판단을 기록합니다.
+          </h1>
+          <p className="mt-4 max-w-3xl leading-relaxed text-slate-400">
+            공식 문서의 단순 요약보다 재현 가능한 실험, 운영 중 실패한 선택, 실제로 바뀐 설계와 한계를 남깁니다.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-4 text-sm">
+            <Link href="/about" className="font-medium text-blue-400 hover:text-blue-300">작성자 소개 →</Link>
+            <Link href="/editorial-policy" className="font-medium text-blue-400 hover:text-blue-300">작성·검증 원칙 →</Link>
+          </div>
+        </div>
+      </section>
+
       {/* Featured Post Hero */}
-      <section className="pt-32 pb-12 px-6 max-w-7xl mx-auto">
+      <section className="pt-16 pb-12 px-6 max-w-7xl mx-auto">
         <div className="mb-8">
           <span className="text-blue-400 font-medium tracking-wider text-sm">주요 글</span>
         </div>
@@ -38,9 +54,9 @@ export default function Home() {
           <Link href={`/posts/${featuredPost.slug}`} className="group block">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
-                <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight group-hover:text-blue-400 transition-colors">
+                <h2 className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight group-hover:text-blue-400 transition-colors">
                   {featuredPost.title}
-                </h1>
+                </h2>
                 <p className="text-xl text-slate-400 mb-8 leading-relaxed line-clamp-3">
                   {featuredPost.teaser || "Read the latest insights and tutorials on AI, Engineering, and Tech."}
                 </p>

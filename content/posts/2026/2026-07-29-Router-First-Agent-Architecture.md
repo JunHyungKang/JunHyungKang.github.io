@@ -3,6 +3,8 @@ title: "나는 왜 새 Agent 서비스에 Router부터 두지 않는가"
 date: "2026-07-29"
 teaser: "새 agent 프로젝트는 별도 Router나 Planner를 두기보다 primary agent 하나와 harness로 시작해 왔다. 반복되는 실패를 보고 agent 경계를 추가하는 기준을 정리했다."
 image: "/images/posts/2026/2026-07-29-Router-First-Agent-Architecture/cover.svg"
+contentType: "아키텍처 판단 기록"
+evidence: "여러 agent 서비스를 점검하며 본 반복 실패와 역할·권한 경계 문제를 설계 기준으로 정리했습니다."
 tags:
   - AI Agent
   - Agent Architecture

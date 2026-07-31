@@ -176,6 +176,31 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                         dangerouslySetInnerHTML={{ __html: postData.contentHtml || '' }}
                     />
 
+                    {postData.noindex ? (
+                        <section className="mt-12 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-6" aria-labelledby="archive-note-heading">
+                            <p className="mb-2 text-xs font-semibold tracking-wider text-amber-300">ARCHIVE NOTE</p>
+                            <h2 id="archive-note-heading" className="text-lg font-bold text-white">이 글은 과거 기록으로 보관합니다</h2>
+                            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                                최신성과 재현성을 다시 검증하지 않아 검색·광고 대상에서 제외했습니다. 현재 검증 기준은{' '}
+                                <Link href="/editorial-policy" className="text-blue-400 hover:text-blue-300">편집 원칙</Link>
+                                에서 확인할 수 있습니다.
+                            </p>
+                        </section>
+                    ) : (
+                        <section className="mt-12 rounded-2xl border border-slate-800 bg-slate-900/60 p-6" aria-labelledby="article-trust-heading">
+                            <p className="mb-2 text-xs font-semibold tracking-wider text-blue-400">ABOUT THIS ARTICLE</p>
+                            <h2 id="article-trust-heading" className="text-lg font-bold text-white">
+                                이 글은 {postData.contentType}입니다
+                            </h2>
+                            <p className="mt-3 leading-relaxed text-slate-300">{postData.evidence}</p>
+                            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+                                강준형이 작성하고 최종 사실·코드·출처를 검토했습니다. 공개 자료와 작성자의 직접 기여를 구분하는 기준은{' '}
+                                <Link href="/editorial-policy" className="text-blue-400 hover:text-blue-300">편집 원칙</Link>
+                                에서 확인할 수 있습니다.
+                            </p>
+                        </section>
+                    )}
+
                     <ShareButtons title={postData.title} slug={postData.slug} />
 
                     <RelatedPosts posts={relatedPosts} />

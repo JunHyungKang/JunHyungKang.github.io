@@ -3,6 +3,8 @@ title: "7일간 29억 토큰을 처리하고도 371등: 자가개선 에이전�
 date: "2026-07-15"
 teaser: "Codex 하네스는 약 7일간 29억 토큰을 처리하며 스스로 작업 방식을 개선했다. 하지만 개선할수록 더 안전한 작은 일에 갇혔다."
 image: "/images/posts/2026/2026-07-15-Agent-Self-Improvement-Local-Optimum/seven-day-run.svg"
+contentType: "실험·운영 회고"
+evidence: "7일간의 실행 기록, 토큰 로그, 공개 기준 모델, 대회 점수와 실패 사례를 함께 분석했습니다."
 tags:
   - AI Agent
   - Agent Harness

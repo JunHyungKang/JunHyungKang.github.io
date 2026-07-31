@@ -3,6 +3,8 @@ title: "코드를 덜 쓰고 규칙을 더 쓰는 시대: AI 코딩 어시스턴
 date: "2026-02-17"
 teaser: "Cursor·Codex·Claude Code를 오가며 느낀 진짜 병목은 모델 성능보다 운영 모델의 불일치였다. 특히 skills 계층의 비대칭까지 포함해, 개인 취향과 팀 표준을 분리하는 실전 거버넌스 구조를 정리한다."
 image: "/images/posts/2026/2026-02-17-AI-Harness-Governance/cover.png"
+contentType: "운영 설계기"
+evidence: "Cursor·Codex·Claude Code를 오간 팀 운영에서 반복된 설정 충돌과 합의 과정을 근거로 삼았습니다."
 tags:
   - AI Engineering
   - Coding Assistant

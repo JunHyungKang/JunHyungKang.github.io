@@ -13,6 +13,7 @@ const requiredFiles = [
   'out/topics/agent-harness.html',
   'out/topics/llm-engineering.html',
   'out/projects.html',
+  'out/editorial-policy.html',
   'out/privacy-policy.html',
   'out/terms-of-service.html',
   'out/robots.txt',
@@ -43,6 +44,12 @@ const sourcePosts = postSources.map((file) => {
   if (!Array.isArray(data.tags) || data.tags.length === 0) failures.push(`Invalid tags in ${file}`);
   if (typeof data.date === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) failures.push(`Invalid date format in ${file}: ${data.date}`);
   if (typeof data.date === 'string' && !slug.startsWith(data.date)) failures.push(`Filename/date mismatch in ${file}: ${data.date}`);
+  if (data.noindex !== true && (typeof data.contentType !== 'string' || data.contentType.trim() === '')) {
+    failures.push(`Indexable post missing contentType in ${file}`);
+  }
+  if (data.noindex !== true && (typeof data.evidence !== 'string' || data.evidence.trim() === '')) {
+    failures.push(`Indexable post missing evidence in ${file}`);
+  }
 
   if (typeof data.updated === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(data.updated)) {
     failures.push(`Invalid updated format in ${file}: ${data.updated}`);
@@ -95,6 +102,7 @@ if (existsSync('out/sitemap.xml')) {
     if (post.noindex !== hasNoindex) failures.push(`Source/output noindex mismatch: ${post.file}`);
     if (post.noindex && sitemapPaths.has(canonicalPath)) failures.push(`Noindex post appears in sitemap: ${canonicalPath}`);
     if (post.noindex && hasAds) failures.push(`AdSense loads on noindex post: ${output}`);
+    if (post.noindex && !html.includes('ARCHIVE NOTE')) failures.push(`Archive note missing from noindex post: ${output}`);
     if (!post.noindex && !sitemapPaths.has(canonicalPath)) failures.push(`Indexable post missing from sitemap: ${canonicalPath}`);
     if (!post.noindex && !hasAds) failures.push(`AdSense missing from indexable post: ${output}`);
     if (!post.noindex) {
@@ -106,6 +114,10 @@ if (existsSync('out/sitemap.xml')) {
       if (!html.includes('"@type":"BlogPosting"')) failures.push(`BlogPosting JSON-LD missing from ${output}`);
       if (!html.includes('"@type":"BreadcrumbList"')) failures.push(`Breadcrumb JSON-LD missing from ${output}`);
       if (!html.includes('rel="author"') || !html.includes('href="/about"')) failures.push(`Visible author link missing from ${output}`);
+      if (!html.includes('ABOUT THIS ARTICLE') || !html.includes('href="/editorial-policy"')) {
+        failures.push(`Evidence and editorial policy block missing from ${output}`);
+      }
+      if ((html.match(/<h1\b/g) || []).length !== 1) failures.push(`Indexable post must render exactly one h1: ${output}`);
       if (!html.includes('"image":["https://')) failures.push(`Absolute BlogPosting image missing from ${output}`);
       if (!html.includes('<meta property="og:image" content="https://')) failures.push(`Open Graph image missing from ${output}`);
     }
@@ -131,6 +143,7 @@ for (const [file, canonical] of [
   ['out/topics/agent-harness.html', `${siteUrl}/topics/agent-harness`],
   ['out/topics/llm-engineering.html', `${siteUrl}/topics/llm-engineering`],
   ['out/projects.html', `${siteUrl}/projects`],
+  ['out/editorial-policy.html', `${siteUrl}/editorial-policy`],
   ['out/privacy-policy.html', `${siteUrl}/privacy-policy`],
 ]) {
   if (!existsSync(file)) continue;

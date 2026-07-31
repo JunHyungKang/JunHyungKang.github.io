@@ -2,6 +2,7 @@
 title: "DSPy: 프롬프트 엔지니어링의 새로운 패러다임"
 date: "2024-06-10"
 teaser: "기존의 하드코딩된 프롬프트 엔지니어링에서 벗어나, 선언적이고 스스로 최적화하는 DSPy 프레임워크를 소개합니다."
+noindex: true
 tags:
   - DSPy
   - LLM

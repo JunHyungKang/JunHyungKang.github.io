@@ -10,6 +10,7 @@ export default function Footer() {
                 <div className="flex flex-wrap justify-center gap-6 text-sm">
                     <Link href="/about" className="text-slate-400 hover:text-white transition-colors">소개</Link>
                     <Link href="/topics" className="text-slate-400 hover:text-white transition-colors">주제</Link>
+                    <Link href="/editorial-policy" className="text-slate-400 hover:text-white transition-colors">편집 원칙</Link>
                     <Link href="/privacy-policy" className="text-slate-400 hover:text-white transition-colors">개인정보처리방침</Link>
                     <Link href="/terms-of-service" className="text-slate-400 hover:text-white transition-colors">이용약관</Link>
                     <a href="https://github.com/JunHyungKang" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-white transition-colors">GitHub</a>
