@@ -1,7 +1,7 @@
 ---
 title: "사용자 승인을 회수했지만 A2A Task는 계속 실행됐다"
 date: "2026-07-31"
-teaser: "공식 A2A Python SDK 1.1.2로 승인 회수 뒤 실행 중인 Task를 확인했다. 별도 CancelTask나 쓰기 직전 재확인이 없으면 Task는 완료됐고 모의 ERP에 주문 기록도 남았다."
+teaser: "공식 A2A Python SDK 1.1.2로 서비스 승인 회수, 실행 중인 Task, 모의 ERP 쓰기가 자동으로 이어지지 않음을 재현했다. CancelTask와 외부 쓰기 직전 권한 검사는 서로 다른 제어였다."
 image: "/images/posts/2026/2026-07-31-A2A-Agent-Delegation-Authorization/cover.svg"
 contentType: "구현 검토"
 evidence: "A2A Protocol v1.0의 JSON-RPC binding과 공식 Python SDK 1.1.2로 비동기 Task를 실행하고 승인 회수와 CancelTask가 서로 다른 경로임을 검증했습니다."
@@ -17,7 +17,7 @@ tags:
 
 A2A를 실제 서비스에 적용할 때 Agent Card를 읽고 요청을 주고받는 것만으로는 부족하다. Task 실행 중 사용자가 승인을 회수했을 때 작업을 어떻게 멈출지, 이미 외부 시스템에 반영됐다면 어떻게 되돌릴지도 정해야 한다.
 
-승인 회수 뒤 Task가 자동으로 취소되는지 공식 SDK로 직접 확인했다. 7월 22일 PyPI에 배포된 [`a2a-sdk 1.1.2`](https://pypi.org/project/a2a-sdk/1.1.2/)로 개인 Agent 역할의 A2A 클라이언트와 구매 Agent를 연결했다. 구매 Agent는 요청을 받아 모의 ERP에 주문을 기록한다. 주문 Task가 `WORKING`에 들어간 직후 사용자의 승인을 회수하고 세 가지 처리를 비교했다.
+`CancelTask`의 취소 경로는 SDK 소스로 확인할 수 있다. 이번에는 서비스가 관리하는 승인 상태가 바뀌었을 때 실행 중인 A2A Task와 모의 ERP 쓰기가 자동으로 멈추는지를 실행 경로로 재현했다. 7월 22일 PyPI에 배포된 [`a2a-sdk 1.1.2`](https://pypi.org/project/a2a-sdk/1.1.2/)로 개인 Agent 역할의 A2A 클라이언트와 구매 Agent를 연결했다. 구매 Agent는 요청을 받아 모의 ERP에 주문을 기록한다. 주문 Task가 `WORKING`에 들어간 직후 사용자의 승인을 회수하고 세 가지 처리를 비교했다.
 
 | 승인 회수 뒤 처리 | `execute()` 취소 | `cancel()` 호출 | Task 최종 상태 | 모의 ERP 주문 |
 | --- | --- | --- | --- | --- |
@@ -33,17 +33,17 @@ A2A를 실제 서비스에 적용할 때 Agent Card를 읽고 요청을 주고�
 
 `CancelTask`는 프로토콜 v1.0에서 처음 생긴 기능이 아니다. v0.3의 JSON-RPC method `tasks/cancel`이 v1.0 operation `CancelTask`로 이름을 바꿨다. v1.0은 같은 operation을 JSON-RPC와 gRPC의 `CancelTask`, HTTP/REST의 `POST /tasks/{id}:cancel`로 [각각 매핑](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/specification.md#L1159-L1172)한다. [v1.0 변경 문서](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/whats-new-v1.md#L102-L113)는 취소할 수 있는 상태와 상태 전이가 더 명확해졌다고 설명한다. 명세가 보장하는 것은 “서버가 취소를 시도하고 갱신된 Task를 반환한다”는 데까지다. 성공은 보장되지 않는다.
 
-최근 공개된 구현 자료는 주로 호출 시점의 권한을 다룬다. AWS가 7월 1일 공개한 [A2A Gateway 예제](https://aws.amazon.com/blogs/machine-learning/building-a-serverless-a2a-gateway-for-agent-discovery-routing-and-access-control/)는 JWT scope로 접근할 수 있는 Agent를 제한한다. 7월 9일 업데이트된 Microsoft Foundry의 [A2A 인증 문서](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-to-agent-authentication)는 하나의 Agent identity를 공유하는 방식과 사용자별 OAuth 권한을 넘기는 방식을 구분한다.
+최근 AWS와 Microsoft가 공개한 구현 자료는 호출 시점의 권한을 다룬다. AWS가 7월 1일 공개한 [A2A Gateway 예제](https://aws.amazon.com/blogs/machine-learning/building-a-serverless-a2a-gateway-for-agent-discovery-routing-and-access-control/)는 JWT scope로 접근할 수 있는 Agent를 제한한다. 7월 9일 업데이트된 Microsoft Foundry의 [A2A 인증 문서](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-to-agent-authentication)는 하나의 Agent identity를 공유하는 방식과 사용자별 OAuth 권한을 넘기는 방식을 구분한다.
 
 이번 실험에서는 두 Agent 사이의 호출 권한을 정상으로 두고 호출이 시작된 뒤 승인 상태가 바뀌는 경우를 봤다. 사용자가 구매 승인을 회수하면 이미 실행 중인 A2A Task도 멈출까. A2A는 서비스의 승인 저장소를 모르기 때문에 승인 회수를 `CancelTask`로 바꿔 보내지 않는다.
 
-[A2A v1.0의 in-task authorization](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/specification.md#L1884-L1938)은 사람의 승인이나 credential이 더 필요한 Agent가 Task를 `TASK_STATE_AUTH_REQUIRED`로 전환하는 흐름을 정의한다. 이 값은 승인 객체 자체가 아니라 Task가 authorization을 기다리고 있다는 실행 상태다.
+[A2A v1.0의 in-task authorization](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/specification.md#L1884-L1938)은 필요한 credential이나 승인을 client가 충족하도록 Agent가 요청할 때 Task를 `TASK_STATE_AUTH_REQUIRED`로 전환하는 흐름을 정의한다. 이 값은 승인 객체 자체가 아니라 Task가 authorization을 기다리고 있다는 실행 상태다.
 
 이번 실험에서 `ApprovalGrant`는 서비스가 별도로 저장한 승인 정보다. Task는 이미 승인을 받아 실행을 시작한 상태였고, 그 뒤 `ApprovalGrant`를 회수했다. A2A 명세는 이 승인 정보의 식별자와 유효 기간, 회수 이벤트나 외부 변경과의 연결을 데이터 모델로 정하지 않는다. 확인하려던 것은 승인 정보가 `REVOKED`로 바뀌었을 때 실행 중인 Task와 모의 ERP 쓰기가 자동으로 중단되는지였다.
 
 ![승인과 A2A Task의 수명이 어긋나는 구간](/images/posts/2026/2026-07-31-A2A-Agent-Delegation-Authorization/task-lifecycle.svg)
 
-테스트는 Python 3.12.4에서 실행했다. Agent Card에는 `protocol_binding="JSONRPC"`, `protocol_version="1.0"`을 넣었다. 서버는 `DefaultRequestHandler`와 `InMemoryTaskStore`로 구성했다. SDK 1.1.2에서 `DefaultRequestHandler`는 [`DefaultRequestHandlerV2`의 alias](https://github.com/a2aproject/a2a-python/blob/v1.1.2/src/a2a/server/request_handlers/__init__.py#L46)다. 승인 저장소와 ERP 쓰기는 메모리로 단순화했고 실제 ERP API 대신 `ORDER_CREATED`를 기록했다.
+테스트는 Python 3.12.4, A2A Protocol v1.0의 JSON-RPC binding, 공식 Python SDK 1.1.2에서 실행했다. 승인 저장소와 ERP 쓰기는 메모리로 단순화했고 실제 ERP API 대신 `ORDER_CREATED`를 기록했다.
 
 전체 코드는 [`examples/a2a-v1-revocation-lifecycle`](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/a2a-v1-revocation-lifecycle)에 두었다.
 
@@ -160,8 +160,6 @@ async def cancel(self, context, event_queue):
     )
 ```
 
-두 번째 실행 로그에서 `execute_cancelled=TRUE`, `cancel_hook_called=TRUE`를 함께 확인했다. `TASK_STATE_CANCELED`만 본 것이 아니라 SDK가 producer에 취소 신호를 보냈고 Agent의 취소 훅까지 실행했다는 뜻이다.
-
 승인을 회수했다고 A2A 클라이언트가 실행 중인 `task_id`를 찾아 주지는 않는다. Task를 멈추려면 승인과 `task_id`의 관계를 서비스가 기록해 두고 `CancelTask`를 별도로 보내야 한다.
 
 취소 요청을 보냈다고 항상 멈추는 것도 아니다. v1.0 명세는 이미 끝났거나 현재 단계에서 취소할 수 없는 Task에 `TaskNotCancelableError`를 반환할 수 있도록 정의한다.
@@ -250,7 +248,9 @@ T1  사용자가 승인 회수
 T2  ERP 주문 API 호출 → ORDER_CREATED
 ```
 
-쓰기 직전 재확인은 이 시간 창을 줄이지만 없애지는 못한다. 같은 데이터베이스를 쓸 수 있다면 승인 검사와 변경을 한 transaction에 묶을 수 있다. 시스템이 분리돼 있다면 자원 서버가 `approval_version` 같은 fencing 값을 검사해야 한다. 또는 승인 회수가 token의 `active=false`로 이어지는 구성이라면 [token introspection](https://datatracker.ietf.org/doc/html/rfc7662)으로 최신 상태를 확인할 수 있다. 여기서 `approval_version`은 서비스가 단조 증가시키고 자원 서버가 이전 버전의 쓰기를 거절하는 값이다. 짧은 만료 시간은 노출 시간을 줄일 뿐 원자성을 만들지 않는다.
+쓰기 직전 재확인은 이 시간 창을 줄이지만 없애지는 못한다. 같은 데이터베이스를 쓸 수 있다면 승인 검사와 변경을 한 transaction에 묶을 수 있다. 시스템이 분리돼 있다면 자원 서버가 최신 권한 세대와 요청의 `approval_version`을 원자적으로 비교·기록하고 오래된 요청을 거절해야 한다. 여기서 `approval_version`은 서비스가 단조 증가시키는 fencing 값이다.
+
+승인 회수가 token 회수로 이어지는 구성이라면 [token introspection](https://datatracker.ietf.org/doc/html/rfc7662)으로 `active` 상태를 확인할 수도 있다. 다만 introspection 결과를 캐시하면 그 시간만큼 회수 반영이 늦어진다. fencing과 introspection 어느 쪽도 승인 저장소와 ERP 쓰기를 하나의 transaction으로 만들지는 않는다. 짧은 만료 시간 역시 노출 시간을 줄일 뿐 원자성을 만들지 않는다.
 
 ERP가 이런 검사를 지원하지 않으면 최종 방어선은 멱등한 요청과 보상 작업이다. 이 경우 `CancelTask` 성공을 주문 취소 성공으로 기록해서도 안 된다. A2A Task 상태와 ERP 상태를 별도로 저장하고 나중에 대조해야 한다.
 
@@ -264,19 +264,11 @@ ERP가 이런 검사를 지원하지 않으면 최종 방어선은 멱등한 요
 
 따라서 세 실행 결과는 A2A 전체 구현의 안전성을 증명하지 않는다. Python SDK 1.1.2의 JSON-RPC 경로에서 애플리케이션 승인 회수, `CancelTask`, 쓰기 직전 재확인이 서로 다른 동작임을 재현한 결과다.
 
-## `SendMessage` 성공만으로 연결이 끝난 것은 아니다
+## `SendMessage` 성공 뒤에 남는 것
 
-Agent Card를 읽고 `SendMessage`가 성공하면 Agent끼리 대화할 수 있다. 운영 서비스에서는 다음 경로까지 확인해야 한다.
+A2A v1.0은 Agent끼리 Task를 주고받고 취소를 요청하는 형식을 맞춰 준다. `CancelTask`는 불필요한 실행을 줄이지만 권한 불변식이나 이미 반영된 결과의 원복까지 보장하지 않는다.
 
-- 승인 회수 이벤트로 실행 중인 `task_id`를 찾을 수 있는가
-- 그 이벤트가 token 회수와 control-plane identity의 `CancelTask`로 이어지는가
-- 호출받은 Agent가 `cancel()`을 실제로 구현했는가
-- 자원 서버가 외부 변경 시점의 승인 상태나 fencing 값을 확인하는가
-- 이미 반영된 변경을 되돌릴 방법이 있는가
-
-Agent identity와 호출별 권한 검사가 필요하다는 건 변하지 않는다. 다만 실제 프로덕션에서는 호출이 허용된 뒤 사용자의 승인이 바뀌는 구간까지 다뤄야 한다.
-
-그래서 `SendMessage`가 성공했다는 이유만으로 A2A를 운영에 넣을 준비가 끝났다고 보기는 어렵다. A2A v1.0은 Agent끼리 Task를 주고받고 취소를 요청하는 형식을 맞춰 준다. `CancelTask`는 불필요한 실행을 줄이지만 권한 불변식까지 보장하지 않는다. 사용자 승인에서 파생된 token과 Task, 실제 변경을 연결하고 자원 서버에서 최신 승인을 확인해야 한다. 이미 반영된 결과는 별도의 보상 작업으로 맞춰야 한다. 이 부분은 프로토콜이 아니라 서비스를 설계하는 쪽의 책임이다.
+실제 서비스에서는 사용자 승인에서 파생된 token과 A2A Task, 외부 시스템의 변경을 연결해야 한다. 외부 변경 시점에는 최신 승인 상태를 다시 확인하고, 이미 반영된 결과는 별도의 보상 작업으로 맞춰야 한다. `SendMessage`가 성공한 뒤 이 경로까지 설계해야 A2A를 운영에 넣을 준비가 끝난다.
 
 ## 참고 자료
 

@@ -1,6 +1,6 @@
 <svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">CancelTask는 권한 불변식을 보장하지 않는다</title>
-  <desc id="desc">사용자 승인만 회수하면 A2A Task가 계속 실행돼 모의 ERP에 주문 기록이 남는다. CancelTask가 Python SDK의 producer 취소와 AgentExecutor cancel hook을 거치는 경로를 함께 보여준다.</desc>
+  <desc id="desc">사용자 승인만 회수하면 A2A Task가 계속 실행돼 모의 ERP에 주문 기록이 남는다. CancelTask와 외부 변경 직전 권한 검사는 서로 다른 제어임을 보여준다.</desc>
 
   <defs>
     <linearGradient id="background" x1="40" y1="30" x2="1160" y2="1170" gradientUnits="userSpaceOnUse">
@@ -81,7 +81,7 @@
     <text x="873" y="897" fill="#83CDB8" font-size="14" font-weight="650" text-anchor="middle">실서비스는 자원 서버 검사도 필요</text>
 
     <rect x="72" y="1020" width="1056" height="112" rx="22" fill="#0D2238" stroke="#274B67"/>
-    <text x="104" y="1062" fill="#7EE7DF" font-size="17" font-weight="750">SDK 1.1.2에서 확인한 취소 경로</text>
-    <text x="104" y="1096" fill="#E6EEF5" font-size="20" font-weight="650">_producer_task.cancel()  →  AgentExecutor.cancel()  →  CANCELED</text>
+    <text x="104" y="1062" fill="#7EE7DF" font-size="17" font-weight="750">운영에서 남는 조건</text>
+    <text x="104" y="1096" fill="#E6EEF5" font-size="20" font-weight="650">CancelTask는 취소 요청일 뿐  ·  외부 변경 직전 권한 검사는 별도</text>
   </g>
 </svg>
