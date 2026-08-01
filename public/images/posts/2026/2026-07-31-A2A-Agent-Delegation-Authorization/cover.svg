@@ -21,7 +21,7 @@
   <text x="72" y="82" fill="#7EE7DF" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="700" letter-spacing="1.3">A2A v1.0 × TASK LIFECYCLE</text>
   <text x="72" y="142" fill="#F5F8FC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="42" font-weight="750">사용자 승인을 회수했지만</text>
   <text x="72" y="196" fill="#F5F8FC" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="42" font-weight="750">A2A Task는 계속 실행됐다</text>
-  <text x="72" y="235" fill="#9FB7CA" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="18">승인 회수, CancelTask, 보상 작업은 서로 다른 동작이다</text>
+  <text x="72" y="235" fill="#9FB7CA" font-family="Pretendard, Apple SD Gothic Neo, sans-serif" font-size="18">CancelTask는 실행 중단, 권한 재확인은 외부 변경의 안전 조건이다</text>
 
   <g filter="url(#shadow)">
     <rect x="72" y="278" width="1056" height="270" rx="24" fill="#0C2239" stroke="#244562"/>

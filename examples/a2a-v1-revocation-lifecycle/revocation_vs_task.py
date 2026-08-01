@@ -5,6 +5,7 @@ Python package: a2a-sdk[http-server] 1.1.2
 """
 
 import asyncio
+from importlib.metadata import version
 
 import httpx
 import uvicorn
@@ -62,6 +63,8 @@ class PurchaseAgentExecutor(AgentExecutor):
         self.grant = grant
         self.recheck_before_write = False
         self.side_effects: list[str] = []
+        self.execute_cancelled = False
+        self.cancel_hook_called = False
 
     async def execute(
         self,
@@ -82,31 +85,36 @@ class PurchaseAgentExecutor(AgentExecutor):
             await updater.reject(new_text_message("approval already revoked"))
             return
 
-        # The A2A request has returned, but this Task keeps running.
-        await asyncio.sleep(0.4)
+        try:
+            # The A2A request has returned, but this Task keeps running.
+            await asyncio.sleep(0.4)
 
-        if self.recheck_before_write and not self.grant.active:
-            await updater.reject(
-                new_text_message("approval revoked before ERP write")
-            )
-            return
-
-        self.side_effects.append("ORDER_CREATED")
-        await updater.add_artifact(
-            parts=[
-                new_text_part(
-                    text="ERP order created",
-                    media_type="text/plain",
+            if self.recheck_before_write and not self.grant.active:
+                await updater.reject(
+                    new_text_message("approval revoked before ERP write")
                 )
-            ]
-        )
-        await updater.complete(new_text_message("purchase completed"))
+                return
+
+            self.side_effects.append("ORDER_CREATED")
+            await updater.add_artifact(
+                parts=[
+                    new_text_part(
+                        text="ERP order created",
+                        media_type="text/plain",
+                    )
+                ]
+            )
+            await updater.complete(new_text_message("purchase completed"))
+        except asyncio.CancelledError:
+            self.execute_cancelled = True
+            raise
 
     async def cancel(
         self,
         context: RequestContext,
         event_queue: EventQueue,
     ) -> None:
+        self.cancel_hook_called = True
         if context.task_id is None or context.context_id is None:
             return
         updater = TaskUpdater(
@@ -158,11 +166,12 @@ def build_app(
 
 
 async def wait_for_terminal_task(client, task_id: str):
-    while True:
-        task = await client.get_task(GetTaskRequest(id=task_id))
-        if task.status.state in TERMINAL_STATES:
-            return task
-        await asyncio.sleep(0.05)
+    async with asyncio.timeout(5):
+        while True:
+            task = await client.get_task(GetTaskRequest(id=task_id))
+            if task.status.state in TERMINAL_STATES:
+                return task
+            await asyncio.sleep(0.05)
 
 
 async def start_task(client) -> str:
@@ -187,18 +196,36 @@ async def run_case(
     executor: PurchaseAgentExecutor,
     name: str,
     recheck_before_write: bool,
+    expected_state: int,
+    expect_side_effect: bool,
 ) -> None:
     grant.reset()
     executor.recheck_before_write = recheck_before_write
     executor.side_effects.clear()
+    executor.execute_cancelled = False
+    executor.cancel_hook_called = False
 
     task_id = await start_task(client)
     grant.revoke()
     task = await wait_for_terminal_task(client, task_id)
 
+    if task.status.state != expected_state:
+        raise AssertionError(
+            f"{name}: expected {TaskState.Name(expected_state)}, "
+            f"got {TaskState.Name(task.status.state)}"
+        )
+    if bool(executor.side_effects) is not expect_side_effect:
+        raise AssertionError(
+            f"{name}: side effect expectation did not match"
+        )
+    if executor.execute_cancelled or executor.cancel_hook_called:
+        raise AssertionError(f"{name}: unexpected cancellation signal")
+
     print(f"[{name}]")
     print("grant=REVOKED")
     print(f"task={TaskState.Name(task.status.state)}")
+    print(f"execute_cancelled={str(executor.execute_cancelled).upper()}")
+    print(f"cancel_hook_called={str(executor.cancel_hook_called).upper()}")
     print(
         "side_effect="
         + (executor.side_effects[0] if executor.side_effects else "BLOCKED")
@@ -214,14 +241,31 @@ async def run_cancel_case(
     grant.reset()
     executor.recheck_before_write = False
     executor.side_effects.clear()
+    executor.execute_cancelled = False
+    executor.cancel_hook_called = False
 
     task_id = await start_task(client)
     grant.revoke()
     task = await client.cancel_task(CancelTaskRequest(id=task_id))
 
+    if task.status.state != TaskState.TASK_STATE_CANCELED:
+        raise AssertionError(
+            "revoke-plus-cancel: Task did not reach CANCELED"
+        )
+    if not executor.execute_cancelled or not executor.cancel_hook_called:
+        raise AssertionError(
+            "revoke-plus-cancel: SDK cancellation path was not observed"
+        )
+    if executor.side_effects:
+        raise AssertionError(
+            "revoke-plus-cancel: downstream side effect was not blocked"
+        )
+
     print("[revoke-plus-cancel]")
     print("grant=REVOKED")
     print(f"task={TaskState.Name(task.status.state)}")
+    print(f"execute_cancelled={str(executor.execute_cancelled).upper()}")
+    print(f"cancel_hook_called={str(executor.cancel_hook_called).upper()}")
     print(
         "side_effect="
         + (executor.side_effects[0] if executor.side_effects else "BLOCKED")
@@ -233,12 +277,19 @@ async def main() -> None:
     executor = PurchaseAgentExecutor(grant)
     app, handler = build_app(executor)
 
+    print("[environment]")
+    print(f"a2a_sdk={version('a2a-sdk')}")
+    print("protocol=1.0")
+    print("binding=JSONRPC")
+    print(f"handler={handler.__class__.__name__}")
+
     server = uvicorn.Server(
         uvicorn.Config(app, host=HOST, port=PORT, log_level="warning")
     )
     server_task = asyncio.create_task(server.serve())
-    while not server.started:
-        await asyncio.sleep(0.01)
+    async with asyncio.timeout(5):
+        while not server.started:
+            await asyncio.sleep(0.01)
 
     try:
         async with httpx.AsyncClient() as httpx_client:
@@ -259,6 +310,8 @@ async def main() -> None:
                 executor=executor,
                 name="check-once",
                 recheck_before_write=False,
+                expected_state=TaskState.TASK_STATE_COMPLETED,
+                expect_side_effect=True,
             )
             await run_cancel_case(
                 client=client,
@@ -271,6 +324,8 @@ async def main() -> None:
                 executor=executor,
                 name="recheck-before-write",
                 recheck_before_write=True,
+                expected_state=TaskState.TASK_STATE_REJECTED,
+                expect_side_effect=False,
             )
         finally:
             await client.close()

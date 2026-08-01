@@ -1,6 +1,6 @@
 <svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
-  <title id="title">승인, 토큰, A2A Task의 서로 다른 수명</title>
-  <desc id="desc">사용자 승인이 회수된 뒤에도 위임 토큰과 A2A Task가 유효해 모의 ERP에 주문 기록이 남는 실패 경로와, 승인 회수를 토큰 회수 및 CancelTask에 연결하고 외부 쓰기 직전에 재확인하는 경로를 비교한다.</desc>
+  <title id="title">승인 회수, CancelTask, 외부 쓰기 재확인의 서로 다른 역할</title>
+  <desc id="desc">애플리케이션 승인만 회수하면 A2A Task와 execute 코루틴이 계속 실행되는 경로, CancelTask가 Python SDK의 producer와 cancel hook을 거치는 경로, 쓰기 직전 승인 재확인이 모의 ERP 기록을 차단하는 경로를 비교한다.</desc>
   <defs>
     <linearGradient id="bg" x1="70" y1="40" x2="1130" y2="720" gradientUnits="userSpaceOnUse">
       <stop stop-color="#F8FAFC"/>
@@ -13,69 +13,74 @@
 
   <rect width="1200" height="760" rx="28" fill="url(#bg)"/>
   <g font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
-    <text x="64" y="69" fill="#17324D" font-size="32" font-weight="750">사용자 승인을 회수해도 실행 중인 Task는 멈추지 않는다</text>
-    <text x="64" y="103" fill="#5A7188" font-size="17">A2A Protocol 1.0 · a2a-sdk 1.1.2 재현</text>
+    <text x="64" y="67" fill="#17324D" font-size="31" font-weight="750">승인 회수만으로 실행 중인 A2A Task는 멈추지 않았다</text>
+    <text x="64" y="101" fill="#5A7188" font-size="17">JSON-RPC 1.0 · a2a-sdk 1.1.2 · DefaultRequestHandlerV2</text>
 
-    <rect x="64" y="132" width="1072" height="370" rx="22" fill="#FFFFFF" stroke="#D8E1E8"/>
-    <text x="90" y="171" fill="#9D3C2F" font-size="18" font-weight="750">시작할 때만 승인 확인</text>
+    <rect x="64" y="126" width="1072" height="374" rx="22" fill="#FFFFFF" stroke="#D8E1E8"/>
+    <text x="90" y="166" fill="#9D3C2F" font-size="18" font-weight="750">추가 처리 없음</text>
 
     <g fill="#6A8194" font-size="13" font-weight="650" text-anchor="middle">
-      <text x="296" y="205">10:00:00</text>
-      <text x="518" y="205">10:00:01</text>
-      <text x="740" y="205">10:00:05</text>
-      <text x="962" y="205">10:00:09</text>
+      <text x="296" y="200">Task 시작</text>
+      <text x="518" y="200">Task 반환</text>
+      <text x="740" y="200">승인 회수</text>
+      <text x="962" y="200">외부 쓰기</text>
     </g>
-    <line x1="236" y1="220" x2="1010" y2="220" stroke="#B7C6D2" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="236" y1="216" x2="1010" y2="216" stroke="#B7C6D2" stroke-width="2" marker-end="url(#arrow)"/>
 
     <g fill="#263F55" font-size="15" font-weight="700">
-      <text x="92" y="271">승인</text>
-      <text x="92" y="335">위임 토큰</text>
-      <text x="92" y="399">A2A Task</text>
-      <text x="92" y="463">모의 ERP</text>
+      <text x="92" y="266">ApprovalGrant</text>
+      <text x="92" y="334">A2A Task</text>
+      <text x="92" y="402">execute()</text>
+      <text x="92" y="470">모의 ERP</text>
     </g>
 
-    <rect x="236" y="244" width="504" height="38" rx="19" fill="#DDF4EA" stroke="#72B79D"/>
-    <text x="488" y="269" fill="#247353" font-size="14" font-weight="750" text-anchor="middle">ACTIVE</text>
-    <rect x="740" y="244" width="270" height="38" rx="19" fill="#FBE3E7" stroke="#D7828F"/>
-    <text x="875" y="269" fill="#9D3C4C" font-size="14" font-weight="750" text-anchor="middle">REVOKED</text>
+    <rect x="236" y="240" width="504" height="38" rx="19" fill="#DDF4EA" stroke="#72B79D"/>
+    <text x="488" y="265" fill="#247353" font-size="14" font-weight="750" text-anchor="middle">ACTIVE</text>
+    <rect x="740" y="240" width="270" height="38" rx="19" fill="#FBE3E7" stroke="#D7828F"/>
+    <text x="875" y="265" fill="#9D3C4C" font-size="14" font-weight="750" text-anchor="middle">REVOKED</text>
 
-    <rect x="518" y="308" width="492" height="38" rx="19" fill="#FFF0D6" stroke="#D7A657"/>
-    <text x="764" y="333" fill="#8A5A13" font-size="14" font-weight="750" text-anchor="middle">만료 시점까지 유효</text>
+    <rect x="296" y="308" width="666" height="38" rx="19" fill="#DDEFFA" stroke="#76AED1"/>
+    <text x="629" y="333" fill="#20678F" font-size="14" font-weight="750" text-anchor="middle">WORKING</text>
+    <circle cx="962" cy="327" r="19" fill="#276F99"/>
+    <text x="962" y="332" fill="#FFFFFF" font-size="11" font-weight="800" text-anchor="middle">DONE</text>
 
-    <rect x="518" y="372" width="444" height="38" rx="19" fill="#DDEFFA" stroke="#76AED1"/>
-    <text x="740" y="397" fill="#20678F" font-size="14" font-weight="750" text-anchor="middle">WORKING</text>
-    <circle cx="962" cy="391" r="19" fill="#276F99"/>
-    <text x="962" y="396" fill="#FFFFFF" font-size="12" font-weight="800" text-anchor="middle">OK</text>
+    <rect x="296" y="376" width="666" height="38" rx="19" fill="#EEF1F5" stroke="#9EAFBD"/>
+    <text x="629" y="401" fill="#4D6477" font-size="14" font-weight="750" text-anchor="middle">asyncio.sleep() 이후 계속 실행 · 취소 신호 없음</text>
 
-    <circle cx="962" cy="455" r="23" fill="#B46A28"/>
-    <text x="962" y="461" fill="#FFFFFF" font-size="12" font-weight="800" text-anchor="middle">WRITE</text>
-    <text x="1014" y="461" fill="#8A4E19" font-size="14" font-weight="750">ORDER_CREATED</text>
+    <circle cx="962" cy="463" r="23" fill="#B46A28"/>
+    <text x="962" y="469" fill="#FFFFFF" font-size="12" font-weight="800" text-anchor="middle">WRITE</text>
+    <text x="1014" y="469" fill="#8A4E19" font-size="14" font-weight="750">ORDER_CREATED</text>
 
-    <line x1="740" y1="222" x2="740" y2="482" stroke="#D36A79" stroke-width="2" stroke-dasharray="7 7"/>
-    <rect x="664" y="216" width="152" height="30" rx="15" fill="#FBE3E7"/>
-    <text x="740" y="236" fill="#9D3C4C" font-size="13" font-weight="750" text-anchor="middle">승인 회수</text>
-    <text x="766" y="294" fill="#A9505F" font-size="13" font-weight="650">Task와 토큰에는 전달되지 않음</text>
+    <line x1="740" y1="218" x2="740" y2="482" stroke="#D36A79" stroke-width="2" stroke-dasharray="7 7"/>
+    <rect x="664" y="212" width="152" height="30" rx="15" fill="#FBE3E7"/>
+    <text x="740" y="232" fill="#9D3C4C" font-size="13" font-weight="750" text-anchor="middle">grant.revoke()</text>
+    <text x="765" y="294" fill="#A9505F" font-size="13" font-weight="650">Task와 execute()에는 전달되지 않음</text>
 
-    <rect x="64" y="526" width="1072" height="170" rx="22" fill="#F5FAFD" stroke="#8EBBD7" stroke-width="2"/>
-    <text x="90" y="565" fill="#176594" font-size="18" font-weight="750">외부 쓰기 직전에 다시 확인</text>
+    <rect x="64" y="522" width="1072" height="188" rx="22" fill="#F5FAFD" stroke="#8EBBD7" stroke-width="2"/>
+    <text x="90" y="560" fill="#176594" font-size="18" font-weight="750">두 제어는 다른 실패를 막는다</text>
 
-    <rect x="90" y="593" width="202" height="52" rx="16" fill="#FBE3E7" stroke="#D7828F"/>
-    <text x="191" y="625" fill="#9D3C4C" font-size="15" font-weight="750" text-anchor="middle">승인 REVOKED</text>
-    <line x1="292" y1="619" x2="405" y2="619" stroke="#56758E" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <text x="90" y="609" fill="#263F55" font-size="14" font-weight="750">CancelTask</text>
+    <rect x="210" y="581" width="218" height="44" rx="14" fill="#E8F2F8" stroke="#8EBBD7"/>
+    <text x="319" y="608" fill="#315E78" font-size="13" font-weight="750" text-anchor="middle">_producer_task.cancel()</text>
+    <line x1="428" y1="603" x2="486" y2="603" stroke="#56758E" stroke-width="2.2" marker-end="url(#arrow)"/>
+    <rect x="502" y="581" width="218" height="44" rx="14" fill="#E8F2F8" stroke="#8EBBD7"/>
+    <text x="611" y="608" fill="#315E78" font-size="13" font-weight="750" text-anchor="middle">AgentExecutor.cancel()</text>
+    <line x1="720" y1="603" x2="778" y2="603" stroke="#56758E" stroke-width="2.2" marker-end="url(#arrow)"/>
+    <rect x="794" y="581" width="160" height="44" rx="14" fill="#DDF4EA" stroke="#72B79D"/>
+    <text x="874" y="608" fill="#247353" font-size="13" font-weight="800" text-anchor="middle">CANCELED</text>
+    <text x="974" y="608" fill="#5A7188" font-size="13">실행 중단</text>
 
-    <rect x="421" y="593" width="202" height="52" rx="16" fill="#E8F2F8" stroke="#8EBBD7"/>
-    <text x="522" y="615" fill="#315E78" font-size="14" font-weight="750" text-anchor="middle">토큰 회수</text>
-    <text x="522" y="634" fill="#315E78" font-size="14" font-weight="750" text-anchor="middle">+ CancelTask</text>
-    <line x1="623" y1="619" x2="736" y2="619" stroke="#56758E" stroke-width="2.5" marker-end="url(#arrow)"/>
+    <text x="90" y="667" fill="#263F55" font-size="14" font-weight="750">쓰기 재확인</text>
+    <rect x="210" y="639" width="218" height="44" rx="14" fill="#FFF0D6" stroke="#D7A657"/>
+    <text x="319" y="666" fill="#8A5A13" font-size="13" font-weight="750" text-anchor="middle">grant.active 재조회</text>
+    <line x1="428" y1="661" x2="486" y2="661" stroke="#56758E" stroke-width="2.2" marker-end="url(#arrow)"/>
+    <rect x="502" y="639" width="218" height="44" rx="14" fill="#FBE3E7" stroke="#D7828F"/>
+    <text x="611" y="666" fill="#9D3C4C" font-size="13" font-weight="750" text-anchor="middle">REJECTED</text>
+    <line x1="720" y1="661" x2="778" y2="661" stroke="#56758E" stroke-width="2.2" marker-end="url(#arrow)"/>
+    <rect x="794" y="639" width="160" height="44" rx="14" fill="#DDF4EA" stroke="#72B79D"/>
+    <text x="874" y="666" fill="#247353" font-size="13" font-weight="800" text-anchor="middle">WRITE 차단</text>
+    <text x="974" y="666" fill="#5A7188" font-size="13">안전 조건</text>
 
-    <rect x="752" y="593" width="166" height="52" rx="16" fill="#FFF0D6" stroke="#D7A657"/>
-    <text x="835" y="615" fill="#8A5A13" font-size="14" font-weight="750" text-anchor="middle">쓰기 직전</text>
-    <text x="835" y="634" fill="#8A5A13" font-size="14" font-weight="750" text-anchor="middle">재확인</text>
-    <line x1="918" y1="619" x2="996" y2="619" stroke="#56758E" stroke-width="2.5" marker-end="url(#arrow)"/>
-
-    <rect x="1012" y="593" width="98" height="52" rx="16" fill="#DDF4EA" stroke="#72B79D"/>
-    <text x="1061" y="625" fill="#247353" font-size="14" font-weight="800" text-anchor="middle">차단</text>
-
-    <text x="90" y="675" fill="#5A7188" font-size="14">외부 시스템에 이미 반영됐다면 CancelTask가 아니라 별도의 보상 작업이 필요하다.</text>
+    <text x="90" y="738" fill="#5A7188" font-size="13">서로 다른 시스템에서는 재확인과 쓰기 사이에도 TOCTOU가 남는다. 자원 서버 검사나 fencing, 보상 작업이 필요하다.</text>
   </g>
 </svg>
