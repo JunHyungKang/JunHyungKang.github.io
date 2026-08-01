@@ -37,7 +37,9 @@ A2A를 실제 서비스에 적용할 때 Agent Card를 읽고 요청을 주고�
 
 이번 실험에서는 두 Agent 사이의 호출 권한을 정상으로 두고 호출이 시작된 뒤 승인 상태가 바뀌는 경우를 봤다. 사용자가 구매 승인을 회수하면 이미 실행 중인 A2A Task도 멈출까. A2A는 서비스의 승인 저장소를 모르기 때문에 승인 회수를 `CancelTask`로 바꿔 보내지 않는다.
 
-여기서 `ApprovalGrant`는 A2A 바깥에 둔 애플리케이션 상태다. `TASK_STATE_AUTH_REQUIRED`를 구현한 것이 아니다. [A2A v1.0의 in-task authorization](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/specification.md#L1884-L1938)은 사람의 승인이 필요한 Agent가 Task를 `AUTH_REQUIRED`로 전환하는 흐름을 정의하지만 승인 객체의 식별자와 유효 기간, 회수 이벤트를 A2A 데이터 모델로 정하지는 않는다. 이번 실험은 이미 허용된 요청과 실행 중인 Task, 외부 변경의 수명이 어긋나는 지점만 떼어 봤다.
+[A2A v1.0의 in-task authorization](https://github.com/a2aproject/A2A/blob/v1.0.0/docs/specification.md#L1884-L1938)은 사람의 승인이나 credential이 더 필요한 Agent가 Task를 `TASK_STATE_AUTH_REQUIRED`로 전환하는 흐름을 정의한다. 이 값은 승인 객체 자체가 아니라 Task가 authorization을 기다리고 있다는 실행 상태다.
+
+이번 실험에서 `ApprovalGrant`는 서비스가 별도로 저장한 승인 정보다. Task는 이미 승인을 받아 실행을 시작한 상태였고, 그 뒤 `ApprovalGrant`를 회수했다. A2A 명세는 이 승인 정보의 식별자와 유효 기간, 회수 이벤트나 외부 변경과의 연결을 데이터 모델로 정하지 않는다. 확인하려던 것은 승인 정보가 `REVOKED`로 바뀌었을 때 실행 중인 Task와 모의 ERP 쓰기가 자동으로 중단되는지였다.
 
 ![승인과 A2A Task의 수명이 어긋나는 구간](/images/posts/2026/2026-07-31-A2A-Agent-Delegation-Authorization/task-lifecycle.svg)
 
