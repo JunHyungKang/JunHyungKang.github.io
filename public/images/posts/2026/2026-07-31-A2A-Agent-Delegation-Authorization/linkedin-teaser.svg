@@ -1,0 +1,87 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">승인 회수와 A2A Task 취소는 같은 동작이 아니다</title>
+  <desc id="desc">사용자 승인만 회수하면 A2A Task가 계속 실행돼 모의 ERP에 주문 기록이 남지만, 승인 회수 뒤 CancelTask를 별도로 보내면 실행 중인 Task가 취소되고 주문 기록이 차단되는 실험 결과를 비교한다.</desc>
+
+  <defs>
+    <linearGradient id="background" x1="40" y1="30" x2="1160" y2="1170" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#07182C"/>
+      <stop offset="1" stop-color="#102B46"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="20" flood-color="#020B14" flood-opacity="0.32"/>
+    </filter>
+    <marker id="arrowRed" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10V0Z" fill="#FF7A8C"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0 0L10 5L0 10V0Z" fill="#66D4B2"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="1200" rx="32" fill="url(#background)"/>
+  <circle cx="1110" cy="68" r="220" fill="#2975A6" fill-opacity="0.16"/>
+  <circle cx="54" cy="1160" r="230" fill="#25B7AD" fill-opacity="0.08"/>
+
+  <g font-family="Pretendard, Apple SD Gothic Neo, sans-serif">
+    <text x="72" y="82" fill="#7EE7DF" font-size="21" font-weight="700" letter-spacing="1.2">A2A PROTOCOL v1.0 · SDK 실험</text>
+    <text x="72" y="157" fill="#F5F8FC" font-size="48" font-weight="760">승인 회수 ≠ A2A Task 취소</text>
+    <text x="72" y="204" fill="#AFC2D2" font-size="22">승인만 회수했더니 Task는 계속 실행됐고, 모의 ERP에 주문 기록도 남았다.</text>
+
+    <rect x="72" y="246" width="1056" height="86" rx="20" fill="#102A42" stroke="#2B4A64"/>
+    <text x="104" y="282" fill="#86A3BA" font-size="16" font-weight="700">실험 구성</text>
+    <text x="104" y="312" fill="#E7EFF6" font-size="20" font-weight="650">개인 Agent 역할의 A2A 클라이언트  →  구매 Agent  →  모의 ERP</text>
+
+    <g filter="url(#shadow)">
+      <rect x="72" y="374" width="506" height="602" rx="26" fill="#10243A" stroke="#6C3543" stroke-width="2"/>
+      <rect x="622" y="374" width="506" height="602" rx="26" fill="#10243A" stroke="#286C62" stroke-width="2"/>
+    </g>
+
+    <rect x="104" y="406" width="206" height="42" rx="21" fill="#522B36"/>
+    <text x="207" y="434" fill="#FFB8C2" font-size="17" font-weight="750" text-anchor="middle">승인만 회수</text>
+    <text x="104" y="492" fill="#FFB8C2" font-size="18" font-weight="700">1</text>
+    <rect x="140" y="463" width="366" height="58" rx="16" fill="#17314A" stroke="#38566F"/>
+    <text x="323" y="499" fill="#EAF1F7" font-size="19" font-weight="700" text-anchor="middle">A2A Task 실행 중</text>
+    <line x1="323" y1="521" x2="323" y2="566" stroke="#FF7A8C" stroke-width="4" marker-end="url(#arrowRed)"/>
+
+    <text x="104" y="617" fill="#FFB8C2" font-size="18" font-weight="700">2</text>
+    <rect x="140" y="588" width="366" height="58" rx="16" fill="#4B2732" stroke="#A34B5A"/>
+    <text x="323" y="624" fill="#FFC5CD" font-size="19" font-weight="700" text-anchor="middle">사용자 승인 회수</text>
+    <line x1="323" y1="646" x2="323" y2="691" stroke="#FF7A8C" stroke-width="4" marker-end="url(#arrowRed)"/>
+
+    <text x="104" y="742" fill="#FFB8C2" font-size="18" font-weight="700">3</text>
+    <rect x="140" y="713" width="366" height="58" rx="16" fill="#17314A" stroke="#38566F"/>
+    <text x="323" y="749" fill="#EAF1F7" font-size="19" font-weight="700" text-anchor="middle">Task는 그대로 완료</text>
+    <line x1="323" y1="771" x2="323" y2="816" stroke="#FF7A8C" stroke-width="4" marker-end="url(#arrowRed)"/>
+
+    <text x="104" y="867" fill="#FFB8C2" font-size="18" font-weight="700">4</text>
+    <rect x="140" y="838" width="366" height="78" rx="16" fill="#553223" stroke="#B77A3A"/>
+    <text x="323" y="872" fill="#FFD799" font-size="17" font-weight="700" text-anchor="middle">모의 ERP에 주문 기록</text>
+    <text x="323" y="897" fill="#D8B788" font-size="14" font-weight="650" text-anchor="middle">되돌릴 작업이 생김</text>
+
+    <rect x="654" y="406" width="290" height="42" rx="21" fill="#183E39"/>
+    <text x="799" y="434" fill="#9CE8D1" font-size="17" font-weight="750" text-anchor="middle">승인 회수 + CancelTask</text>
+    <text x="654" y="492" fill="#9CE8D1" font-size="18" font-weight="700">1</text>
+    <rect x="690" y="463" width="366" height="58" rx="16" fill="#17314A" stroke="#38566F"/>
+    <text x="873" y="499" fill="#EAF1F7" font-size="19" font-weight="700" text-anchor="middle">A2A Task 실행 중</text>
+    <line x1="873" y1="521" x2="873" y2="566" stroke="#66D4B2" stroke-width="4" marker-end="url(#arrowGreen)"/>
+
+    <text x="654" y="617" fill="#9CE8D1" font-size="18" font-weight="700">2</text>
+    <rect x="690" y="588" width="366" height="58" rx="16" fill="#243C45" stroke="#52717A"/>
+    <text x="873" y="624" fill="#EAF1F7" font-size="19" font-weight="700" text-anchor="middle">승인 회수</text>
+    <line x1="873" y1="646" x2="873" y2="691" stroke="#66D4B2" stroke-width="4" marker-end="url(#arrowGreen)"/>
+
+    <text x="654" y="742" fill="#9CE8D1" font-size="18" font-weight="700">3</text>
+    <rect x="690" y="713" width="366" height="58" rx="16" fill="#17413B" stroke="#328777"/>
+    <text x="873" y="749" fill="#A9EBD7" font-size="19" font-weight="750" text-anchor="middle">CancelTask 별도 전송</text>
+    <line x1="873" y1="771" x2="873" y2="816" stroke="#66D4B2" stroke-width="4" marker-end="url(#arrowGreen)"/>
+
+    <text x="654" y="867" fill="#9CE8D1" font-size="18" font-weight="700">4</text>
+    <rect x="690" y="838" width="366" height="78" rx="16" fill="#183E39" stroke="#328777"/>
+    <text x="873" y="872" fill="#A9EBD7" font-size="17" font-weight="750" text-anchor="middle">Task 취소 · 주문 생성 차단</text>
+    <text x="873" y="897" fill="#83CDB8" font-size="14" font-weight="650" text-anchor="middle">외부 변경 전 권한 재확인도 필요</text>
+
+    <rect x="72" y="1020" width="1056" height="112" rx="22" fill="#0D2238" stroke="#274B67"/>
+    <text x="104" y="1062" fill="#7EE7DF" font-size="17" font-weight="750">CancelTask란?</text>
+    <text x="104" y="1096" fill="#E6EEF5" font-size="20" font-weight="650">A2A v1.0 명세에 정의된 Task 취소 요청이다.</text>
+  </g>
+</svg>
