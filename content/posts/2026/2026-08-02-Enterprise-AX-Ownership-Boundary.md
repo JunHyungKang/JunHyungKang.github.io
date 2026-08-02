@@ -77,6 +77,8 @@ OpenAI도 2026년 7월 [Agent 시대의 AI 투자 원칙](https://openai.com/ind
 
 `curated knowledge`를 중앙 역량으로 분류해도 지식의 정답까지 중앙팀이 소유할 수는 없다. 검색 인프라와 접근 정책은 중앙에서 제공할 수 있지만 “이 규정이 아직 유효한가”를 판단할 책임은 도메인에 남아야 한다.
 
+내가 구축하는 온톨로지 플랫폼도 이 경계를 따른다. 전사 데이터를 온톨로지로 먼저 넓게 모델링하기보다 Agent가 실제로 답해야 할 질문에서 필요한 데이터와 관계를 좁혀 간다. 우리 플랫폼은 그 범위의 온톨로지를 만들고 갱신하는 과정을 자동화한다. 다만 개념과 관계가 업무에 맞는지는 도메인 팀이 확인한다. 온톨로지 엔지니어링에서는 이처럼 범위를 정할 때 쓰는 질문을 [`competency question`](https://protege.stanford.edu/publications/ontology_development/ontology101-noy-mcguinness.html)이라고 부른다.
+
 평가도 역할이 나뉜다. 중앙팀은 eval을 실행하고 기준 미달 배포를 막는 체계를 만들 수 있다. 어떤 답이 실제 업무에서 틀렸는지, 어떤 예외를 반드시 통과해야 하는지는 도메인 팀이 정해야 한다.
 
 구매 Agent의 `create_order` tool을 예로 들면 중앙팀은 Agent별 접근 권한과 인증 정보 전달 방식, 감사 로그 형식을 표준화할 수 있다. 재시도 때문에 같은 주문이 두 번 만들어지지 않게 하는 처리는 구매 시스템을 맡은 팀이 정해야 한다. 금액별 승인선과 이미 생성된 주문의 취소 규칙도 마찬가지다. 이 의미까지 중앙 AX팀이 떠안으면 ERP 정책이 바뀔 때마다 다시 중앙 대기열을 거치게 된다.
@@ -127,3 +129,4 @@ Agent 수가 빠르게 늘었는데 모든 변경이 중앙 작업 대기열에 
 - [2026 Work Trend Index Annual Report — Microsoft, 2026-05-05](https://www.microsoft.com/en-us/worklab/work-trend-index/agents-human-agency-and-the-opportunity-for-every-organization)
 - [How to manage AI investments in the agentic era — OpenAI, 2026-07-14](https://openai.com/index/managing-ai-investments-in-agentic-era/)
 - [Managing AI agent sprawl across business units — AWS, 2026-07-17](https://aws.amazon.com/blogs/industries/managing-ai-agent-sprawl-across-business-units/)
+- [Ontology Development 101: A Guide to Creating Your First Ontology — Stanford](https://protege.stanford.edu/publications/ontology_development/ontology101-noy-mcguinness.html)
