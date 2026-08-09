@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Agent를 위한 온톨로지는 질문에서 시작한다</title>
+  <desc id="desc">전사 데이터 전체를 먼저 모델링하는 경로와, Agent가 답해야 할 질문에서 필요한 개념과 관계를 좁히고 원문 근거까지 연결하는 경로를 비교한다.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111F"/>
+      <stop offset="1" stop-color="#101D35"/>
+    </linearGradient>
+    <linearGradient id="question" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.28"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748B"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#34D399"/>
+    </marker>
+    <style>
+      text { font-family: Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", sans-serif; }
+      .heading { fill: #F8FAFC; font-size: 36px; font-weight: 760; }
+      .sub { fill: #94A3B8; font-size: 18px; font-weight: 500; }
+      .panel-title { font-size: 22px; font-weight: 730; }
+      .label { fill: #E2E8F0; font-size: 17px; font-weight: 680; }
+      .small { fill: #CBD5E1; font-size: 14px; font-weight: 500; }
+      .tiny { fill: #94A3B8; font-size: 13px; font-weight: 500; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" rx="28" fill="url(#background)"/>
+  <circle cx="1090" cy="70" r="165" fill="#22D3EE" opacity="0.05"/>
+  <circle cx="80" cy="610" r="180" fill="#34D399" opacity="0.04"/>
+
+  <text x="64" y="66" class="heading">Agent를 위한 온톨로지는 질문에서 시작한다</text>
+  <text x="66" y="101" class="sub">전사 데이터를 먼저 옮기기보다, 답해야 할 질문에서 필요한 의미를 좁힌다</text>
+
+  <rect x="48" y="136" width="376" height="426" rx="24" fill="#0B1728" stroke="#334155" stroke-width="2"/>
+  <text x="76" y="178" class="panel-title" fill="#FCA5A5">범위를 데이터에서 정하면</text>
+  <text x="76" y="205" class="tiny">어디에 쓸지 모른 채 모델부터 커진다</text>
+
+  <g filter="url(#shadow)">
+    <rect x="76" y="240" width="94" height="62" rx="12" fill="#172033" stroke="#64748B"/>
+    <rect x="188" y="240" width="94" height="62" rx="12" fill="#172033" stroke="#64748B"/>
+    <rect x="300" y="240" width="94" height="62" rx="12" fill="#172033" stroke="#64748B"/>
+  </g>
+  <text x="123" y="266" class="label" text-anchor="middle">Table</text>
+  <text x="123" y="286" class="tiny" text-anchor="middle">schema</text>
+  <text x="235" y="266" class="label" text-anchor="middle">문서</text>
+  <text x="235" y="286" class="tiny" text-anchor="middle">규정·정책</text>
+  <text x="347" y="266" class="label" text-anchor="middle">Catalog</text>
+  <text x="347" y="286" class="tiny" text-anchor="middle">metadata</text>
+
+  <path d="M235 305 V347" fill="none" stroke="#64748B" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <rect x="92" y="360" width="286" height="86" rx="16" fill="#2D1823" stroke="#FB7185"/>
+  <text x="235" y="393" class="label" text-anchor="middle">Class · Relation 계속 증가</text>
+  <text x="235" y="419" class="small" text-anchor="middle">완료 기준과 검증 질문이 불분명</text>
+
+  <rect x="112" y="478" width="246" height="50" rx="14" fill="#172033" stroke="#475569"/>
+  <text x="235" y="509" class="small" text-anchor="middle">“이 모델로 무엇을 답하지?”</text>
+
+  <rect x="456" y="136" width="696" height="426" rx="24" fill="#0A1B28" stroke="#1E9B86" stroke-width="2"/>
+  <text x="484" y="178" class="panel-title" fill="#6EE7B7">내가 택한 기본 경로</text>
+  <text x="484" y="205" class="tiny">Agent 질문에서 범위를 정하고 필요한 검색만 붙인다</text>
+
+  <rect x="484" y="238" width="228" height="80" rx="16" fill="url(#question)" filter="url(#shadow)"/>
+  <text x="598" y="269" text-anchor="middle" fill="#052E2B" font-size="17" font-weight="780">Agent가 답해야 할 질문</text>
+  <text x="598" y="294" text-anchor="middle" fill="#064E3B" font-size="13" font-weight="600">근거 · 유효 시점 · 중단 조건</text>
+
+  <path d="M712 278 H758" fill="none" stroke="#34D399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="770" y="238" width="174" height="80" rx="16" fill="#102C30" stroke="#2DD4BF"/>
+  <text x="857" y="269" class="label" text-anchor="middle">최소 온톨로지</text>
+  <text x="857" y="294" class="tiny" text-anchor="middle">필요한 개념·관계</text>
+
+  <path d="M944 278 H990" fill="none" stroke="#34D399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="1002" y="238" width="122" height="80" rx="16" fill="#13243A" stroke="#38BDF8"/>
+  <text x="1063" y="269" class="label" text-anchor="middle">검증</text>
+  <text x="1063" y="294" class="tiny" text-anchor="middle">도메인 승인</text>
+
+  <path d="M857 318 V346 H669 V358" fill="none" stroke="#34D399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <path d="M857 346 H977 V358" fill="none" stroke="#34D399" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+  <rect x="526" y="370" width="286" height="92" rx="17" fill="#172033" stroke="#64748B"/>
+  <text x="669" y="401" class="label" text-anchor="middle">단일 사실·문구</text>
+  <text x="669" y="427" class="small" text-anchor="middle">벡터 검색 → 원문 조각</text>
+  <text x="669" y="448" class="tiny" text-anchor="middle">그래프 없이도 충분한 질문</text>
+
+  <rect x="834" y="370" width="286" height="92" rx="17" fill="#102C30" stroke="#2DD4BF"/>
+  <text x="977" y="401" class="label" text-anchor="middle">관계·시간을 따라가는 질문</text>
+  <text x="977" y="427" class="small" text-anchor="middle">벡터 시작점 → 그래프 탐색 → 원문</text>
+  <text x="977" y="448" class="tiny" text-anchor="middle">필요할 때만 graph context 추가</text>
+
+  <rect x="558" y="492" width="530" height="44" rx="14" fill="#0F2D2B" stroke="#34D399"/>
+  <text x="823" y="520" class="small" text-anchor="middle" fill="#A7F3D0">재사용이 확인된 개념만 공통 모델로 승격</text>
+</svg>
