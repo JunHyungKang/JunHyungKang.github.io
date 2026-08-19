@@ -67,6 +67,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const allPosts = getSortedPostsData();
+  const identityJsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Person',
+        '@id': 'https://junhyungkang.github.io/about#person',
+        name: 'JunHyung Kang',
+        url: 'https://junhyungkang.github.io/about',
+        jobTitle: 'Generative AI Engineer',
+        sameAs: [
+          'https://github.com/JunHyungKang',
+          'https://www.linkedin.com/in/junhyung-kang-071605106/',
+        ],
+      },
+      {
+        '@type': 'Blog',
+        '@id': 'https://junhyungkang.github.io/#blog',
+        url: 'https://junhyungkang.github.io',
+        name: "JunHyung's Tech Log",
+        description: '강준형이 직접 구현하고 검증한 AI 에이전트·LLM 엔지니어링 기록',
+        inLanguage: 'ko-KR',
+        publisher: { '@id': 'https://junhyungkang.github.io/about#person' },
+      },
+    ],
+  };
 
   return (
     <html lang="ko" suppressHydrationWarning>
@@ -74,6 +99,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#020617] text-slate-200 min-h-screen`}
         suppressHydrationWarning
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(identityJsonLd) }}
+        />
         <Navbar posts={allPosts} />
         {children}
         <Footer />

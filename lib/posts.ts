@@ -99,8 +99,11 @@ export function getSortedPostsData({ includeNoindex = false }: { includeNoindex?
   });
 }
 
-export function getAllPostIds() {
-  const allFiles = getAllFiles(postsDirectory);
+export function getAllPostIds({ includeNoindex = false }: { includeNoindex?: boolean } = {}) {
+  const allFiles = getAllFiles(postsDirectory).filter((fullPath) => {
+    if (includeNoindex) return true;
+    return matter.read(fullPath).data.noindex !== true;
+  });
   
   return allFiles.map((fullPath) => {
     const fileName = path.basename(fullPath);

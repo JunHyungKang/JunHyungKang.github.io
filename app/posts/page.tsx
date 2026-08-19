@@ -1,13 +1,17 @@
 import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { Metadata } from 'next';
-import GoogleAdSense from '@/components/GoogleAdSense';
 import Link from 'next/link';
 import { topics } from '@/lib/topics';
+
+const siteUrl = 'https://junhyungkang.github.io';
 
 export const metadata: Metadata = {
     title: 'AI 엔지니어링 글',
     description: 'AI 에이전트, LLM, 딥러닝과 개발 경험을 다룬 강준형의 기술 글 전체 목록입니다.',
+    alternates: {
+        canonical: `${siteUrl}/posts`,
+    },
 };
 
 export default function BlogIndex() {
@@ -15,8 +19,6 @@ export default function BlogIndex() {
 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30">
-            <GoogleAdSense pId="3166603343095810" />
-
             <div className="pt-32 pb-20 px-6 max-w-7xl mx-auto">
                 <div className="mb-12">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">AI 엔지니어링 글</h1>

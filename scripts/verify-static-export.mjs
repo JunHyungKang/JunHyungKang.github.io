@@ -66,6 +66,8 @@ const sourcePosts = postSources.map((file) => {
     noindex: data.noindex === true,
   };
 });
+const publicPosts = sourcePosts.filter((post) => !post.noindex);
+const archivedPosts = sourcePosts.filter((post) => post.noindex);
 
 if (existsSync('out/sitemap.xml')) {
   const sitemap = readFileSync('out/sitemap.xml', 'utf8');
@@ -88,7 +90,12 @@ if (existsSync('out/sitemap.xml')) {
     if (url.pathname !== '/' && url.pathname.endsWith('/')) failures.push(`Trailing slash in sitemap URL: ${location}`);
   }
 
-  for (const post of sourcePosts) {
+  for (const post of archivedPosts) {
+    const output = `out/posts/${post.slug}.html`;
+    if (existsSync(output)) failures.push(`Noindex post must not be exported: ${output}`);
+  }
+
+  for (const post of publicPosts) {
     const output = `out/posts/${post.slug}.html`;
     if (!existsSync(output)) {
       failures.push(`Missing post export: ${output}`);
@@ -96,31 +103,24 @@ if (existsSync('out/sitemap.xml')) {
     }
     const html = readFileSync(output, 'utf8');
     const canonicalPath = `/posts/${post.slug}`;
-    const hasNoindex = /<meta name="robots" content="noindex, follow"\s*\/>/.test(html);
     const hasAds = html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
 
-    if (post.noindex !== hasNoindex) failures.push(`Source/output noindex mismatch: ${post.file}`);
-    if (post.noindex && sitemapPaths.has(canonicalPath)) failures.push(`Noindex post appears in sitemap: ${canonicalPath}`);
-    if (post.noindex && hasAds) failures.push(`AdSense loads on noindex post: ${output}`);
-    if (post.noindex && !html.includes('ARCHIVE NOTE')) failures.push(`Archive note missing from noindex post: ${output}`);
-    if (!post.noindex && !sitemapPaths.has(canonicalPath)) failures.push(`Indexable post missing from sitemap: ${canonicalPath}`);
-    if (!post.noindex && !hasAds) failures.push(`AdSense missing from indexable post: ${output}`);
-    if (!post.noindex) {
-      const expectedLastmod = post.updated || post.date;
-      const actualLastmod = sitemapEntries.get(canonicalPath)?.lastmod;
-      if (actualLastmod !== expectedLastmod) {
-        failures.push(`Incorrect sitemap lastmod for ${canonicalPath}; expected ${expectedLastmod}, received ${actualLastmod}`);
-      }
-      if (!html.includes('"@type":"BlogPosting"')) failures.push(`BlogPosting JSON-LD missing from ${output}`);
-      if (!html.includes('"@type":"BreadcrumbList"')) failures.push(`Breadcrumb JSON-LD missing from ${output}`);
-      if (!html.includes('rel="author"') || !html.includes('href="/about"')) failures.push(`Visible author link missing from ${output}`);
-      if (!html.includes('ABOUT THIS ARTICLE') || !html.includes('href="/editorial-policy"')) {
-        failures.push(`Evidence and editorial policy block missing from ${output}`);
-      }
-      if ((html.match(/<h1\b/g) || []).length !== 1) failures.push(`Indexable post must render exactly one h1: ${output}`);
-      if (!html.includes('"image":["https://')) failures.push(`Absolute BlogPosting image missing from ${output}`);
-      if (!html.includes('<meta property="og:image" content="https://')) failures.push(`Open Graph image missing from ${output}`);
+    if (!sitemapPaths.has(canonicalPath)) failures.push(`Indexable post missing from sitemap: ${canonicalPath}`);
+    if (!hasAds) failures.push(`AdSense missing from indexable post: ${output}`);
+    const expectedLastmod = post.updated || post.date;
+    const actualLastmod = sitemapEntries.get(canonicalPath)?.lastmod;
+    if (actualLastmod !== expectedLastmod) {
+      failures.push(`Incorrect sitemap lastmod for ${canonicalPath}; expected ${expectedLastmod}, received ${actualLastmod}`);
     }
+    if (!html.includes('"@type":"BlogPosting"')) failures.push(`BlogPosting JSON-LD missing from ${output}`);
+    if (!html.includes('"@type":"BreadcrumbList"')) failures.push(`Breadcrumb JSON-LD missing from ${output}`);
+    if (!html.includes('rel="author"') || !html.includes('href="/about"')) failures.push(`Visible author link missing from ${output}`);
+    if (!html.includes('ABOUT THIS ARTICLE') || !html.includes('href="/editorial-policy"')) {
+      failures.push(`Evidence and editorial policy block missing from ${output}`);
+    }
+    if ((html.match(/<h1\b/g) || []).length !== 1) failures.push(`Indexable post must render exactly one h1: ${output}`);
+    if (!html.includes('"image":["https://')) failures.push(`Absolute BlogPosting image missing from ${output}`);
+    if (!html.includes('<meta property="og:image" content="https://')) failures.push(`Open Graph image missing from ${output}`);
   }
 
   for (const topicPath of ['/topics', '/topics/ai-agents', '/topics/agent-harness', '/topics/llm-engineering']) {
@@ -172,6 +172,12 @@ for (const file of getFiles('out').filter((path) => path.endsWith('.html'))) {
         ? `out${pathname}`
         : `out${pathname}.html`;
     if (!existsSync(target)) failures.push(`Broken internal link in ${file}: ${link}`);
+  }
+}
+
+for (const file of ['out/index.html', 'out/posts.html']) {
+  if (existsSync(file) && readFileSync(file, 'utf8').includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) {
+    failures.push(`AdSense script must not load on navigation page: ${file}`);
   }
 }
 
