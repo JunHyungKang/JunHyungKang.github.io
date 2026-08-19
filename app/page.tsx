@@ -3,7 +3,6 @@ import { getSortedPostsData } from '@/lib/posts';
 import ArticleCard from '@/components/ArticleCard';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import GoogleAdSense from '@/components/GoogleAdSense';
 
 export default function Home() {
   const allPostsData = getSortedPostsData();
@@ -26,8 +25,6 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
-      <GoogleAdSense pId="3166603343095810" />
-
       <section className="px-6 pt-32">
         <div className="mx-auto max-w-7xl rounded-2xl border border-slate-800 bg-slate-900/50 px-6 py-8 md:px-10">
           <p className="mb-3 text-sm font-medium tracking-wider text-blue-400">JH&apos;S TECH LOG</p>

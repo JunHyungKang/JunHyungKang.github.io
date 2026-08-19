@@ -2,9 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, BookOpen, Github, Wrench } from 'lucide-react';
 
+const siteUrl = 'https://junhyungkang.github.io';
+
 export const metadata: Metadata = {
     title: 'AI 엔지니어링 프로젝트',
     description: 'AI 엔지니어 강준형이 직접 만들고 운영한 공개 도구, 오픈소스 작업과 기술 프로젝트를 소개합니다.',
+    alternates: {
+        canonical: `${siteUrl}/projects`,
+    },
 };
 
 const projects = [
