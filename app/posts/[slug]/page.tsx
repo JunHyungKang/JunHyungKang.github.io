@@ -70,6 +70,8 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                 '@id': `${canonicalUrl}#article`,
                 mainEntityOfPage: canonicalUrl,
                 headline: postData.title,
+                articleSection: postTopics.map((topic) => topic.name),
+                keywords: postData.tags,
                 datePublished: postData.date,
                 dateModified: postData.updated || postData.date,
                 description: postData.teaser || `강준형의 기술 블로그에서 ${postData.title} 글을 읽어보세요.`,
@@ -86,6 +88,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                     name: 'JunHyung Kang',
                     url: `${siteUrl}/about`,
                 },
+                isPartOf: { '@id': `${siteUrl}/#blog` },
             },
             {
                 '@type': 'BreadcrumbList',

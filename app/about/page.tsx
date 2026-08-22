@@ -1,9 +1,14 @@
 import { Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
 import { Metadata } from "next";
 
+const siteUrl = 'https://junhyungkang.github.io';
+
 export const metadata: Metadata = {
     title: 'AI 엔지니어 강준형 소개',
     description: 'LLM, 생성형 AI, 모델 개발과 서빙 경험을 보유한 AI 엔지니어 강준형을 소개합니다.',
+    alternates: {
+        canonical: `${siteUrl}/about`,
+    },
 };
 
 export default function About() {

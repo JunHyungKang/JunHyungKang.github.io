@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
 
+const siteUrl = 'https://junhyungkang.github.io';
+
 export const metadata: Metadata = {
     title: 'Privacy Policy',
     description: 'Privacy and cookie policy for JunHyung’s Tech Log.',
+    alternates: {
+        canonical: `${siteUrl}/privacy-policy`,
+    },
 };
 
 export default function PrivacyPolicy() {

@@ -1,8 +1,13 @@
 import type { Metadata } from 'next';
 
+const siteUrl = 'https://junhyungkang.github.io';
+
 export const metadata: Metadata = {
     title: 'Terms of Use',
     description: 'Terms of use for JunHyung’s Tech Log.',
+    alternates: {
+        canonical: `${siteUrl}/terms-of-service`,
+    },
 };
 
 export default function TermsOfService() {
