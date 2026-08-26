@@ -83,11 +83,28 @@ if (existsSync('out/sitemap.xml')) {
   if (locations.length === 0) failures.push('Sitemap contains no URLs');
   if (new Set(locations).size !== locations.length) failures.push('Sitemap contains duplicate URLs');
   if (/<changefreq>|<priority>/.test(sitemap)) failures.push('Sitemap contains ignored changefreq or priority hints');
+  if (sitemapPaths.has('/feed.xml')) failures.push('RSS feed must not be listed as a canonical page in sitemap.xml');
 
   for (const location of locations) {
     const url = new URL(location);
     if (url.origin !== siteUrl) failures.push(`Unexpected sitemap origin: ${location}`);
     if (url.pathname !== '/' && url.pathname.endsWith('/')) failures.push(`Trailing slash in sitemap URL: ${location}`);
+
+    const output = url.pathname === '/'
+      ? 'out/index.html'
+      : `out${url.pathname}.html`;
+    if (!existsSync(output)) {
+      failures.push(`Sitemap URL does not map to an exported HTML page: ${location}`);
+      continue;
+    }
+
+    const html = readFileSync(output, 'utf8');
+    if (!html.includes(`<link rel="canonical" href="${location}"`)) {
+      failures.push(`Sitemap URL is not self-canonical: ${location}`);
+    }
+    if (/<meta[^>]+name="robots"[^>]+content="[^"]*noindex/i.test(html)) {
+      failures.push(`Noindex page must not be listed in sitemap.xml: ${location}`);
+    }
   }
 
   for (const post of archivedPosts) {
