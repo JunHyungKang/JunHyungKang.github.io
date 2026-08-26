@@ -30,7 +30,10 @@ module.exports = {
   generateIndexSitemap: false,
   trailingSlash: false,
   autoLastmod: false,
-  exclude: noindexPostPaths,
+  // The RSS feed is discoverable from the homepage and can be submitted as a
+  // feed sitemap on its own. It is not a canonical HTML page, so keep it out
+  // of the primary page sitemap.
+  exclude: ['/feed.xml', ...noindexPostPaths],
   transform: async (_config, urlPath) => {
     const lastmod = postLastModified.get(urlPath);
     return {
