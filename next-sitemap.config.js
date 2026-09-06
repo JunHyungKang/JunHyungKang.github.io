@@ -26,6 +26,11 @@ const postLastModified = new Map(
 module.exports = {
   siteUrl: 'https://junhyungkang.github.io',
   generateRobotsTxt: true,
+  robotsTxtOptions: {
+    // Google reports Host as an ignored rule; retain only supported directives.
+    transformRobotsTxt: async (_config, robotsTxt) =>
+      robotsTxt.replace(/^# Host\r?\nHost:[^\r\n]*\r?\n\r?\n/gm, ''),
+  },
   outDir: 'out',
   generateIndexSitemap: false,
   trailingSlash: false,
