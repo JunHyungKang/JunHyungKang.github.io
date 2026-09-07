@@ -184,6 +184,7 @@ for (const [file, canonical] of [
 
 if (existsSync('out/index.html')) {
   const home = readFileSync('out/index.html', 'utf8');
+  if (!home.includes('<meta name="google-adsense-account" content="ca-pub-3166603343095810"')) failures.push('AdSense ownership metadata missing from homepage');
   if (!home.includes('"@type":"WebSite"')) failures.push('WebSite JSON-LD missing from homepage');
   if (!home.includes('type="application/rss+xml"')) failures.push('RSS discovery link missing from homepage');
 }
