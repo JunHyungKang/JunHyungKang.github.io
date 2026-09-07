@@ -20,7 +20,7 @@ export async function GET() {
     allPosts.forEach((post) => {
         feed.item({
             title: post.title,
-            description: post.teaser || post.contentHtml?.slice(0, 150) + '...' || '',
+            description: post.teaser || '',
             url: `${site_url}/posts/${post.slug}`,
             date: post.date,
             author: 'JunHyung Kang',

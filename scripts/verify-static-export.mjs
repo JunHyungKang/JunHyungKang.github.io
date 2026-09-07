@@ -89,10 +89,7 @@ if (existsSync('out/sitemap.xml')) {
     const url = new URL(location);
     if (url.origin !== siteUrl) failures.push(`Unexpected sitemap origin: ${location}`);
     if (url.pathname !== '/' && url.pathname.endsWith('/')) failures.push(`Trailing slash in sitemap URL: ${location}`);
-
-    const output = url.pathname === '/'
-      ? 'out/index.html'
-      : `out${url.pathname}.html`;
+    const output = url.pathname === '/' ? 'out/index.html' : `out${decodeURIComponent(url.pathname)}.html`;
     if (!existsSync(output)) {
       failures.push(`Sitemap URL does not map to an exported HTML page: ${location}`);
       continue;
@@ -109,7 +106,14 @@ if (existsSync('out/sitemap.xml')) {
 
   for (const post of archivedPosts) {
     const output = `out/posts/${post.slug}.html`;
-    if (existsSync(output)) failures.push(`Noindex post must not be exported: ${output}`);
+    if (!existsSync(output)) {
+      failures.push(`Archived URL must remain readable: ${output}`);
+      continue;
+    }
+    const html = readFileSync(output, 'utf8');
+    if (!/<meta name="robots" content="noindex, follow"/.test(html)) failures.push(`Archive must remain noindex: ${output}`);
+    if (sitemapPaths.has(`/posts/${post.slug}`)) failures.push(`Archive leaked into sitemap: ${output}`);
+    if (html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) failures.push(`Archive must not load ads: ${output}`);
   }
 
   for (const post of publicPosts) {
@@ -138,6 +142,16 @@ if (existsSync('out/sitemap.xml')) {
     if ((html.match(/<h1\b/g) || []).length !== 1) failures.push(`Indexable post must render exactly one h1: ${output}`);
     if (!html.includes('"image":["https://')) failures.push(`Absolute BlogPosting image missing from ${output}`);
     if (!html.includes('<meta property="og:image" content="https://')) failures.push(`Open Graph image missing from ${output}`);
+    const imageSources = [...html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)].map(match => match[1]);
+    const ogImage = html.match(/<meta property="og:image" content="([^"]+)"/)?.[1];
+    for (const src of [...imageSources, ...(ogImage ? [ogImage] : [])]) {
+      const url = new URL(src, siteUrl);
+      if (url.origin === siteUrl && !existsSync(`out${decodeURIComponent(url.pathname)}`)) failures.push(`Missing image in ${output}: ${src}`);
+    }
+    for (const [, href] of html.matchAll(/href="#([^"]+)"/g)) {
+      const id = decodeURIComponent(href);
+      if (!html.includes(`id="${id}"`)) failures.push(`Missing heading target in ${output}: ${id}`);
+    }
   }
 
   for (const topicPath of ['/topics', '/topics/ai-agents', '/topics/agent-harness', '/topics/llm-engineering']) {

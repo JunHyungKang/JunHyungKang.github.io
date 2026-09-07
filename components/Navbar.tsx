@@ -88,12 +88,15 @@ export default function Navbar({ posts = [] }: NavbarProps) {
                     {/* Mobile Menu Button */}
                     <div className="flex items-center gap-4 md:hidden">
                         <button
+                            aria-label="글 검색"
                             onClick={() => setIsSearchOpen(true)}
                             className="text-slate-300 hover:text-white p-2"
                         >
                             <Search size={20} />
                         </button>
                         <button
+                            aria-label={isOpen ? "메뉴 닫기" : "메뉴 열기"}
+                            aria-expanded={isOpen}
                             className="text-slate-300 hover:text-white"
                             onClick={() => setIsOpen(!isOpen)}
                         >

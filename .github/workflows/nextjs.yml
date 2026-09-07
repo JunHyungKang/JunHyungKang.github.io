@@ -77,6 +77,12 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: Verify static export
         run: ${{ steps.detect-package-manager.outputs.manager }} run verify:export
+      - name: Lint
+        run: ${{ steps.detect-package-manager.outputs.manager }} run lint
+      - name: Install test browser
+        run: ${{ steps.detect-package-manager.outputs.runner }} playwright install --with-deps chromium
+      - name: Verify browser interactions
+        run: ${{ steps.detect-package-manager.outputs.manager }} run test:browser
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

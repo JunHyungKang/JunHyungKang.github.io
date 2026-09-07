@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { Command } from "cmdk";
 import { Search, FileText, ArrowRight } from "lucide-react";
@@ -16,6 +16,20 @@ interface CommandMenuProps {
 
 export default function CommandMenu({ posts, isOpen, setIsOpen }: CommandMenuProps) {
   const router = useRouter();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    inputRef.current?.focus();
+    return () => {
+      dialog?.close();
+      previousFocus?.focus();
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -43,23 +57,28 @@ export default function CommandMenu({ posts, isOpen, setIsOpen }: CommandMenuPro
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-[20vh] px-4">
-      <div 
-        className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm transition-opacity" 
-        onClick={() => setIsOpen(false)}
-      />
+    <dialog
+      ref={dialogRef}
+      aria-label="글 검색"
+      onCancel={() => setIsOpen(false)}
+      onClick={(event) => {
+        if (event.target === event.currentTarget) setIsOpen(false);
+      }}
+      className="fixed inset-0 z-50 m-0 h-screen max-h-none w-screen max-w-none bg-transparent open:flex items-start justify-center pt-[20vh] px-4 backdrop:bg-slate-950/80 backdrop:backdrop-blur-sm"
+    >
       
       <div className="relative w-full max-w-lg bg-slate-900 border border-slate-700 rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10 animate-in fade-in zoom-in-95 duration-200">
         <Command label="Global Search" className="w-full">
           <div className="flex items-center border-b border-slate-700 px-4">
             <Search className="w-5 h-5 text-slate-400 mr-3" />
             <Command.Input 
+              ref={inputRef}
               placeholder="Search articles..." 
               className="w-full h-14 bg-transparent text-slate-200 placeholder:text-slate-500 focus:outline-none text-lg"
             />
-            <div className="hidden sm:flex items-center gap-1 text-xs text-slate-500 font-medium">
+            <button type="button" aria-label="검색 닫기" onClick={() => setIsOpen(false)} className="flex items-center gap-1 text-xs text-slate-400 font-medium">
               <span className="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700">ESC</span>
-            </div>
+            </button>
           </div>
 
           <Command.List className="max-h-[60vh] overflow-y-auto p-2 scroll-py-2">
@@ -129,6 +148,6 @@ export default function CommandMenu({ posts, isOpen, setIsOpen }: CommandMenuPro
           </div>
         </Command>
       </div>
-    </div>
+    </dialog>
   );
 }

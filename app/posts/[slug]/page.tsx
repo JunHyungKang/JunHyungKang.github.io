@@ -15,7 +15,8 @@ function toAbsoluteUrl(url?: string) {
 }
 
 export async function generateStaticParams() {
-    const paths = getAllPostIds();
+    // Search visibility must not remove an existing article URL.
+    const paths = getAllPostIds({ includeNoindex: true });
     return paths.map((path) => path.params);
 }
 

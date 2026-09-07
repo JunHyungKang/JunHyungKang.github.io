@@ -5,6 +5,8 @@ import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
@@ -163,7 +165,16 @@ export async function getPostData(slug: string): Promise<PostData> {
   const processedContent = await remark()
     .use(remarkGfm)
     .use(remarkMath)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
+    // Preserve legacy article images/captions, but never execute source HTML.
+    .use(rehypeRaw)
+    .use(rehypeSanitize, {
+      ...defaultSchema,
+      attributes: {
+        ...defaultSchema.attributes,
+        code: [['className', /^language-./, 'math-inline', 'math-display']],
+      },
+    })
     .use(rehypeKatex)
     .use(rehypeSlug)
     .use(rehypeStringify)

@@ -46,14 +46,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
           <Link
             key={heading.id}
             href={`#${heading.id}`}
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector(`#${heading.id}`)?.scrollIntoView({
-                behavior: "smooth",
-              });
-              // Manually set active mostly for immediate feedback
-              setActiveId(heading.id);
-            }}
+            onClick={() => setActiveId(heading.id)}
             className={`text-sm transition-colors duration-200 border-l-2 pl-4 -ml-[1.05rem] ${
               activeId === heading.id
                 ? "text-blue-400 border-blue-500 font-medium"
