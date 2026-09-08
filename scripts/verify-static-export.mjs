@@ -2,6 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { URL } from 'node:url';
 import { basename } from 'node:path';
 import matter from 'gray-matter';
+import { inspectHtml, reachablePages } from './crawl-graph.mjs';
 
 const siteUrl = 'https://junhyungkang.github.io';
 const requiredFiles = [
@@ -21,6 +22,8 @@ const requiredFiles = [
   'out/sitemap.xml',
 ];
 const failures = [];
+const crawlPages = new Map();
+const sitemapLocations = [];
 
 function getFiles(directory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -72,6 +75,7 @@ const archivedPosts = sourcePosts.filter((post) => post.noindex);
 if (existsSync('out/sitemap.xml')) {
   const sitemap = readFileSync('out/sitemap.xml', 'utf8');
   const locations = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => match[1]);
+  sitemapLocations.push(...locations.map(location => new URL(location).href));
   const sitemapPaths = new Set(locations.map((location) => new URL(location).pathname));
   const sitemapEntries = new Map(
     [...sitemap.matchAll(/<url>(.*?)<\/url>/gs)].map((match) => {
@@ -124,6 +128,14 @@ if (existsSync('out/sitemap.xml')) {
     }
     const html = readFileSync(output, 'utf8');
     const canonicalPath = `/posts/${post.slug}`;
+    const parsed = inspectHtml(html, `${siteUrl}${canonicalPath}`);
+    if (!parsed.articleText) failures.push(`Missing pre-rendered article content: ${output}`);
+    if (!/\bindex\b/.test(parsed.robots.robots || '') || !/\bfollow\b/.test(parsed.robots.robots || '')) {
+      failures.push(`Public post lost inherited robots metadata: ${output}`);
+    }
+    if (!/max-image-preview:large/.test(parsed.robots.googlebot || '')) {
+      failures.push(`Public post lost Google preview metadata: ${output}`);
+    }
     const hasAds = html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
 
     if (!sitemapPaths.has(canonicalPath)) failures.push(`Indexable post missing from sitemap: ${canonicalPath}`);
@@ -191,10 +203,14 @@ if (existsSync('out/index.html')) {
 
 for (const file of getFiles('out').filter((path) => path.endsWith('.html'))) {
   const html = readFileSync(file, 'utf8');
-  const links = [...html.matchAll(/href="([^"]+)"/g)].map((match) => match[1]);
+  const pathname = file === 'out/index.html' ? '/' : file.slice(3, -5);
+  const pageUrl = new URL(pathname, siteUrl).href;
+  const parsed = inspectHtml(html, pageUrl);
+  crawlPages.set(pageUrl, parsed);
+  const links = parsed.hrefs;
 
   for (const link of links) {
-    if (!link.startsWith('/') || link.startsWith('//')) continue;
+    if (new URL(link).origin !== siteUrl) continue;
     const pathname = decodeURIComponent(new URL(link, siteUrl).pathname);
     if (pathname.startsWith('/_next/')) continue;
 
@@ -205,6 +221,11 @@ for (const file of getFiles('out').filter((path) => path.endsWith('.html'))) {
         : `out${pathname}.html`;
     if (!existsSync(target)) failures.push(`Broken internal link in ${file}: ${link}`);
   }
+}
+
+const reachable = reachablePages(crawlPages, `${siteUrl}/`);
+for (const location of sitemapLocations) {
+  if (!reachable.has(location)) failures.push(`Sitemap page unreachable through static anchors from home: ${location}`);
 }
 
 for (const file of ['out/index.html', 'out/posts.html']) {
