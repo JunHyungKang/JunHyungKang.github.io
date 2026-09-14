@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         alternates: {
             canonical: `https://junhyungkang.github.io/posts/${slug}`,
         },
-        robots: postData.noindex ? {
-            index: false,
-            follow: true,
-        } : undefined,
+        // Omit the key for public posts: `undefined` clears layout metadata.
+        ...(postData.noindex ? {
+            robots: { index: false, follow: true },
+        } : {}),
         openGraph: {
             title: postData.title,
             description,
