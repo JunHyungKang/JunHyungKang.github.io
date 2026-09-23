@@ -45,7 +45,7 @@ A2A를 실제 서비스에 적용할 때 Agent Card를 읽고 요청을 주고�
 
 테스트는 Python 3.12.4, A2A Protocol v1.0의 JSON-RPC binding, 공식 Python SDK 1.1.2에서 실행했다. 승인 저장소와 ERP 쓰기는 메모리로 단순화했고 실제 ERP API 대신 `ORDER_CREATED`를 기록했다.
 
-전체 코드는 [`examples/a2a-v1-revocation-lifecycle`](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/a2a-v1-revocation-lifecycle)에 두었다.
+전체 코드는 [`examples/a2a-v1-revocation-lifecycle`](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/main/examples/a2a-v1-revocation-lifecycle)에 두었다.
 
 스크립트는 표의 Task 상태와 외부 변경, `CancelledError`, `cancel()` 호출 여부를 각각 검증한다. 하나라도 기대값과 다르면 `AssertionError`로 종료한다.
 
