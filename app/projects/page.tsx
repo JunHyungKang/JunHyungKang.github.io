@@ -1,3 +1,4 @@
+import SelectedWriting from '@/components/SelectedWriting';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowUpRight, BookOpen, Github, Wrench } from 'lucide-react';
@@ -50,6 +51,8 @@ export default function Projects() {
                         I build practical tools and document what I learn while working on AI systems. This page collects public work that can be explored without an account.
                     </p>
                 </header>
+
+                <SelectedWriting />
 
                 <section className="grid gap-6" aria-label="Selected projects">
                     {projects.map(({ title, description, href, cta, icon: Icon, tags }) => {

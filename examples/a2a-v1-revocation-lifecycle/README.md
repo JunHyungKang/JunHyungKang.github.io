@@ -1,5 +1,7 @@
 # A2A v1.0: revocation is not task cancellation
 
+Read the [accompanying article: Approval revocation and A2A task lifecycle](https://junhyungkang.github.io/posts/2026-07-31-A2A-Agent-Delegation-Authorization) for the investigation, results, and limitations.
+
 This example uses the official Python SDK to show that revoking an approval
 grant does not automatically cancel an already-running A2A Task.
 
