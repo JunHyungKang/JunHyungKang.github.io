@@ -69,7 +69,7 @@ lifespan의 의미도 달라졌다. v2의 Streamable HTTP lifespan은 서버 시
 
 v2 `MCPServer`는 한 endpoint에서 2026 client와 2025 계열 client를 모두 받는다. 새 `Client`는 `server/discover`를 먼저 시도하고 구형 서버라면 기존 handshake로 돌아간다.
 
-문장만 읽어서는 얼마나 자동으로 처리되는지 감이 오지 않았다. 그래서 Python 3.12.4와 `mcp==2.0.0`으로 실제 Streamable HTTP endpoint를 하나 띄우고, 두 client를 동시에 연결했다. Uvicorn을 시작하고 종료하는 부분까지 포함한 코드는 [실행 파일](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/dual_protocol_http.py)에 뒀다.
+문장만 읽어서는 얼마나 자동으로 처리되는지 감이 오지 않았다. 그래서 Python 3.12.4와 `mcp==2.0.0`으로 실제 Streamable HTTP endpoint를 하나 띄우고, 두 client를 동시에 연결했다. Uvicorn을 시작하고 종료하는 부분까지 포함한 코드는 [실행 파일](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/main/examples/mcp-v2-fastmcp-migration/dual_protocol_http.py)에 뒀다.
 
 ```python
 from mcp import Client
@@ -104,7 +104,7 @@ legacy: 2025-11-25 -> {'result': 'same handler'}
 modern: 2026-07-28 -> {'result': 'same handler'}
 ```
 
-구형 서버로 돌아가는 경로도 따로 확인했다. `mcp==1.29.0` [서버](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/legacy_sdk_v1_server.py)를 띄우고 기본 설정의 v2 [client](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/master/examples/mcp-v2-fastmcp-migration/v2_client_fallback.py)를 연결했다. 서버는 첫 `server/discover` 요청을 거절했고, client는 곧바로 기존 handshake를 다시 시도했다.
+구형 서버로 돌아가는 경로도 따로 확인했다. `mcp==1.29.0` [서버](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/main/examples/mcp-v2-fastmcp-migration/legacy_sdk_v1_server.py)를 띄우고 기본 설정의 v2 [client](https://github.com/JunHyungKang/JunHyungKang.github.io/blob/main/examples/mcp-v2-fastmcp-migration/v2_client_fallback.py)를 연결했다. 서버는 첫 `server/discover` 요청을 거절했고, client는 곧바로 기존 handshake를 다시 시도했다.
 
 ```text
 auto fallback: 2025-11-25 -> {'result': 'legacy server'}
@@ -182,7 +182,7 @@ fastmcp==3.4.5 의존성 해석 결과   → mcp==1.29.0
 FastMCP 3 tool 호출                → {'result': 5}
 ```
 
-이 테스트는 코드 경로가 맞다는 증거일 뿐 운영 호환성을 보장하지 않는다. 인증, 여러 worker, 재시작, long-lived stream이 붙은 서비스라면 앞의 네 가지 통합 테스트가 더 중요하다. 실행 파일과 version pin은 [재현 코드](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/master/examples/mcp-v2-fastmcp-migration)에 넣었다.
+이 테스트는 코드 경로가 맞다는 증거일 뿐 운영 호환성을 보장하지 않는다. 인증, 여러 worker, 재시작, long-lived stream이 붙은 서비스라면 앞의 네 가지 통합 테스트가 더 중요하다. 실행 파일과 version pin은 [재현 코드](https://github.com/JunHyungKang/JunHyungKang.github.io/tree/main/examples/mcp-v2-fastmcp-migration)에 넣었다.
 
 내가 바꾼 판단은 `FastMCP`를 곧바로 `MCPServer`로 치환하자는 게 아니었다. 먼저 import 경로를 확인하고, 운영 트래픽에서 두 프로토콜 버전의 비율을 보자는 쪽이었다.
 
