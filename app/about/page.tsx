@@ -1,3 +1,4 @@
+import SelectedWriting from '@/components/SelectedWriting';
 import { Mail, Github, Linkedin, BookOpen, Award, Code2, GraduationCap } from "lucide-react";
 import { Metadata } from "next";
 
@@ -28,6 +29,8 @@ export default function About() {
                         I enjoy growing together with colleagues and strive to apply the latest research trends to practical products.
                     </p>
                 </div>
+
+                <SelectedWriting />
 
                 <div className="grid md:grid-cols-3 gap-12">
                     <div className="md:col-span-2 space-y-16">

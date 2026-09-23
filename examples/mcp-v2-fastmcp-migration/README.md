@@ -1,5 +1,7 @@
 # MCP Python SDK v2 / FastMCP migration checks
 
+Read the [accompanying article: FastMCP migration investigation](https://junhyungkang.github.io/posts/2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration) for the investigation, results, and limitations.
+
 This directory contains the executable examples referenced by
 `2026-07-28-MCP-Python-SDK-v2-FastMCP-Migration.md`.
 
