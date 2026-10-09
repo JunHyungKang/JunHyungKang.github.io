@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 7424",
     "build": "next build",
-    "postbuild": "next-sitemap",
+    "postbuild": "next-sitemap && node scripts/generate-legacy-redirects.mjs",
     "verify:export": "node --test tests/crawl-graph.test.mjs && node scripts/verify-static-export.mjs",
     "test:browser": "playwright test",
     "start": "next start",

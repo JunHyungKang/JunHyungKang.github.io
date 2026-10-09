@@ -2,13 +2,20 @@
 title: "DSPy: 프롬프트 엔지니어링의 새로운 패러다임"
 date: "2024-06-10"
 teaser: "기존의 하드코딩된 프롬프트 엔지니어링에서 벗어나, 선언적이고 스스로 최적화하는 DSPy 프레임워크를 소개합니다."
-noindex: true
+noindex: false
+listed: true
+adsEnabled: false
+updated: "2026-10-09"
+contentType: "기술 해설"
+evidence: "프롬프트 수정 과정에서 겪은 문제를 출발점으로 DSPy 논문과 공개 예제를 해설했습니다. 자체 성능 비교 실험은 수행하지 않았습니다."
 tags:
   - DSPy
   - LLM
   - Prompt Engineering
   - Python
 ---
+
+> 이 글은 2024년 6월 당시 DSPy 논문과 API를 다룬 해설입니다. 아래 코드는 당시 공개 예제이며 현재 버전의 실행 안내가 아닙니다. 최신 사용법은 [DSPy 공식 문서](https://dspy.ai/)에서 확인할 수 있습니다.
 
 안녕하세요 저는 SK C&C에서 생성형 AI관련 업무를 하고 있는데요,
 이번 글을 통해 전통적인 수작업 프롬프트 엔지니어링과 다른 접근 방식을 시도하고 있는 **DSPy**에 대해서 알아보려고 합니다.

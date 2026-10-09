@@ -25,6 +25,8 @@ export interface PostData {
   teaser?: string;
   tags?: string[];
   noindex?: boolean;
+  listed?: boolean;
+  adsEnabled?: boolean;
   contentType?: string;
   evidence?: string;
   headings?: { id: string; text: string; level: number }[];
@@ -89,7 +91,7 @@ export function getSortedPostsData({ includeNoindex = false }: { includeNoindex?
 
   const visiblePosts = includeNoindex
     ? allPostsData
-    : allPostsData.filter((post) => !post.noindex);
+    : allPostsData.filter((post) => post.listed ?? !post.noindex);
 
   // Sort posts by date
   return visiblePosts.sort((a, b) => {

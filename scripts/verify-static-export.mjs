@@ -44,6 +44,9 @@ const sourcePosts = postSources.map((file) => {
   for (const field of ['title', 'date', 'teaser']) {
     if (typeof data[field] !== 'string' || data[field].trim() === '') failures.push(`Invalid ${field} in ${file}`);
   }
+  for (const field of ['noindex', 'listed', 'adsEnabled']) {
+    if (data[field] !== undefined && typeof data[field] !== 'boolean') failures.push(`Invalid boolean ${field} in ${file}`);
+  }
   if (!Array.isArray(data.tags) || data.tags.length === 0) failures.push(`Invalid tags in ${file}`);
   if (typeof data.date === 'string' && !/^\d{4}-\d{2}-\d{2}$/.test(data.date)) failures.push(`Invalid date format in ${file}: ${data.date}`);
   if (typeof data.date === 'string' && !slug.startsWith(data.date)) failures.push(`Filename/date mismatch in ${file}: ${data.date}`);
@@ -67,6 +70,8 @@ const sourcePosts = postSources.map((file) => {
     date: data.date,
     updated: data.updated,
     noindex: data.noindex === true,
+    listed: data.listed ?? data.noindex !== true,
+    adsEnabled: data.adsEnabled ?? data.noindex !== true,
   };
 });
 const publicPosts = sourcePosts.filter((post) => !post.noindex);
@@ -117,7 +122,7 @@ if (existsSync('out/sitemap.xml')) {
     const html = readFileSync(output, 'utf8');
     if (!/<meta name="robots" content="noindex, follow"/.test(html)) failures.push(`Archive must remain noindex: ${output}`);
     if (sitemapPaths.has(`/posts/${post.slug}`)) failures.push(`Archive leaked into sitemap: ${output}`);
-    if (html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) failures.push(`Archive must not load ads: ${output}`);
+    if (html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js') !== post.adsEnabled) failures.push(`Unexpected ad policy: ${output}`);
   }
 
   for (const post of publicPosts) {
@@ -139,7 +144,7 @@ if (existsSync('out/sitemap.xml')) {
     const hasAds = html.includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js');
 
     if (!sitemapPaths.has(canonicalPath)) failures.push(`Indexable post missing from sitemap: ${canonicalPath}`);
-    if (!hasAds) failures.push(`AdSense missing from indexable post: ${output}`);
+    if (hasAds !== post.adsEnabled) failures.push(`Unexpected ad policy: ${output}`);
     const expectedLastmod = post.updated || post.date;
     const actualLastmod = sitemapEntries.get(canonicalPath)?.lastmod;
     if (actualLastmod !== expectedLastmod) {
@@ -232,6 +237,19 @@ for (const file of ['out/index.html', 'out/posts.html']) {
   if (existsSync(file) && readFileSync(file, 'utf8').includes('pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')) {
     failures.push(`AdSense script must not load on navigation page: ${file}`);
   }
+}
+
+
+for (const post of sourcePosts) {
+  const html = readFileSync('out/posts.html', 'utf8');
+  const anchors = inspectHtml(html, `${siteUrl}/posts`).anchors;
+  const inList = anchors.some(a => decodeURIComponent(new URL(a.url).pathname) === `/posts/${post.slug}`);
+  if (inList !== post.listed) failures.push(`Unexpected listing policy: ${post.slug}`);
+}
+for (const [from, to] of Object.entries(JSON.parse(readFileSync('config/legacy-urls.json', 'utf8')))) {
+  const html = readFileSync(`out${from}index.html`, 'utf8');
+  if (!html.includes(`content="0; url=${siteUrl}${to}"`) || !html.includes(`rel="canonical" href="${siteUrl}${to}"`)) failures.push(`Invalid legacy redirect: ${from}`);
+  if (sitemapLocations.includes(`${siteUrl}${from}`)) failures.push(`Legacy alias in sitemap: ${from}`);
 }
 
 if (failures.length > 0) {

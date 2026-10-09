@@ -119,7 +119,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
 
     return (
         <main className="min-h-screen bg-[#020617] text-slate-200 selection:bg-blue-500/30 pt-24 pb-20">
-            {!postData.noindex && <GoogleAdSense pId="3166603343095810" />}
+            {(postData.adsEnabled ?? !postData.noindex) && <GoogleAdSense pId="3166603343095810" />}
             <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 xl:grid-cols-4 gap-12">
 
                 {/* Main Content */}
@@ -185,7 +185,7 @@ export default async function Post({ params }: { params: Promise<{ slug: string 
                             <p className="mb-2 text-xs font-semibold tracking-wider text-amber-300">ARCHIVE NOTE</p>
                             <h2 id="archive-note-heading" className="text-lg font-bold text-white">이 글은 과거 기록으로 보관합니다</h2>
                             <p className="mt-3 text-sm leading-relaxed text-slate-400">
-                                최신성과 재현성을 다시 검증하지 않아 검색·광고 대상에서 제외했습니다. 현재 검증 기준은{' '}
+                                검토가 필요한 과거 기록으로 검색 대상에서 제외했습니다. 현재 검증 기준은{' '}
                                 <Link href="/editorial-policy" className="text-blue-400 hover:text-blue-300">편집 원칙</Link>
                                 에서 확인할 수 있습니다.
                             </p>
