@@ -3,7 +3,12 @@ title: "Antigravity 사용 후기: 출시부터 지금까지"
 date: "2025-12-27"
 teaser: "Antigravity 출시 후 지금까지 사용해본 후기를 공유합니다. 장점, 단점, 그리고 앞으로의 기대까지 정리해봤습니다."
 image: "/images/posts/2025/2025-12-27-Antigravity-Review/good_news_korean.png"
-noindex: true
+noindex: false
+listed: true
+adsEnabled: false
+updated: "2026-10-09"
+contentType: "사용 경험"
+evidence: "개인 사이드 프로젝트에서 사용한 모델, 작업 흐름과 직접 개입한 실패 사례를 기록했습니다."
 tags:
   - Review
   - Antigravity
@@ -13,11 +18,13 @@ tags:
   - Claude Code
 ---
 
+> 이 글은 2025년 12월의 사용 기록입니다. 가격, 모델 선택지와 사용량 제한은 당시 계정에서 관찰한 내용이며 현재 제공 조건을 뜻하지 않습니다.
+
 ## 들어가며
 
 Antigravity가 출시된 이후부터 지금까지 꾸준히 사용해오고 있습니다. 오늘은 그동안 이 도구를 사용하며 느꼈던 점들을 솔직하게 풀어보려 합니다.
 
-특히 오늘 **CS146S: The Modern Software Developer** 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
+특히 오늘 [CS146S: The Modern Software Developer](https://themodernsoftware.dev/) 강의 내용을 훑어보다가 깊은 인상을 받아, 그 내용과 함께 제 생각을 정리해보고 싶었습니다. (이 글에 사용된 이미지의 대부분은 해당 강의 슬라이드 출처임을 밝힙니다.)
 
 ![Software 1.0 2.0 3.0](/images/posts/2025/2025-12-27-Antigravity-Review/software_1_2_3.png)
 
@@ -63,7 +70,6 @@ Antigravity는 저 같은 성향의 개발자에게 **IDE 기반이면서도 적
 
 자주 반복되는 테스트 코드 작성이나, 커밋-푸시-PR 같은 정해진 시퀀스(Sequential Action), 혹은 도메인 지식이 많이 필요한 복잡한 작업들을 미리 정의해두고 사용하면 생산성이 크게 오를 것 같습니다. 아직 본격적으로 활용해보진 못했지만, 잠재력만으로도 충분히 장점으로 꼽을 만합니다.
 
-
 ---
 
 ## 단점
@@ -77,7 +83,6 @@ Antigravity는 저 같은 성향의 개발자에게 **IDE 기반이면서도 적
 Sync 방식으로 에이전트와 실시간으로 호흡하며 코딩하는 제 입장에서는, 에이전트의 생각 과정을 따라가고 싶은데 **영어-한국어** 사이에서 오는 인지 부하 때문에 순간적으로 버퍼링이 걸리거나 멍해지는 순간들이 있었습니다. 매끄러운 사고의 흐름을 방해하는 요소입니다.
 
 ### 2. 애매한 자율성 (Semi-Async의 딜레마)
-
 
 제가 Cursor를 좋아하는 이유는 코딩 호흡이 짧고, 에이전트의 자율성이 제가 통제 가능한 수준으로 약하기 때문에 실시간 협업(Pair Programming)하는 느낌이 들기 때문입니다. 반대로 극단적인 효율을 추구하며 Planning과 Testing에만 집중하는 개발자라면 아예 여러 에이전트를 Async로 돌리는 방식을 선호하겠죠.
 ![Workflow Future](/images/posts/2025/2025-12-27-Antigravity-Review/workflow_future.png)

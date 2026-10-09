@@ -2,7 +2,12 @@
 title: "Agentic AI 개념 정리: 에이전트와 워크플로우의 스펙트럼"
 date: "2025-05-28"
 teaser: "Agent, Workflow, Agentic AI의 개념을 정리하고, AI 엔지니어링 관점에서의 의의와 실제 적용 전략을 다룹니다."
-noindex: true
+noindex: false
+listed: true
+adsEnabled: false
+updated: "2026-10-09"
+contentType: "개념·설계 해설"
+evidence: "공개된 Agent와 Workflow 정의를 비교하고 개발 과정에서 겪은 용어 혼선과 설계 판단을 구분해 정리했습니다."
 tags:
   - Agent
   - Agentic AI
@@ -10,6 +15,8 @@ tags:
   - LLM
   - AI Engineering
 ---
+
+> 이 글은 2025년 5월 당시 자료와 개발 경험을 정리한 글입니다. 기관별 정의와 제 설계 의견을 구분해 읽어 주세요.
 
 ## 1. 들어가며
 
@@ -32,7 +39,6 @@ tags:
 * 복잡한 흐름(flow)이 없으면 Agent가 아닌가요?
 * Agent Framework은 왜 쓰나요? 서비스에 의존성만 높아지는 거 아닌가요?
 
-
 ## 2. Agent? Agentic AI?
 
 ### 🔍 주요 조직에서 말하는 Agent란?
@@ -40,17 +46,16 @@ tags:
 | 출처 | 정의 요약 | 출처 |
 | --- | ----- | --- |
 | **OpenAI** | Agent는 당신을 대신해 스스로 작업을 수행하는 시스템 | [A practical guide to building agents](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf) |
-| **Anthropic** | Agent: LLM이 자율적으로 프로세스를 조정하고 도구 사용을 결정하며 작업을 수행하는 시스템.<br>Workflow: LLM과 도구가 사전에 정의된 코드 경로를 따라 오케스트레이션되는 시스템.<br>둘을 합친 모든 변형을 **Agentic System**이라 부름. | [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents?ref=blog.langchain.dev) |
+| **Anthropic** | Agent: LLM이 자율적으로 프로세스를 조정하고 도구 사용을 결정하며 작업을 수행하는 시스템.<br>Workflow: LLM과 도구가 사전에 정의된 코드 경로를 따라 오케스트레이션되는 시스템.<br>두 방식을 포괄하는 시스템을 **Agentic System**이라 부름. | [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents?ref=blog.langchain.dev) |
 | **Google** | 목표를 추구하고 사용자를 대신해 작업을 완료하는 AI 소프트웨어 시스템. 추론, 계획, 기억을 활용하고 일정 수준의 자율성으로 의사결정함. | [What are AI agents?](https://cloud.google.com/discover/what-are-ai-agents) |
 | **LangChain** | LLM을 사용해 애플리케이션의 제어 흐름을 결정하는 시스템 | [What is an agent?](https://blog.langchain.dev/what-is-an-agent/) |
-| **NVIDIA** | LLM을 활용해 문제를 **추론 → 계획 → 실행**하는 시스템 | NVIDIA Tech Blog |
 | **Microsoft** | 언어 모델 위에 얹혀 정보를 관찰·수집하고, 입력을 제공하며, 함께 실행 계획을 수립하거나 독자적으로 행동하는 계층 | [Microsoft Source](https://news.microsoft.com/source/features/ai/ai-agents-what-they-are-and-how-theyll-change-the-way-we-work/) |
 
 > 이 문서에서는 기술적으로 명확한 기준을 제시하는 **Anthropic의 정의**를 중심으로 설명합니다.
 
 ### **🧠 Agentic System이란?**
 
-* **Agentic System**: *Agent*와 *Workflow*가 결합된 구조
+* **Agentic System**: 이 글에서는 *Agent*와 *Workflow*를 포괄하는 표현으로 사용합니다. 두 방식을 반드시 결합해야 한다는 뜻은 아닙니다.
     * **Agent**: 자율적으로 프로세스를 조정하고, 도구를 활용해 능동적으로 작업을 수행하는 시스템
     * **Workflow**: LLM과 도구가 사전에 정의된 흐름에 따라 동작하는 시스템
 * 위의 기준으로 다시 아래의 그림을 보면, 각 단계의 자율성 수준을 Workflow와 Agent로 나눌 수 있습니다.
@@ -66,11 +71,7 @@ tags:
 
 * 이처럼 명확한 Workflow와 명확한 Agent 사이에는 명확히 구분되지 않는 회색 지대가 존재하며, 이를 ‘Agentic 정도’의 스펙트럼으로 이해하자는 접근도 제안되고 있습니다.
 
-    > 나는 특정 시스템을 에이전트로 볼 것인지 아닌지를 **이분법적으로** 결정하기보다는, **에이전트적인(agentic) 정도**를 기준으로 생각하는 것이 더 유용할 것이라고 생각했다.
-    > “에이전트(agent)“라는 명사가 특정 범주를 한정하는 반면, “에이전트적(agentic)“이라는 형용사는 다양한 시스템을 유연하게 포함할 수 있도록 해준다.
-    > 단 한 번 프롬프팅하는 방식은 명확히 에이전트가 아니며, 반면 **고수준의 지시를 받고 계획을 세우며 도구를 활용하고 반복적인 처리를 수행하는 자율 에이전트**는 명백히 에이전트라고 할 수 있다.
-    > 이 사이에는 **회색 지대(gray zone)**가 존재한다.
-    > — *Andrew Ng*
+이 글에서는 도구를 쓴다는 사실보다 다음 실행 단계를 누가 결정하는지를 기준으로 자율성을 비교하겠습니다.
 
 ### **✏️ 개인적인 경험에서 본 회색 지대**
 
@@ -78,7 +79,6 @@ tags:
     하지만 Agent 프레임워크를 사용했다는 이유만으로 해당 모듈을 “Agent”로 분류했는데, 지금 돌이켜보면 구조적으로는 Workflow에 더 가까웠고,
     이로 인해 팀 내 커뮤니케이션에 혼선을 줬을 가능성도 있다고 생각합니다.
 * 이처럼 Workflow와 Agent 사이에는 경계가 모호한 경우가 많기 때문에, 내부적으로 용어 정의와 분류 기준을 협의 후 유연하게 판단하는 것이 현실적인 접근이라 생각합니다.
-
 
 ## 3. Agent vs Workflow
 
@@ -98,7 +98,7 @@ tags:
     * Agent 프로토타입을 만드는 건 쉽지만, 실제 서비스를 위한 안정적 Agent를 구축하는 건 매우 어렵습니다.
 <br>
 * 최신 LLM의 성능이 크게 향상되면서, 세부 작업 단계를 일일이 설계하기보다는 모델에게 의사결정을 위임하려는 시도가 늘고 있습니다.
-    이에 따라 ‘최적화된 에이전트 내부 로직’ 자체보다는, 외부 도구·다른 에이전트와의 연동을 표준화한 상위 오케스트레이션 기술(예: MCP, A2A)이 주목받고 있습니다.
+    이에 따라 ‘최적화된 에이전트 내부 로직’ 자체보다는, 외부 도구·다른 에이전트와의 연동을 표준화한 연동 규약(예: 도구·데이터 연결을 위한 MCP, 에이전트 간 통신을 위한 A2A)이 주목받고 있습니다.
 <br>
 * 다만 실제 비즈니스 현장에서는 재현성·비용·지연 시간이 핵심이므로, 복잡한 프로세스를 전적으로 모델에게 맡기기보다는 사람이 설계한 결정론적 Workflow를 선호하는 경우가 여전히 많습니다.
     따라서 현시점에서는 **워크플로우 기반의 뼈대 위에, 일부 단계만 에이전트로 대체하는 하이브리드 방식**이 가장 현실적인 선택지입니다.
@@ -113,7 +113,6 @@ tags:
 * 정의에 집착하기보다는, 서비스 목적과 구현 방식에 따라 유연하게 해석하는 것이 실용적입니다.
 * 다만 최근에는 모델자체의 성능향상으로, 더 Agentic한 방식의 기술이 주목받고 있습니다.
 
-
 ## **4. Agent Framework의 가치**
 
 * **Agent Framework의 핵심 가치는, 엔지니어 간에 공통된 구축 방식을 제공함으로써 온보딩과 유지보수를 더 쉽게 만든다는 점**입니다.
@@ -126,7 +125,6 @@ tags:
 이 글에서 많은 부분을 참고한 LangChain 블로그에서는 이 질문에 간단히 답합니다:
 
 > **당신의 애플리케이션이 위 기능들을 모두 필요로 하지 않거나,직접 구현하길 원한다면**, 프레임워크 없이도 가능할 수 있습니다.
-
 
 ## **5. 모델 바깥의 AI Engineering**
 
@@ -162,7 +160,7 @@ tags:
     * **신뢰 가능한 방식으로 전체 시스템을 구현**합니다.
 <br>
 * 앞으로 LLM 성능이 지금보다 훨씬 강화되면, 세부 워크플로를 일일이 설계하는 비중은 줄어들 수 있습니다.
-    그러나 그럴수록 ReAct, Plan-and-Execute 같은 **범용 에이전트 패턴**과 MCP·A2A와 같은 **고수준 오케스트레이션 프로토콜**을 얼마나 잘 활용하느냐가 전략적 차별화 포인트가 될 가능성이 큽니다.
+    그러나 그럴수록 ReAct, Plan-and-Execute 같은 **범용 에이전트 패턴**과 MCP·A2A 같은 **연동 규약**을 얼마나 잘 활용하느냐가 전략적 차별화 포인트가 될 가능성이 큽니다.
     결국 저수준 구현의 부담은 줄어드는 대신, 견고하고 범용적인 에이전트 구조를 설계·운용하는 역량이 오히려 더 중요해질 것이라는 것이 제 개인적인 전망입니다.
 
 ***
@@ -188,7 +186,6 @@ tags:
 
 > “좋은 에이전트는 좋은 모델 위에서 동작합니다.
 > 하지만 좋은 시스템은 좋은 흐름과 설계 위에서 만들어집니다.”
-
 
 ## 🔗 주요 참고 자료 링크
 

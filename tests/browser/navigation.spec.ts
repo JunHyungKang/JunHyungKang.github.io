@@ -83,3 +83,30 @@ test('archived HTML images and source attribution survive rendering', async ({ p
   await expect(page.locator('.prose div').filter({ hasText: /^\(이미지 출처:/ }).getByRole('link', { name: 'YouTube', exact: true })).toHaveCount(1);
   await expect(page.locator('.katex').first()).toBeVisible();
 });
+
+test('restored articles are discoverable without enabling ads', async ({ page }) => {
+  for (const slug of ['2024-06-10-DSPy-Intro', '2025-05-28-Agentic-AI', '2025-10-13-ACE-Intro', '2025-12-27-Antigravity-Review']) {
+    await page.goto('/posts');
+    const link = page.locator(`main a[href="/posts/${slug}"]`);
+    await expect(link).toHaveCount(1);
+    await link.click();
+    await expect(page).toHaveURL(new RegExp(`/posts/${slug}$`));
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'index, follow');
+    await expect(page.locator('article blockquote').first()).toBeVisible();
+    await expect(page.locator('script[src*="adsbygoogle"]')).toHaveCount(0);
+    await expect(page.getByText('ARCHIVE NOTE', { exact: true })).toHaveCount(0);
+  }
+});
+
+test('legacy directory URLs serve a canonical redirect and fallback link', async ({ request }) => {
+  for (const [from, to] of Object.entries({
+    '/tech/gitlab_flow/': '/posts/2022-10-11-gitlab_flow',
+    '/tech/GPU_setting/': '/posts/2023-03-30-GPU_setting',
+  })) {
+    const response = await request.get(from);
+    expect(response.status()).toBe(200);
+    const html = await response.text();
+    expect(html).toContain(`content="0; url=https://junhyungkang.github.io${to}"`);
+    expect(html).toContain(`href="https://junhyungkang.github.io${to}"`);
+  }
+});

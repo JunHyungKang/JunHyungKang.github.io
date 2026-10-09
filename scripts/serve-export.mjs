@@ -9,7 +9,7 @@ http.createServer(async (req, res) => {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     let file = path.resolve(root, `.${pathname}`);
     if (file !== root && !file.startsWith(root + path.sep)) throw new Error('Invalid path');
-    if (pathname === '/') file = path.join(root, 'index.html');
+    if (pathname.endsWith('/')) file = path.join(file, 'index.html');
     else if (!path.extname(file)) file += '.html';
     const content = await readFile(file);
     res.writeHead(200, { 'Content-Type': mime[path.extname(file)] || 'application/octet-stream' });
