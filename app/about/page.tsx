@@ -50,7 +50,7 @@ export default function About() {
                                     <div className="space-y-6 mt-4">
                                         <div>
                                             <h4 className="text-slate-200 font-medium mb-1">AI Transformation (AIX)</h4>
-                                            <p className="text-slate-400 text-sm">Leading AI transformation work in the X Team, applying LLM and agent-based automation to media localization operations (dubbing and subtitling).</p>
+                                            <p className="text-slate-400 text-sm">Leading internal AI transformation (AX) initiatives in the X Team, automating internal workflows and operations with LLMs and AI agents.</p>
                                         </div>
                                     </div>
                                 </div>
