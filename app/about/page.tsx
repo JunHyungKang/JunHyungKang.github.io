@@ -6,7 +6,7 @@ const siteUrl = 'https://junhyungkang.github.io';
 
 export const metadata: Metadata = {
     title: 'AI 엔지니어 강준형 소개',
-    description: 'LLM, 생성형 AI, 모델 개발과 서빙 경험을 보유한 AI 엔지니어 강준형을 소개합니다.',
+    description: '현재 (주)아이유노글로벌 X Team의 AIX unit 리더로 일하는 AI 엔지니어 강준형의 LLM·생성형 AI 경험을 소개합니다.',
     alternates: {
         canonical: `${siteUrl}/about`,
     },
@@ -21,7 +21,7 @@ export default function About() {
                 <div className="mb-12 border-b border-slate-800 pb-12">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">About Me</h1>
                     <p className="text-xl text-slate-400 leading-relaxed mb-6">
-                        I am <strong className="text-white">JH Kang</strong>, a Generative AI Engineer who enjoys working happily.
+                        I am <strong className="text-white">JH Kang</strong>, a Generative AI Engineer. Since September 2026 I have been leading the AIX unit of the X Team at <strong className="text-white">IYUNO Global</strong>, and I still enjoy working happily.
                     </p>
                     <p className="text-lg text-slate-400 leading-relaxed">
                         After obtaining a Master’s degree from the Graduate School of Artificial Intelligence, I have been conducting research and development in AI models.
@@ -41,15 +41,29 @@ export default function About() {
                                 <Code2 className="text-blue-500" /> Work Experience
                             </h2>
                             <div className="space-y-12">
-                                {/* SK AX */}
+                                {/* IYUNO Global */}
                                 <div className="relative pl-8 border-l border-slate-800">
                                     <div className="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-blue-500 ring-4 ring-[#020617]" />
-                                    <h3 className="text-xl font-semibold text-white">Generative AI Engineer</h3>
-                                    <p className="text-blue-400 mb-2">SK AX (C&C) • 2022.01 - Present</p>
+                                    <h3 className="text-xl font-semibold text-white">AIX unit Team Leader</h3>
+                                    <p className="text-blue-400 mb-2">IYUNO Global ((주)아이유노글로벌) · X Team • 2026.09 - Present</p>
 
                                     <div className="space-y-6 mt-4">
                                         <div>
-                                            <h4 className="text-slate-200 font-medium mb-1">Manufacturing AI Agent Platform (2025.08 - Present)</h4>
+                                            <h4 className="text-slate-200 font-medium mb-1">AI Transformation (AIX)</h4>
+                                            <p className="text-slate-400 text-sm">Leading AI transformation work in the X Team, applying LLM and agent-based automation to media localization operations (dubbing and subtitling).</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* SK AX */}
+                                <div className="relative pl-8 border-l border-slate-800">
+                                    <div className="absolute -left-1.5 top-1.5 w-3 h-3 rounded-full bg-slate-600 ring-4 ring-[#020617]" />
+                                    <h3 className="text-xl font-semibold text-white">Generative AI Engineer</h3>
+                                    <p className="text-slate-500 mb-2">SK AX (C&C) • 2022.01 - 2026.09</p>
+
+                                    <div className="space-y-6 mt-4">
+                                        <div>
+                                            <h4 className="text-slate-200 font-medium mb-1">Manufacturing AI Agent Platform (2025.08 - 2026.09)</h4>
                                             <p className="text-slate-400 text-sm">Developing an automated platform for creating and managing AI agents based on manufacturing expert knowledge.</p>
                                         </div>
                                         <div>
@@ -142,10 +156,10 @@ export default function About() {
                                     <strong className="text-white">AI Grand Challenge (2020)</strong> - 3rd Place (Behavior Recognition Track)
                                 </li>
                                 <li>
-                                    <strong className="text-white">SK Group Expert (DEVOCEAN)</strong> - Active Member (2024.02 - Present)
+                                    <strong className="text-white">SK Group Expert (DEVOCEAN)</strong> - Active Member (2024.02 - 2026.09)
                                 </li>
                                 <li>
-                                    <strong className="text-white">Internal Instructor & Mentor</strong> - GenAI Engineer Training (2024 - Present)
+                                    <strong className="text-white">Internal Instructor & Mentor</strong> - GenAI Engineer Training (2024 - 2026)
                                 </li>
                             </ul>
                         </section>
